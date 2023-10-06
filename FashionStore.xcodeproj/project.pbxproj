@@ -7,19 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB6FF3972ACFEE4D003E8541 /* CustomTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6FF3962ACFEE4D003E8541 /* CustomTF.swift */; };
+		DB6FF3992AD040BD003E8541 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6FF3982AD040BD003E8541 /* View+Extensions.swift */; };
+		DB6FF39B2AD04186003E8541 /* Signin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6FF39A2AD04186003E8541 /* Signin.swift */; };
 		DB76FFBD2ACBD6F200AEDD9F /* FashionStoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76FFBC2ACBD6F200AEDD9F /* FashionStoreApp.swift */; };
-		DB76FFBF2ACBD6F200AEDD9F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76FFBE2ACBD6F200AEDD9F /* ContentView.swift */; };
 		DB76FFC12ACBD6F400AEDD9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB76FFC02ACBD6F400AEDD9F /* Assets.xcassets */; };
 		DB76FFC52ACBD6F400AEDD9F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB76FFC42ACBD6F400AEDD9F /* Preview Assets.xcassets */; };
+		DB76FFCE2ACBF12400AEDD9F /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76FFCD2ACBF12400AEDD9F /* WelcomeView.swift */; };
+		DB76FFD52ACBF47800AEDD9F /* PlayfairDisplay-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB76FFD22ACBF1CC00AEDD9F /* PlayfairDisplay-Bold.ttf */; };
+		DB76FFD62ACBF47C00AEDD9F /* PlayfairDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB76FFD32ACBF1CC00AEDD9F /* PlayfairDisplay-Regular.ttf */; };
+		DB76FFD82ACBF9D500AEDD9F /* GreatVibes-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB76FFD72ACBF9D500AEDD9F /* GreatVibes-Regular.ttf */; };
+		DB76FFDC2ACEFD0D00AEDD9F /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76FFDB2ACEFD0D00AEDD9F /* OnBoarding.swift */; };
+		DB76FFE12ACF3E1100AEDD9F /* OnBoardingTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76FFE02ACF3E1100AEDD9F /* OnBoardingTapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB6FF3962ACFEE4D003E8541 /* CustomTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTF.swift; sourceTree = "<group>"; };
+		DB6FF3982AD040BD003E8541 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		DB6FF39A2AD04186003E8541 /* Signin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signin.swift; sourceTree = "<group>"; };
 		DB76FFB92ACBD6F200AEDD9F /* FashionStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FashionStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB76FFBC2ACBD6F200AEDD9F /* FashionStoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStoreApp.swift; sourceTree = "<group>"; };
-		DB76FFBE2ACBD6F200AEDD9F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DB76FFC02ACBD6F400AEDD9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB76FFC22ACBD6F400AEDD9F /* FashionStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FashionStore.entitlements; sourceTree = "<group>"; };
 		DB76FFC42ACBD6F400AEDD9F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DB76FFCD2ACBF12400AEDD9F /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		DB76FFD22ACBF1CC00AEDD9F /* PlayfairDisplay-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-Bold.ttf"; sourceTree = "<group>"; };
+		DB76FFD32ACBF1CC00AEDD9F /* PlayfairDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-Regular.ttf"; sourceTree = "<group>"; };
+		DB76FFD72ACBF9D500AEDD9F /* GreatVibes-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GreatVibes-Regular.ttf"; sourceTree = "<group>"; };
+		DB76FFD92ACBFA7400AEDD9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DB76FFDB2ACEFD0D00AEDD9F /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
+		DB76FFE02ACF3E1100AEDD9F /* OnBoardingTapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingTapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +70,9 @@
 			isa = PBXGroup;
 			children = (
 				DB76FFBC2ACBD6F200AEDD9F /* FashionStoreApp.swift */,
-				DB76FFBE2ACBD6F200AEDD9F /* ContentView.swift */,
+				DB76FFDA2ACEFCD300AEDD9F /* View */,
+				DB76FFD12ACBF1A000AEDD9F /* Helpers */,
+				DB76FFD92ACBFA7400AEDD9F /* Info.plist */,
 				DB76FFC02ACBD6F400AEDD9F /* Assets.xcassets */,
 				DB76FFC22ACBD6F400AEDD9F /* FashionStore.entitlements */,
 				DB76FFC32ACBD6F400AEDD9F /* Preview Content */,
@@ -67,6 +86,37 @@
 				DB76FFC42ACBD6F400AEDD9F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DB76FFD12ACBF1A000AEDD9F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DB76FFD42ACBF1D100AEDD9F /* Fonts */,
+				DB6FF3982AD040BD003E8541 /* View+Extensions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DB76FFD42ACBF1D100AEDD9F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DB76FFD22ACBF1CC00AEDD9F /* PlayfairDisplay-Bold.ttf */,
+				DB76FFD32ACBF1CC00AEDD9F /* PlayfairDisplay-Regular.ttf */,
+				DB76FFD72ACBF9D500AEDD9F /* GreatVibes-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		DB76FFDA2ACEFCD300AEDD9F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DB76FFCD2ACBF12400AEDD9F /* WelcomeView.swift */,
+				DB76FFDB2ACEFD0D00AEDD9F /* OnBoarding.swift */,
+				DB76FFE02ACF3E1100AEDD9F /* OnBoardingTapView.swift */,
+				DB6FF3962ACFEE4D003E8541 /* CustomTF.swift */,
+				DB6FF39A2AD04186003E8541 /* Signin.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +177,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB76FFD62ACBF47C00AEDD9F /* PlayfairDisplay-Regular.ttf in Resources */,
+				DB76FFD52ACBF47800AEDD9F /* PlayfairDisplay-Bold.ttf in Resources */,
 				DB76FFC52ACBD6F400AEDD9F /* Preview Assets.xcassets in Resources */,
+				DB76FFD82ACBF9D500AEDD9F /* GreatVibes-Regular.ttf in Resources */,
 				DB76FFC12ACBD6F400AEDD9F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,7 +192,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB76FFBF2ACBD6F200AEDD9F /* ContentView.swift in Sources */,
+				DB76FFE12ACF3E1100AEDD9F /* OnBoardingTapView.swift in Sources */,
+				DB76FFCE2ACBF12400AEDD9F /* WelcomeView.swift in Sources */,
+				DB6FF3972ACFEE4D003E8541 /* CustomTF.swift in Sources */,
+				DB6FF3992AD040BD003E8541 /* View+Extensions.swift in Sources */,
+				DB6FF39B2AD04186003E8541 /* Signin.swift in Sources */,
+				DB76FFDC2ACEFD0D00AEDD9F /* OnBoarding.swift in Sources */,
 				DB76FFBD2ACBD6F200AEDD9F /* FashionStoreApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +330,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"FashionStore/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FashionStore/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -308,6 +367,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"FashionStore/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FashionStore/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
