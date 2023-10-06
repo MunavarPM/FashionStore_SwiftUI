@@ -20,6 +20,7 @@ struct Signin: View {
             Color("Light")
                 .ignoresSafeArea()
             VStack {
+                /// view
                 AppNameView(color: .black)
                     .padding(.bottom, 50)
                     .offset(x: -15)
