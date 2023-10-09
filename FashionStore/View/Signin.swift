@@ -15,12 +15,14 @@ struct Signin: View {
     @State private var password: String = ""
     @State private var username: String = ""
     @State private var rotationEffect: Double = 0.0
-    @State private var signinToggle: Bool = false
+    @State private var signinToggle: Bool = true
     @State private var conformPassword: String = ""
     @State var isLoading: Bool = false
     @State var alertMessage: String = ""
     @State var alertTittle: String = ""
     @State var showAlert: Bool = false
+    @State private var Email: String = ""
+    @State private var Password: String = ""
     
     
     var body: some View {
@@ -35,38 +37,40 @@ struct Signin: View {
                         .padding(.bottom, 50)
                         .offset(x: -15)
                     VStack(alignment: .leading) {
-                        Text(signinToggle ? "Sign Up" : "Welcome !" )
+                        Text(signinToggle ?  "Welcome !" : "Sign Up")
                             .font(.custom("PlayfairDisplay-Bold", size: 25))
                             .padding(.bottom, 5)
-                        Text(signinToggle ? "Create an new account" : "please login or sign up to continue with our app")
+                        Text(signinToggle ?  "please login or sign up to continue with our app" : "Create an new account")
                             .font(.custom("PlayfairDisplay-Regular", size: 15))
                             .foregroundStyle(.gray)
                             .padding(.bottom, 25)
                         VStack(spacing: 25) {
-                            if signinToggle {
+                            if !signinToggle {
                                 CustomTF(hint: "Username", value: $username)
                                     .font(.custom("PlayfairDisplay-Regular", size: 17))
                                     .autocapitalization(.none)
                             }
-                            CustomTF(hint: "Email", value: $email)
+                            CustomTF(hint: "Email", value: signinToggle ?  $email : $Email)
                                 .font(.custom("PlayfairDisplay-Regular", size: 17))
                                 .autocapitalization(.none)
-                            CustomTF(hint: "Password",isPassword: true, value: $password)
+                            CustomTF(hint: "Password",isPassword: true, value: signinToggle ? $password : $Password)
                                 .font(.custom("PlayfairDisplay-Regular", size: 17))
                                 .autocapitalization(.none)
                                 .padding(.top, 5)
-                            if signinToggle {
+                            if !signinToggle {
                                 CustomTF(hint: "Conform Password", isPassword: true, value: $conformPassword)
                                     .font(.custom("PlayfairDisplay-Regular", size: 17))
                                     .autocapitalization(.none)
                             }
-                            Button {
-                                print("Forgot pa{ssword")
-                            } label: {
-                                Text("Forgot Password?")
-                                    .font(.custom("PlayfairDisplay-Bold", size: 17))
-                                    .tint(.black).opacity(0.8)
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                            if signinToggle {
+                                Button {
+                                    print("Forgot pa{ssword")
+                                } label: {
+                                    Text("Forgot Password?")
+                                        .font(.custom("PlayfairDisplay-Bold", size: 17))
+                                        .tint(.black).opacity(0.8)
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                }
                             }
                             Capsule()
                                 .frame(width: UIScreen.main.bounds.width - 40, height: 50)
@@ -74,7 +78,7 @@ struct Signin: View {
                                     Button {
                                         Task {
                                             do {
-                                                if signinToggle {
+                                                if !signinToggle {
                                                     try await authViewModel.signUp(signUpData: SignUpDataModel(username: username, email: email, password: password))
                                                 } else {
                                                     try await authViewModel.signIn(email: email, password: password)
@@ -84,21 +88,21 @@ struct Signin: View {
                                             }
                                         }
                                     } label: {
-                                        Text(signinToggle ? "Submit" : "Login")
+                                        Text(signinToggle ? "Login" : "Submit")
                                             .font(.custom("PlayfairDisplay-Bold", size: 17))
                                             .foregroundStyle(.light)
                                             .padding(.horizontal, 35)
                                             .padding(.vertical, 12)
                                             .background(.dark)
                                             .clipShape(Capsule())
-                                            .disabledWithOpacity(signinToggle ? username.isEmpty || email.isEmpty || password.isEmpty || conformPassword.isEmpty : email.isEmpty || password.isEmpty)
+                                            .disabledWithOpacity(signinToggle ? email.isEmpty || password.isEmpty : username.isEmpty || Email.isEmpty || Password.isEmpty || conformPassword.isEmpty )
                                     }
                                     .alert(alertMessage, isPresented:$showAlert, actions: {})
                                 }
                             Spacer()
                             
                             HStack {
-                                Text(signinToggle ? "Already have an account" :"Don't have an Account?")
+                                Text(signinToggle ? "Don't have an Account?" :  "Already have an account" )
                                     .font(.custom("PlayfairDisplay-Regular", size: 15))
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.7)) {
@@ -106,7 +110,7 @@ struct Signin: View {
                                         self.rotationEffect += 180
                                     }
                                 } label: {
-                                    Text(signinToggle ? "Signup":"Signin")
+                                    Text(signinToggle ? "Signin" : "Signup")
                                         .font(.custom("PlayfairDisplay-Bold", size: 17))
                                         .fontWeight(.bold)
                                         .tint(.black)

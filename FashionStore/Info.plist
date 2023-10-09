@@ -2,11 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>PlayfairDisplay-Bold.ttf</string>
-		<string>PlayfairDisplay-Regular.ttf</string>
-		<string>GreatVibes-Regular.ttf</string>
-	</array>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>65.2.148.79</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSTemporaryExceptionMinimumTLSVersion</key>
+                <string>TLSv1.1</string>
+            </dict>
+        </dict>
+    </dict>
+    <key>UIAppFonts</key>
+    <array>
+        <string>PlayfairDisplay-Bold.ttf</string>
+        <string>PlayfairDisplay-Regular.ttf</string>
+        <string>GreatVibes-Regular.ttf</string>
+    </array>
 </dict>
 </plist>

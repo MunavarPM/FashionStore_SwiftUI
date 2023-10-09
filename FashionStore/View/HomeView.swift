@@ -76,29 +76,7 @@ struct HomeView: View {
                         }
                         .padding(.horizontal, 10)
                         
-                        HStack {
-                            Image(.onBoarding2)
-                                .resizable()
-                                .frame(width: 120, height: 100)
-                                .cornerRadius(20)
-                            VStack {
-                                Text("Alex Arigato")
-                                    .font(.custom("PlayfairDisplay-Regular", size: 20))
-                                Text("Cleam 90's Jacket")
-                                    .font(.custom("PlayfairDisplay-Regular", size: 15))
-                                    .foregroundStyle(.gray)
-                                Text("$ 240")
-                                    .font(.custom("PlayfairDisplay-Regular", size: 20))
-                            }
-                            Button {
-                                
-                            } label: {
-                                Image(systemName: "arrow.right.square")
-                                    .foregroundStyle(Color("Dark"))
-                            }
-                        }
-                        .padding(.leading, 50)
-                        
+                        MostDemandItem()
                         
                         /// Categories
                         Text("Categories")
@@ -107,11 +85,11 @@ struct HomeView: View {
                             .offset(CGSize(width: 10.0, height: 10.0))
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
-                                ForEach(0 ..< categories.count) { i in
-                                    CapsuleButton(isActive: i == selectedIndex, text: categories[i])
+                                ForEach(0 ..< categories.count) { item in
+                                    CapsuleButton(isActive: item == selectedIndex, text: categories[item])
                                         .containerRelativeFrame(.horizontal) /// New system that for bring the image in to center
                                     .onTapGesture {
-                                        selectedIndex = i
+                                        selectedIndex = item
                                     }
                                 }
                             }
@@ -120,7 +98,6 @@ struct HomeView: View {
                         HStack {
                             Text("Top Dressess")
                                 .font(.custom("PlayfairDisplay-Bold", size: 26))
-                                .fontWeight(.bold)
                             Spacer()
                             Button {
                                 
@@ -220,5 +197,41 @@ struct CapsuleButton: View {
             .background(Color(isActive ? "Dark" : "Light"))
             .clipShape(Capsule())
         }
+    }
+}
+
+struct MostDemandItem: View {
+    var body: some View {
+        HStack {
+            Image(.onBoarding2)
+                .resizable()
+                .frame(width: 120, height: 100)
+                .cornerRadius(20)
+            VStack {
+                Text("Alex Arigato")
+                    .font(.custom("PlayfairDisplay-Regular", size: 20))
+                Text("Cleam 90's Jacket")
+                    .font(.custom("PlayfairDisplay-Regular", size: 15))
+                    .foregroundStyle(.gray)
+                Text("$ 240")
+                    .font(.custom("PlayfairDisplay-Regular", size: 20))
+            }
+            Button {
+                
+            } label: {
+                Image(systemName: "arrow.right.square")
+                    .foregroundStyle(Color("Dark"))
+            }
+        }
+        .padding()
+        .padding(.horizontal, 30)
+        
+        .background {
+            RoundedRectangle(cornerRadius: 30)
+                .stroke(Color.white.opacity(0.4))
+                .background(Color("Light").opacity(0.9).cornerRadius(20))
+                .shadow(color: Color("Dark").opacity(0.2), radius: 12, x: 0, y: 5)
+        }
+        .offset(x: 15, y: 5)
     }
 }
