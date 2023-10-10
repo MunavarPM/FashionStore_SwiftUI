@@ -11,6 +11,8 @@ struct HomeView: View {
     private let categories = ["Dresses", "Jackets", "Jeans", "Shoese"]
     @State private var search: String = ""
     @State private var selectedIndex: Int = 0
+    @State private var isFav = false
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -76,7 +78,7 @@ struct HomeView: View {
                         }
                         .padding(.horizontal, 10)
                         
-                        MostDemandItem()
+                        MostDemandItem(image:UIImage(resource: .shoesClassic), itemName: "Alex Arigato", itemBrand: "Cleam 90's Jacket", rate: 299)
                         
                         /// Categories
                         Text("Categories")
@@ -85,12 +87,11 @@ struct HomeView: View {
                             .offset(CGSize(width: 10.0, height: 10.0))
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
-                                ForEach(0 ..< categories.count) { item in
+                                ForEach(0 ..< categories.count, id: \.self) { item in
                                     CapsuleButton(isActive: item == selectedIndex, text: categories[item])
-                                        .containerRelativeFrame(.horizontal) /// New system that for bring the image in to center
-                                    .onTapGesture {
-                                        selectedIndex = item
-                                    }
+                                        .onTapGesture {
+                                            selectedIndex = item
+                                        }
                                 }
                             }
                             .padding(EdgeInsets(top: 4, leading: 10, bottom: 10, trailing: 20))
@@ -106,9 +107,19 @@ struct HomeView: View {
                                     .font(.custom("PlayfairDisplay-Regular", size: 16))
                                     .foregroundStyle(.gray)
                             }
-
                         }
                         .padding(.horizontal)
+                        
+                        if selectedIndex == 0 {
+                            
+                            ScrollView(.vertical) {
+                                var gridColumn: [GridItem] = [GridItem(), GridItem()]
+                                LazyVGrid(columns: gridColumn) {
+                                    TopItems(image: .modelJacket, fav: $isFav, action: {isFav.toggle()})
+                                    TopItems(image: .modelFT, fav: $isFav, action: {isFav.toggle()})
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -119,7 +130,9 @@ struct HomeView: View {
                             print("MenuBar pressed")
                         }
                     }label: {
+                        
                         MenuBar()
+                        
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -136,6 +149,9 @@ struct HomeView: View {
             }
             .navigationBarBackButtonHidden(true)
         }
+    }
+    func toggleFavorite() {
+        isFav.toggle()
     }
 }
 
@@ -201,37 +217,101 @@ struct CapsuleButton: View {
 }
 
 struct MostDemandItem: View {
+    var image: UIImage
+    var itemName: String
+    var itemBrand: String
+    var rate: Int
     var body: some View {
         HStack {
-            Image(.onBoarding2)
+            Image(uiImage: image)
                 .resizable()
                 .frame(width: 120, height: 100)
                 .cornerRadius(20)
+                .offset(x: -15)
             VStack {
-                Text("Alex Arigato")
+                Text(itemName)
                     .font(.custom("PlayfairDisplay-Regular", size: 20))
-                Text("Cleam 90's Jacket")
+                Text(itemBrand)
                     .font(.custom("PlayfairDisplay-Regular", size: 15))
                     .foregroundStyle(.gray)
-                Text("$ 240")
-                    .font(.custom("PlayfairDisplay-Regular", size: 20))
+                Text("$ \(rate)")
             }
-            Button {
-                
-            } label: {
-                Image(systemName: "arrow.right.square")
-                    .foregroundStyle(Color("Dark"))
+            
+            BackButton {
+                print("Demand buttin tapped")
             }
+            .offset(x: 15)
         }
         .padding()
-        .padding(.horizontal, 30)
         
         .background {
             RoundedRectangle(cornerRadius: 30)
                 .stroke(Color.white.opacity(0.4))
                 .background(Color("Light").opacity(0.9).cornerRadius(20))
                 .shadow(color: Color("Dark").opacity(0.2), radius: 12, x: 0, y: 5)
+                .frame(width: 350, height: 120)
         }
-        .offset(x: 15, y: 5)
+        .offset(x: 40, y: 5)
     }
+}
+
+struct BackButton: View {
+    let forward = true
+    let action: () -> Void
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: forward ? "chevron.forward" : "chevron.backward")
+                .foregroundColor(.white)
+                .padding(.all, 6)
+                .background(Color.black)
+                .cornerRadius(8.0)
+        }
+    }
+}
+
+struct TopItems: View {
+    var image: UIImage
+    @Binding var fav: Bool
+    let action: () -> Void
+    var body: some View {
+        VStack {
+            ZStack {
+                Image(uiImage: image)
+                    .resizable()
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
+                    .frame(width: 160, height: 200)
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button {
+                            withAnimation {
+                                fav.toggle()
+                            }
+                            print("Button was tapped")
+                            action()
+                        } label: {
+                            Image(systemName: fav ? "heart.circle" : "heart.circle.fill" )
+                                .foregroundStyle(fav ? .red : .black)
+                                .onTapGesture {
+                                    fav.toggle()
+                                }
+                        }
+                        .padding(.trailing)
+                        .padding()
+                    }
+                    Spacer()
+                }
+                
+            }
+            
+            Text("LP Hut")
+                .font(.custom("PlayfairDisplay-Bold", size: 20))
+            Text("LP")
+                .font(.custom("PlayfairDisplay-Regular", size: 15))
+                .foregroundStyle(.gray)
+            Text("$ 199")
+                .fontWeight(.bold)
+        }
+    }
+    
 }
