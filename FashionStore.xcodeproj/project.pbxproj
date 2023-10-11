@@ -22,6 +22,8 @@
 		DB76FFD82ACBF9D500AEDD9F /* GreatVibes-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB76FFD72ACBF9D500AEDD9F /* GreatVibes-Regular.ttf */; };
 		DB76FFDC2ACEFD0D00AEDD9F /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76FFDB2ACEFD0D00AEDD9F /* OnBoarding.swift */; };
 		DB76FFE12ACF3E1100AEDD9F /* OnBoardingTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76FFE02ACF3E1100AEDD9F /* OnBoardingTapView.swift */; };
+		DB92EE5D2AD6BC6D00EA2B1A /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB92EE5C2AD6BC6D00EA2B1A /* ProductView.swift */; };
+		DB92EE602AD6DEC200EA2B1A /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB92EE5F2AD6DEC200EA2B1A /* DataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		DB76FFD92ACBFA7400AEDD9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DB76FFDB2ACEFD0D00AEDD9F /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		DB76FFE02ACF3E1100AEDD9F /* OnBoardingTapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingTapView.swift; sourceTree = "<group>"; };
+		DB92EE5C2AD6BC6D00EA2B1A /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
+		DB92EE5F2AD6DEC200EA2B1A /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				DB76FFBC2ACBD6F200AEDD9F /* FashionStoreApp.swift */,
+				DB92EE5E2AD6DEAD00EA2B1A /* New Group */,
 				DB6FF3A02AD1339F003E8541 /* Model */,
 				DB6FF3A32AD1384A003E8541 /* ViewModel */,
 				DB76FFDA2ACEFCD300AEDD9F /* View */,
@@ -134,14 +139,31 @@
 		DB76FFDA2ACEFCD300AEDD9F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DB6FF39E2AD087E4003E8541 /* HomeView.swift */,
+				DB92EE5C2AD6BC6D00EA2B1A /* ProductView.swift */,
+				DB92EE5B2AD6B7F300EA2B1A /* Login */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DB92EE5B2AD6B7F300EA2B1A /* Login */ = {
+			isa = PBXGroup;
+			children = (
 				DB76FFCD2ACBF12400AEDD9F /* WelcomeView.swift */,
 				DB76FFDB2ACEFD0D00AEDD9F /* OnBoarding.swift */,
 				DB76FFE02ACF3E1100AEDD9F /* OnBoardingTapView.swift */,
 				DB6FF39A2AD04186003E8541 /* Signin.swift */,
-				DB6FF39E2AD087E4003E8541 /* HomeView.swift */,
 				DB6FF3962ACFEE4D003E8541 /* CustomTF.swift */,
 			);
-			path = View;
+			path = Login;
+			sourceTree = "<group>";
+		};
+		DB92EE5E2AD6DEAD00EA2B1A /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				DB92EE5F2AD6DEC200EA2B1A /* DataModel.swift */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,8 +244,10 @@
 				DB76FFCE2ACBF12400AEDD9F /* WelcomeView.swift in Sources */,
 				DB6FF3972ACFEE4D003E8541 /* CustomTF.swift in Sources */,
 				DB6FF3992AD040BD003E8541 /* View+Extensions.swift in Sources */,
+				DB92EE602AD6DEC200EA2B1A /* DataModel.swift in Sources */,
 				DB6FF39B2AD04186003E8541 /* Signin.swift in Sources */,
 				DB6FF39F2AD087E4003E8541 /* HomeView.swift in Sources */,
+				DB92EE5D2AD6BC6D00EA2B1A /* ProductView.swift in Sources */,
 				DB76FFDC2ACEFD0D00AEDD9F /* OnBoarding.swift in Sources */,
 				DB6FF3A52AD13868003E8541 /* StoreViewModel.swift in Sources */,
 				DB76FFBD2ACBD6F200AEDD9F /* FashionStoreApp.swift in Sources */,
