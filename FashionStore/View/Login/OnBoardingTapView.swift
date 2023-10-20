@@ -11,6 +11,9 @@ struct OnBoardingTapView: View {
     @State private var currentPage = 0
     @State private var isOnboardingComplete = false
     @State private var welcomeViewPresent = true
+    
+    @StateObject var viewModel = AuthViewModel()
+    
     var body: some View {
         if welcomeViewPresent {
             WelcomeView()
@@ -35,7 +38,13 @@ struct OnBoardingTapView: View {
                 }
                 .overlay(skipButton, alignment: .bottomTrailing)
             } else {
-                Signin()
+                Group {
+                    if viewModel.userSession != nil {
+                        HomeView()
+                    } else {
+                        Signin()
+                    }
+                }
             }
         }
     }

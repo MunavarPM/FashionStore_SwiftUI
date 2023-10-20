@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDtyYrYKpA50wW7TUgplvXWV1-v9P9gQIc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>539044613696</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.-iBiome.FashionStore</string>
+	<key>PROJECT_ID</key>
+	<string>fashionstore-687b4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fashionstore-687b4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:539044613696:ios:0b00e2005cb55b0aa099a5</string>
+</dict>
+</plist>

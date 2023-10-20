@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct FashionStoreApp: App {
+    init() {
+        FirebaseApp.configure()
+        print("🥰")
+    }
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            OnBoardingTapView()
         }
     }
 }
