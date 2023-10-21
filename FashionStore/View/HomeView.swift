@@ -111,14 +111,12 @@ struct HomeView: View {
                                 print("MenuBar pressed")
                             }
                         }label: {
-                            
                             MenuBar()
-                            
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            print("show settings")
+                        NavigationLink {
+                            SettingsView()
                         } label: {
                             Image(.modelS)
                                 .resizable()
@@ -129,7 +127,6 @@ struct HomeView: View {
                             
                         }
                     }
-                    
                 }
                 .navigationBarBackButtonHidden(true)
             }

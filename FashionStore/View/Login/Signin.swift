@@ -6,25 +6,27 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct Signin: View {
     
     //    @ObservedObject var authViewModel = AuthViewModel()
     
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var username: String = ""
+    @State var username: String = ""
+    @State var email: String = ""
+    @State var password: String = ""
+    @State var conformPassword: String = ""
     @State private var rotationEffect: Double = 0.0
     @State private var signinToggle: Bool = true
-    @State private var conformPassword: String = ""
     @State var isLoading: Bool = false
     @State var alertMessage: String = ""
     @State var alertTittle: String = ""
     @State var showAlert: Bool = false
-    @State private var Email: String = ""
-    @State private var Password: String = ""
+    @State var showHome: Bool = false
+//    @State private var Email: String = ""
+//    @State private var Password: String = ""
     
-    @StateObject var viewModel = AuthViewModel()
+    @StateObject var authViewModel = AuthViewModel()
     
     
     var body: some View {
@@ -52,11 +54,11 @@ struct Signin: View {
                                 .font(.custom("PlayfairDisplay-Regular", size: 17))
                                 .autocapitalization(.none)
                         }
-                        CustomTF(hint: "Email", value: signinToggle ?  $email : $Email)
+                        CustomTF(hint: "Email", value: $email)
                             .autocapitalization(.none)
                             .font(.custom("PlayfairDisplay-Regular", size: 17))
                             .autocapitalization(.none)
-                        CustomTF(hint: "Password",isPassword: true, value: signinToggle ? $password : $Password)
+                        CustomTF(hint: "Password",isPassword: true, value: $password)
                             .font(.custom("PlayfairDisplay-Regular", size: 17))
                             .autocapitalization(.none)
                             .padding(.top, 5)
@@ -67,7 +69,9 @@ struct Signin: View {
                         }
                         if signinToggle {
                             Button {
-                                print("Forgot pa{ssword")
+                                Task {
+                                    await authViewModel.reserPassword(email: email)
+                                }
                             } label: {
                                 Text("Forgot Password?")
                                     .font(.custom("PlayfairDisplay-Bold", size: 17))
@@ -80,16 +84,29 @@ struct Signin: View {
                             .overlay {
                                 Button {
                                     Task {
+//                                        /*do {
+//                                            if !signinToggle {
+//                                                try await authViewModel.createUser(withEmail: Email, password: Password, userName: username)
+//                                            } else {
+//                                                try await
+//                                                authViewModel.signIn(withEmail: email, password: password)
+//                                            }
+//                                        } catch {
+//                                            showAlert.toggle()
+//                                            self.alertMessage = error.localizedDescription
+//                                        }*/
+                                        
                                         do {
-                                            if !signinToggle {
-                                                try await viewModel.createUser(withEmail: Email, password: Password, userName: username)
+                                            if signinToggle {
+                                                try await authViewModel.signIn(withEmail: email, password: password)
                                             } else {
-                                                try await
-                                                viewModel.signIn(withEmail: email, password: password)
+                                                try await authViewModel.createUser(withEmail: email, password: password, userName: username)
                                             }
                                         } catch {
+                                            print("😿 Button of login and signin\(error.localizedDescription)")
                                             showAlert.toggle()
                                             self.alertMessage = error.localizedDescription
+                                            self.alertTittle = "⚠️"
                                         }
                                     }
                                 } label: {
@@ -100,7 +117,14 @@ struct Signin: View {
                                         .padding(.vertical, 12)
                                         .background(.dark)
                                         .clipShape(Capsule())
-                                        .disabledWithOpacity(signinToggle ? email.isEmpty || password.isEmpty : username.isEmpty || Email.isEmpty || Password.isEmpty || conformPassword.isEmpty )
+                                        .disabledWithOpacity( email.isEmpty || password.isEmpty)
+                                }
+                                .onAppear {
+                                    Auth.auth().addStateDidChangeListener { auth, user in
+                                        if user != nil {
+                                            showHome.toggle()
+                                        }
+                                    }
                                 }
                                 .alert(alertMessage, isPresented:$showAlert, actions: {})
                             }
@@ -115,7 +139,7 @@ struct Signin: View {
                                     self.rotationEffect += 180
                                 }
                             } label: {
-                                Text(signinToggle ? "Sign Up" : "Sign In")
+                                Text(signinToggle ? "Sign up" : "Sign in")
                                     .font(.custom("PlayfairDisplay-Bold", size: 17))
                                     .fontWeight(.bold)
                                     .tint(.black)
@@ -129,11 +153,17 @@ struct Signin: View {
                 .padding(.vertical, 25)
             }
             .rotation3DEffect(Angle(degrees: rotationEffect), axis: (x: 0.0, y: 5.0, z: 0.0))
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text(alertTittle), message: Text(alertMessage), dismissButton: .cancel())
         }
         .rotation3DEffect(Angle(degrees: rotationEffect), axis: (x: 0.0, y: 5.0, z: 0.0))
-        .alert(isPresented: $showAlert) {
-            Alert(title: Text(alertTittle), message: Text(alertMessage), dismissButton: .cancel())
+        
         }
+        .fullScreenCover(isPresented: $showHome, content: {
+            withAnimation(.easeIn) {
+                TabBar()
+            }
+        })
     }
 }
 //    func register() {

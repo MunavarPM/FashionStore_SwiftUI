@@ -11,6 +11,8 @@ struct User: Identifiable, Codable {
     let id: String
     let userName:  String
     let email: String
+    
+    
 }
 extension User {
     static let munavar = User(id: NSUUID().uuidString, userName: "munavar", email: "munavar@gmail.com")

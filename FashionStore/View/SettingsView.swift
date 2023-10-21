@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @StateObject var authViewModel = AuthViewModel()
+    @State var showHome: Bool = false
+    
     var body: some View {
         ZStack {
             Color(Color("Light"))
@@ -32,13 +35,14 @@ struct SettingsView: View {
                 .offset(x: 45, y: -30)
                 
                 HStack {
-                    Text("Name")
+                    Text(authViewModel.currentUser?.userName ?? User.munavar.userName)
 //                    Rectangle()
 //                        .frame(width: 100, height: 2)
                 }
                 
                 Button(action: {
-                    
+                    authViewModel.signOut()
+                    showHome = true
                 }, label: {
                     HStack {
                         Image(systemName: "rectangle.portrait.and.arrow.forward.fill")
@@ -49,6 +53,11 @@ struct SettingsView: View {
                     .frame(width: UIScreen.main.bounds.width - 200 , height: 50)
                         .background(Color("Dark"))
                         .cornerRadius(30)
+                })
+                .fullScreenCover(isPresented: $showHome, content: {
+                    withAnimation(.easeOut) {
+                        Signin()
+                    }
                 })
             }
         }
