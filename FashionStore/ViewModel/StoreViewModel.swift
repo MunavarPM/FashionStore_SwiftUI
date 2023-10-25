@@ -62,12 +62,12 @@
 //                }
 //            }.resume()
 //        }
-    /*
+//    /*
 //    @Published var isAuthenticated: Bool = false
 //    @Published var errorMessage: String = ""
 //    @Published private var shwoError: Bool = false
-    
-    
+//    
+//    
 //    func signIn(email: String, password: String) async throws { /// user check
 //        let signInRequest = SignInRequestModel(login_cred: email, password: password)
 //        print("\(password)✅")
@@ -111,7 +111,7 @@
 //            }
 //        }.resume()
 //    }
-    
+//    
 //    func signUp(signUpData: SignUpDataModel) async throws { /// Creating
 //        func signUp(signUpDataModel: SignUpDataModel) {
 //            let url = URL(string: ApiEndpoints.signUpUrl)!
@@ -144,7 +144,7 @@
 //            }.resume()
 //        }
 //    }
-    
+//    
 //    func logout() {
 //        guard let url = URL(string: ApiEndpoints.logoutUrl) else { return }
 //        
