@@ -29,12 +29,16 @@ struct SettingsView: View {
                             }
                             .overlay {
                                 VStack {
-                                    SettingBTView(imageSF: "person.fill", title: "Personal Details", action: {
-                                        print("Personal Details")
-                                    })
-                                    SettingBTView(imageSF: "bag.fill", title: "My Order", action: {
-                                        
-                                    })
+                                    NavigationLink(destination: withAnimation(.easeIn){MyOrder()}) {
+                                        SettingBTView(imageSF: "person.fill", title: "Personal Details", action: {
+                                        })
+                                    }
+                                    NavigationLink {
+                                        MyOrder()
+                                    } label: {
+                                        SettingBTView(imageSF: "bag.fill", title: "My Order", action: {})
+                                    }
+
                                     SettingBTView(imageSF: "heart.fill", title: "My Favourites", action: {
                                         print("My Favouites")
                                     })
