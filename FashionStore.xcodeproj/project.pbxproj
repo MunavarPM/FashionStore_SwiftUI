@@ -13,6 +13,7 @@
 		DB6CA1F12AE30E770012339F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6CA1F02AE30E770012339F /* User.swift */; };
 		DB6CA1F32AE3109D0012339F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6CA1F22AE3109D0012339F /* AuthViewModel.swift */; };
 		DB6E66612AE9440700C424C2 /* MyOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6E66602AE9440700C424C2 /* MyOrder.swift */; };
+		DB6E66632AE974E600C424C2 /* MyCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6E66622AE974E600C424C2 /* MyCart.swift */; };
 		DB6FF3972ACFEE4D003E8541 /* CustomTF.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6FF3962ACFEE4D003E8541 /* CustomTF.swift */; };
 		DB6FF3992AD040BD003E8541 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6FF3982AD040BD003E8541 /* View+Extensions.swift */; };
 		DB6FF39B2AD04186003E8541 /* Signin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6FF39A2AD04186003E8541 /* Signin.swift */; };
@@ -47,6 +48,7 @@
 		DB6CA1F02AE30E770012339F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DB6CA1F22AE3109D0012339F /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		DB6E66602AE9440700C424C2 /* MyOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrder.swift; sourceTree = "<group>"; };
+		DB6E66622AE974E600C424C2 /* MyCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCart.swift; sourceTree = "<group>"; };
 		DB6FF3962ACFEE4D003E8541 /* CustomTF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTF.swift; sourceTree = "<group>"; };
 		DB6FF3982AD040BD003E8541 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		DB6FF39A2AD04186003E8541 /* Signin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signin.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				DB951EA12AE3AC0400D779A1 /* ContentView.swift */,
 				DBBFE9FB2AE3896500F6F9A0 /* TabBar.swift */,
 				DB6E66602AE9440700C424C2 /* MyOrder.swift */,
+				DB6E66622AE974E600C424C2 /* MyCart.swift */,
 				DB6CA1EE2AE2F1480012339F /* SettingsView.swift */,
 				DB92EE5C2AD6BC6D00EA2B1A /* ProductView.swift */,
 				DB686B162ADDB342003B1A79 /* CartButton.swift */,
@@ -304,6 +307,7 @@
 				DB951EA22AE3AC0400D779A1 /* ContentView.swift in Sources */,
 				DB6FF3992AD040BD003E8541 /* View+Extensions.swift in Sources */,
 				DB686B172ADDB342003B1A79 /* CartButton.swift in Sources */,
+				DB6E66632AE974E600C424C2 /* MyCart.swift in Sources */,
 				DB6CA1F12AE30E770012339F /* User.swift in Sources */,
 				DB6CA1F32AE3109D0012339F /* AuthViewModel.swift in Sources */,
 				DB92EE602AD6DEC200EA2B1A /* DataModel.swift in Sources */,

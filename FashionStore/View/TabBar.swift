@@ -15,11 +15,16 @@ struct TabBar: View {
                     Label("Home", systemImage: "house")
                 }
                 .tag(0)
+            MyCart()
+                .tabItem {
+                    Label("Cart", systemImage: "cart.fill")
+                }
+                .tag(1)
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
-                .tag(1)
+                .tag(2)
         }
         .accentColor(Color("Dark"))
     }

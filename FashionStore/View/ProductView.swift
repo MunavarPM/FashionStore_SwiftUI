@@ -86,27 +86,7 @@ struct DescriptionView: View {
                 
                 Spacer()
                 VStack {
-                    HStack {
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "minus")
-                                .font(.footnote)
-                        }
-                        
-                        Text("1")
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "plus")
-                                .font(.footnote)
-                        }
-                    }
-                    .padding(.horizontal, 4)
-                    .padding(7)
-                    .foregroundStyle(.black)
-                    .background(Color("Dark").opacity(0.2))
-                    .clipShape(Capsule())
+                    ItemQuantityView()
                     Text("Available Stock")
                         .fontWeight(.medium)
                 }
@@ -181,5 +161,31 @@ struct PriceView: View {
             }
             
         }
+    }
+}
+
+struct ItemQuantityView: View {
+    var body: some View {
+        HStack {
+            Button {
+                
+            } label: {
+                Image(systemName: "minus")
+                    .font(.footnote)
+            }
+            
+            Text("1")
+            Button {
+                
+            } label: {
+                Image(systemName: "plus")
+                    .font(.footnote)
+            }
+        }
+        .padding(.horizontal, 4)
+        .padding(7)
+        .foregroundStyle(.black)
+        .background(Color("Dark").opacity(0.2))
+        .clipShape(Capsule())
     }
 }

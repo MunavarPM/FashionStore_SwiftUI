@@ -16,7 +16,7 @@ struct CartButton: View {
         } label: {
             ZStack {
                 Image(systemName: "bag")
-                    .font(.footnote)
+                    .font(.body)
                     .fontWeight(.bold)
                     .foregroundStyle(Color("Dark"))
                     .padding(10)
