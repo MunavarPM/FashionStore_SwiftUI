@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MyOrder: View {
     @State var onTap: Bool = false
-    @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
             VStack {
@@ -98,14 +97,7 @@ struct MyOrder: View {
             Spacer()
                 .toolbar(content: {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button(action: {
-                            withAnimation(.easeOut){
-                                dismiss()
-                            }
-                        }, label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .font(.title)
-                        })
+                        DismissView()
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         
@@ -125,4 +117,17 @@ struct MyOrder: View {
 
 #Preview {
     MyOrder(onTap: true)
+}
+struct DismissView: View {
+    @Environment(\.dismiss) var dismiss
+    var body: some View {
+        Button(action: {
+            withAnimation(.easeOut){
+                dismiss()
+            }
+        }, label: {
+            Image(systemName: "xmark.circle.fill")
+                .font(.title)
+        })
+    }
 }

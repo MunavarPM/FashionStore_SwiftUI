@@ -9,49 +9,84 @@ import SwiftUI
 
 struct MyCart: View {
     let cartList = ["Antoine", "Bas", "Curt", "Dave", "Erica"]
-    @Environment(\.dismiss) var dismiss
+    
+    
+    @State private var totalPrice: Double = 0 // You may want to compute the total price based on the items in the cart
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 Color("Light")
                 VStack {
-                    Text("My Cart")
-                        .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
-                        .offset(x: -120)
-                    Spacer()
-                    List {
-                        ForEach(0 ..< 5, id: \.self) { item in
+                    VStack {
+                        Text("My Cart")
+                            .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
+                            .offset(x: -120)
+                        Spacer()
+                        List {
+                            ForEach(0 ..< 2, id: \.self) { item in
                                 CartItemView()
-                                .swipeActions {
-                                    Button {
-                                        
-                                    } label: {
-                                        Label("", systemImage: "trash")
+                                    .swipeActions {
+                                        Button {
+                                            // Handle the removal of the item from the cart
+                                        } label: {
+                                            Label("", systemImage: "trash")
+                                        }
+                                        .tint(.black)
                                     }
-                                    .tint(.black)
-                                }
+                            }
                         }
+                        .listStyle(.plain)
                     }
                     
-                    .listStyle(.plain)
-                    .toolbar(content: {
-                        ToolbarItem(placement: .topBarLeading) {
-                            Button(action: {
-                                withAnimation(.easeOut){
-                                    dismiss()
-                                }
-                            }, label: {
-                                Image(systemName: "xmark.circle.fill")
-                                    .font(.title)
-                            })
+                    Spacer()
+                    HStack {
+                        HStack {
+                            Text("Total")
+                                .font(.custom("PlayfairDisplay-Bold", size: 28))
+                            Text("(3 item):").fontWeight(.bold).font(.title2)
                         }
-                    })
+                            .font(.title2).opacity(0.5)
+                            .fontWeight(.bold)
+                        Spacer()
+                        Text("$250")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                    }
+                    .padding()
+                    NavigationLink {
+                        
+                    } label: {
+                        ZStack {
+                            Rectangle()
+                                .fill(Color("Dark"))
+                                .cornerRadius(20)
+                        } .overlay {
+                            HStack {
+                                Text("Proceed to Pay")
+                                    .font(.custom("PlayfairDisplay-Bold", size: 28))
+                                    .padding()
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                Spacer()
+                                Image(systemName: "arrowshape.forward.fill")
+                                    .padding(7)
+                                    .foregroundStyle(Color("Dark"))
+                                    .background(Color("Light"))
+                                    .cornerRadius(10)
+                                    .padding(.horizontal, 15)
+                            }
+                        }
+                        .padding(.bottom)
+                    }
+                    .frame(width: UIScreen.main.bounds.width - 30, height: 85)
                 }
                 .navigationBarBackButtonHidden(true)
             }
         }
     }
 }
+
 
 #Preview {
     MyCart()
@@ -96,3 +131,5 @@ struct CartItemView: View {
         }
     }
 }
+
+

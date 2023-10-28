@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB28CC752AEB800A00DBA453 /* DeliveryAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB28CC742AEB800A00DBA453 /* DeliveryAddress.swift */; };
 		DB686B152ADBB8EB003B1A79 /* BTHeart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB686B142ADBB8EA003B1A79 /* BTHeart.swift */; };
 		DB686B172ADDB342003B1A79 /* CartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB686B162ADDB342003B1A79 /* CartButton.swift */; };
 		DB6CA1EF2AE2F1480012339F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6CA1EE2AE2F1480012339F /* SettingsView.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB28CC742AEB800A00DBA453 /* DeliveryAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddress.swift; sourceTree = "<group>"; };
 		DB686B142ADBB8EA003B1A79 /* BTHeart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTHeart.swift; sourceTree = "<group>"; };
 		DB686B162ADDB342003B1A79 /* CartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartButton.swift; sourceTree = "<group>"; };
 		DB6CA1EE2AE2F1480012339F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -185,8 +187,9 @@
 				DB951EA12AE3AC0400D779A1 /* ContentView.swift */,
 				DBBFE9FB2AE3896500F6F9A0 /* TabBar.swift */,
 				DB6E66602AE9440700C424C2 /* MyOrder.swift */,
-				DB6E66622AE974E600C424C2 /* MyCart.swift */,
 				DB6CA1EE2AE2F1480012339F /* SettingsView.swift */,
+				DB6E66622AE974E600C424C2 /* MyCart.swift */,
+				DB28CC742AEB800A00DBA453 /* DeliveryAddress.swift */,
 				DB92EE5C2AD6BC6D00EA2B1A /* ProductView.swift */,
 				DB686B162ADDB342003B1A79 /* CartButton.swift */,
 				DB686B142ADBB8EA003B1A79 /* BTHeart.swift */,
@@ -298,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB28CC752AEB800A00DBA453 /* DeliveryAddress.swift in Sources */,
 				DB6FF3A22AD133E3003E8541 /* StoreDataModel.swift in Sources */,
 				DB76FFE12ACF3E1100AEDD9F /* OnBoardingTapView.swift in Sources */,
 				DBBFE9FC2AE3896500F6F9A0 /* TabBar.swift in Sources */,

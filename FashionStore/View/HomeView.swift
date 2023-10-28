@@ -102,6 +102,14 @@ struct HomeView: View {
                                 }
                             }
                         }
+                        .onTapGesture {
+                            NavigationLink {
+                                ProductView(product: productList[2])
+                            } label: {
+                                
+                            }
+
+                        }
                     }
                 }
                 .toolbar {

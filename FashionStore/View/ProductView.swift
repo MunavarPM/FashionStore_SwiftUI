@@ -18,7 +18,7 @@ struct ProductView: View {
             ZStack {
                 Color("Light")
                     .ignoresSafeArea(.all)
-                ScrollView {
+                ScrollView(showsIndicators: false){
                     Image(product.image1)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -37,19 +37,7 @@ struct ProductView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        withAnimation(.easeInOut) {
-                            dismiss()
-                        }
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(.footnote)
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color("Light"))
-                            .padding(15)
-                            .background(Color("Dark"))
-                            .clipShape(Circle())
-                    }
+                    DismissView()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     CartButton(numberOfProduct: 1, action: {
@@ -62,7 +50,7 @@ struct ProductView: View {
 }
 
 #Preview {
-    ProductView(product: productList[3])
+    ProductView(product: productList[2])
 }
 
 struct DescriptionView: View {
@@ -118,8 +106,11 @@ struct DescriptionView: View {
                 .font(.custom("PlayfairDisplay-Bold", size: 20))
             Text("Get a little lift from these Sam Edelman sandals featuring ruched straps and leather lace-up ties, while a braided jute sole makes a fresh statement for summer.")
                 .font(.custom("PlayfairDisplay-Regular", size: 12)).opacity(0.6)
-                .padding()
-            PriceView()
+                .padding(.top)
+            
+            
+            TotalCostView(cost: 1222)
+                .padding(.top, 30)
         }
         .padding()
         .padding(.top)
@@ -129,7 +120,8 @@ struct DescriptionView: View {
     }
 }
 
-struct PriceView: View {
+struct TotalCostView: View {
+    let cost: Int
     var body: some View {
         HStack {
             Button {
@@ -140,8 +132,9 @@ struct PriceView: View {
                         .foregroundStyle(Color("Dark"))
                         .font(.custom("PlayfairDisplay-Regular", size: 12))
                         .opacity(0.4)
-                    Text("$124.00")
-                        .font(.title).bold()
+                    Text("$\(cost)")
+                        .font(.title)
+                        .fontWeight(.heavy)
                     
                 }
                 .foregroundStyle(Color("Dark"))
