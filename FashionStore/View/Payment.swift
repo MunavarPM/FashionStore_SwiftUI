@@ -56,6 +56,7 @@ struct Payment: View {
     }
 }
 
+
 #Preview {
     Payment()
 }
