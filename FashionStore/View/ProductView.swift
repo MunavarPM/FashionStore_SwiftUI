@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductView: View {
     
     @State private var isFav = false
+    @State private var isShowCartView = false
     @Environment(\.dismiss) var dismiss
     var product: Product
     
@@ -19,7 +20,7 @@ struct ProductView: View {
                 Color("Light")
                     .ignoresSafeArea(.all)
                 ScrollView(showsIndicators: false){
-                    Image(product.image1)
+                    Image(product.imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .edgesIgnoringSafeArea(.top)
@@ -27,10 +28,12 @@ struct ProductView: View {
                     
                     DescriptionView()
                         .offset(y: -40)
-                    BTHeart(fav: $isFav, action: {
-                        
-                    })
-                    .offset(x: -30, y: -550)
+                    
+                        BTHeart(fav: $isFav, action: {
+                            
+                        })
+                        .offset(x: -30, y: -550)
+                    
                 }
                 .edgesIgnoringSafeArea(.top)
                 
@@ -40,17 +43,21 @@ struct ProductView: View {
                     DismissView()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    CartButton(numberOfProduct: 1, action: {
-                        print("CartButton")
-                    })
+                        CartButton(numberOfProduct: 1, action: {
+                            isShowCartView.toggle()
+                        })
                 }
             }
         }
+        .sheet(isPresented: $isShowCartView, content: {
+            MyCart()
+        })
+        .navigationBarBackButtonHidden()
     }
 }
 
 #Preview {
-    ProductView(product: productList[2])
+    ProductView(product: productList[1])
 }
 
 struct DescriptionView: View {

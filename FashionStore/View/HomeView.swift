@@ -12,7 +12,6 @@ struct HomeView: View {
     @State private var selectedIndex: Int = 0
     @State private var isFav = false
     
-    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -61,14 +60,20 @@ struct HomeView: View {
                             let gridColumn: [GridItem] = [GridItem(), GridItem()]
                             if selectedIndex == 0 {
                                 LazyVGrid(columns: gridColumn) {
-                                    TopItems(image: .modelJacket, fav: $isFav, action: {
-                                        withAnimation(.easeInOut) {
-                                            isFav.toggle()
-                                    }})
-                                    TopItems(image: .modelFT, fav: $isFav, action: {
-                                        withAnimation(.easeInOut) {
-                                            isFav.toggle()
-                                    }})
+                                    NavigationLink(destination: ProductView(product: productList[1])) {
+                                        TopItems(image: .modelJacket, fav: $isFav, action: {
+                                            withAnimation(.easeInOut) {
+                                                isFav.toggle()
+                                            }
+                                        })
+                                    }
+                                    NavigationLink(destination: ProductView(product: productList[0])) {
+                                        TopItems(image: .modelFT, fav: $isFav, action: {
+                                            withAnimation(.easeInOut) {
+                                                isFav.toggle()
+                                            }
+                                        })
+                                    }
                                 }
                             } else if selectedIndex == 1 {
                                 LazyVGrid(columns: gridColumn) {
@@ -102,14 +107,14 @@ struct HomeView: View {
                                 }
                             }
                         }
-                        .onTapGesture {
-                            NavigationLink {
-                                ProductView(product: productList[2])
-                            } label: {
-                                
-                            }
-
-                        }
+//                        .onTapGesture {
+//                            NavigationLink {
+//                                ProductView(product: productList[2])
+//                            } label: {
+//                                
+//                            }
+//
+//                        }
                     }
                 }
                 .toolbar {
@@ -304,6 +309,7 @@ struct TopItems: View {
         }
         .shadow(color: Color("Dark").opacity(0.2), radius: 10, x: 5, y: 10)
         .padding(.horizontal)
+        
     }
 }
 

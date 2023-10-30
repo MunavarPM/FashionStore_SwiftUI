@@ -14,7 +14,9 @@ struct BTHeart: View {
         HStack {
             Spacer()
             Button {
+                withAnimation(.easeInOut){
                     fav.toggle()
+                }
                 print("Button was tapped")
                 action()
             } label: {
@@ -30,7 +32,6 @@ struct BTHeart: View {
                         fav.toggle()
                     }
             }
-//            .padding()
         }
     }
 }
