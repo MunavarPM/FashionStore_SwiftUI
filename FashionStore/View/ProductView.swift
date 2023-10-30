@@ -124,8 +124,8 @@ struct TotalCostView: View {
     let cost: Int
     var body: some View {
         HStack {
-            Button {
-                
+            NavigationLink {
+                Payment()
             } label: {
                 VStack(alignment: .leading) {
                     Text("Total Price")
@@ -140,19 +140,18 @@ struct TotalCostView: View {
                 .foregroundStyle(Color("Dark"))
             }
             Spacer()
-            Button {
-                
+            NavigationLink {
+                Payment()
             } label: {
                 HStack {
                     Image(systemName: "bag")
                     Text("Add to cart")
                 }
-                .padding()
+                .padding(15)
                 .foregroundStyle(Color("Light"))
                 .background(Color("Dark"))
                 .clipShape(Capsule())
             }
-            
         }
     }
 }

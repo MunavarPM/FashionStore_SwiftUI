@@ -100,6 +100,7 @@ struct DeliveryAddress: View {
                     }
                 }
             }
+            .navigationBarBackButtonHidden(true)
             .toolbar(content: {
                 ToolbarItem(placement: .topBarLeading) {
                     DismissView()
@@ -143,7 +144,7 @@ struct ProductListView: View {
                                 .font(.custom("PlayfairDisplay-Regular", size: 15).bold())
                             Text("$1299")
                                 .font(.title3)
-                                .fontWeight(.heavy)
+                                .fontWeight(.bold)
                             
                         }
                     }

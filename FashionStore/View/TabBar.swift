@@ -20,11 +20,16 @@ struct TabBar: View {
                     Label("Cart", systemImage: "cart.fill")
                 }
                 .tag(1)
+            WhishlistView()
+                .tabItem {
+                    Label("Whislist", systemImage: "heart.fill")
+                }
+                .tag(2)
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
-                .tag(2)
+                .tag(3)
         }
         .accentColor(Color("Dark"))
     }

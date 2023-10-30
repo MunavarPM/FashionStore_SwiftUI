@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DB28CC752AEB800A00DBA453 /* DeliveryAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB28CC742AEB800A00DBA453 /* DeliveryAddress.swift */; };
 		DB46CBF42AEE499F0040377B /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB46CBF32AEE499F0040377B /* Payment.swift */; };
+		DB46CBF62AEFC34B0040377B /* WhishlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB46CBF52AEFC34B0040377B /* WhishlistView.swift */; };
 		DB686B152ADBB8EB003B1A79 /* BTHeart.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB686B142ADBB8EA003B1A79 /* BTHeart.swift */; };
 		DB686B172ADDB342003B1A79 /* CartButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB686B162ADDB342003B1A79 /* CartButton.swift */; };
 		DB6CA1EF2AE2F1480012339F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6CA1EE2AE2F1480012339F /* SettingsView.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		DB28CC742AEB800A00DBA453 /* DeliveryAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddress.swift; sourceTree = "<group>"; };
 		DB46CBF32AEE499F0040377B /* Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
+		DB46CBF52AEFC34B0040377B /* WhishlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhishlistView.swift; sourceTree = "<group>"; };
 		DB686B142ADBB8EA003B1A79 /* BTHeart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTHeart.swift; sourceTree = "<group>"; };
 		DB686B162ADDB342003B1A79 /* CartButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartButton.swift; sourceTree = "<group>"; };
 		DB6CA1EE2AE2F1480012339F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				DB6FF39E2AD087E4003E8541 /* HomeView.swift */,
 				DB951EA12AE3AC0400D779A1 /* ContentView.swift */,
 				DBBFE9FB2AE3896500F6F9A0 /* TabBar.swift */,
+				DB46CBF52AEFC34B0040377B /* WhishlistView.swift */,
 				DB6E66602AE9440700C424C2 /* MyOrder.swift */,
 				DB6CA1EE2AE2F1480012339F /* SettingsView.swift */,
 				DB6E66622AE974E600C424C2 /* MyCart.swift */,
@@ -326,6 +329,7 @@
 				DB92EE5D2AD6BC6D00EA2B1A /* ProductView.swift in Sources */,
 				DB76FFDC2ACEFD0D00AEDD9F /* OnBoarding.swift in Sources */,
 				DB6FF3A52AD13868003E8541 /* StoreViewModel.swift in Sources */,
+				DB46CBF62AEFC34B0040377B /* WhishlistView.swift in Sources */,
 				DB46CBF42AEE499F0040377B /* Payment.swift in Sources */,
 				DB76FFBD2ACBD6F200AEDD9F /* FashionStoreApp.swift in Sources */,
 			);

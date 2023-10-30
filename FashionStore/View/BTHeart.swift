@@ -30,7 +30,7 @@ struct BTHeart: View {
                         fav.toggle()
                     }
             }
-            .padding()
+//            .padding()
         }
     }
 }

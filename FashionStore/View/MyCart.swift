@@ -43,19 +43,19 @@ struct MyCart: View {
                     HStack {
                         HStack {
                             Text("Total")
-                                .font(.custom("PlayfairDisplay-Bold", size: 28))
+                                .font(.custom("PlayfairDisplay-Bold", size: 25))
                             Text("(3 item):").fontWeight(.bold).font(.title2)
                         }
                             .font(.title2).opacity(0.5)
                             .fontWeight(.bold)
                         Spacer()
                         Text("$250")
-                            .font(.title2)
+                            .font(.title)
                             .fontWeight(.bold)
                     }
                     .padding()
                     NavigationLink {
-                        
+                        DeliveryAddress()
                     } label: {
                         ZStack {
                             Rectangle()
@@ -99,21 +99,21 @@ struct CartItemView: View {
                     RoundedRectangle(cornerRadius: 17)
                         .fill(Color("Light").opacity(0.8))
                         .shadow(radius: 5, x: 2, y: 5)
-                        .frame(width: UIScreen.main.bounds.width - 30, height: 120)
+                        .frame(width: UIScreen.main.bounds.width - 30, height: 110)
                 }
                 .overlay {
                     HStack {
                         Image(.shoesBoys)
                             .resizable()
-                            .frame(width: 100, height: 100)
+                            .frame(width: 80, height: 80)
                             .cornerRadius(10)
                             .padding()
                         VStack(alignment: .leading) {
                             Text("Shoes")
-                                .font(.custom("PlayfairDisplay-Bold", size: 25))
+                                .font(.custom("PlayfairDisplay-Bold", size: 23))
                             
                             Text("Brand name")
-                                .font(.custom("PlayfairDisplay-Regular", size: 18))
+                                .font(.custom("PlayfairDisplay-Regular", size: 16))
                             Spacer()
                             HStack {
                                 Text("$ 120.00")

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Payment: View {
-    @State var isTap = false
+   
     var body: some View {
         NavigationStack {
             VStack {
@@ -16,32 +16,10 @@ struct Payment: View {
                     .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
                     .offset(x: -110)
                 Spacer()
-                VStack(alignment: .leading) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Color(isTap ? "Dark":"Light"))
-                            .frame(width: 370, height: 80)
-                            .shadow(radius: 4, x: 5, y: 6)
-                    }.overlay {
-                        HStack(spacing: 20) {
-                            Image(.modelFT)
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                            Text("Paypal")
-                                .foregroundStyle(Color(isTap ? "Light":"Dark"))
-                                .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                            Spacer()
-                            Button {
-                                isTap.toggle()
-                            } label: {
-                                Image(systemName: isTap ? "circle.fill" : "circle")
-                                    .foregroundStyle(Color(isTap ? "Light":"Dark"))
-                            }
-                        }
-                        .padding(.horizontal)
-                    }
-                    .background(RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: 2).opacity(0.1))
+                VStack(alignment: .leading, spacing: 25) {
+                    PaymentOptionView(image: "ModelFT", text: "Paypal")
+                    PaymentOptionView(image: "", text: "Add Card")
+                    
                     Spacer()
                 }
                 .padding(.top)
@@ -53,10 +31,45 @@ struct Payment: View {
                 }
             })
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 
 #Preview {
     Payment()
+}
+
+struct PaymentOptionView: View {
+    @State var isTap = false
+    let image: String?
+    let text: String?
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color(isTap ? "Dark":"Light"))
+                .frame(width: 370, height: 80)
+                .shadow(radius: 4, x: 3, y: 3)
+        }.overlay {
+            HStack(spacing: 20) {
+                Image(image ?? "star")
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                    .clipShape(Circle())
+                Text(text ?? "Paypal")
+                    .foregroundStyle(Color(isTap ? "Light":"Dark"))
+                    .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
+                Spacer()
+                Button {} label: {
+                    Image(systemName: isTap ? "circle.fill" : "circle")
+                        .foregroundStyle(Color(isTap ? "Light":"Dark"))
+                }
+            }
+            .padding(.horizontal)
+        }
+        .onTapGesture {
+            isTap.toggle()
+        }
+        .background(RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: 2).opacity(0.1))
+    }
 }
