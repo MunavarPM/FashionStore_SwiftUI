@@ -80,11 +80,11 @@ struct HomeView: View {
                                     TopItems(image: .modelSH, fav: $isFav, action: {
                                         withAnimation(.easeInOut) {
                                             isFav.toggle()
-                                    }})
+                                        }})
                                     TopItems(image: .modelS, fav: $isFav, action: {
                                         withAnimation(.easeInOut) {
                                             isFav.toggle()
-                                    }})
+                                        }})
                                 }
                             } else if selectedIndex == 2 {
                                 LazyVGrid(columns: gridColumn) {
@@ -92,29 +92,21 @@ struct HomeView: View {
                                     TopItems(image: .modelS, fav: $isFav, action: {
                                         withAnimation(.easeInOut) {
                                             isFav.toggle()
-                                    }})
+                                        }})
                                 }
                             } else if selectedIndex == 3 {
                                 LazyVGrid(columns: gridColumn) {
                                     TopItems(image: .shoesClassic, fav: $isFav, action: {
                                         withAnimation(.easeInOut) {
                                             isFav.toggle()
-                                    }})
+                                        }})
                                     TopItems(image: .shoesBoys, fav: $isFav, action: {
                                         withAnimation(.easeInOut) {
                                             isFav.toggle()
-                                    }})
+                                        }})
                                 }
                             }
                         }
-//                        .onTapGesture {
-//                            NavigationLink {
-//                                ProductView(product: productList[2])
-//                            } label: {
-//                                
-//                            }
-//
-//                        }
                     }
                 }
                 .toolbar {
@@ -273,14 +265,11 @@ struct TopItems: View {
                     .resizable()
                     .clipShape(RoundedRectangle(cornerRadius: 30))
                     .frame(width: 160, height: 200)
-//                    .onTapGesture {
-//                        NavigationLink(value: ProductView())
-//                    }
                 VStack {
                     HStack {
                         Spacer()
                         Button {
-                                fav.toggle()
+                            fav.toggle()
                             print("Button was tapped")
                             action()
                         } label: {
@@ -372,36 +361,3 @@ struct SearchBar: View {
         .padding(.horizontal, 10)
     }
 }
-//struct ImageSliderView: View {
-//    @State private var currentIndex = 0
-//    var slides: [String] = ["fni","fn2","fn3","fn4","fn5"]
-//    var body: some View {
-//        ZStack(alignment: .bottomLeading){
-//            ZStack(alignment: .trailing){
-//                Image(slides[currentIndex])
-//                    .resizable()
-//                    .frame(width: .infinity, height: 180)
-//                    .scaledToFit()
-//                    .cornerRadius(15)
-//            }
-//            HStack{
-//                ForEach(0..<slides.count){index in
-//                    Circle()
-//                        .fill(self.currentIndex == index ? Color("kPrimary") : Color("kSecondary") )
-//                        .frame(width: 10, height: 10)
-//                }
-//            }
-//            .padding()
-//        }
-//        .padding()
-//        .onAppear {
-//            Timer .scheduledTimer(withTimeInterval: 5, repeats: true){timer in
-//                if self.currentIndex + 1 == self.slides.count{
-//                    self.currentIndex = 0
-//                }else{
-//                    self.currentIndex += 1
-//                    }
-//                }
-//        }
-//        }
-//    }             

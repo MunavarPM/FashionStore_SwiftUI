@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Payment: View {
-   
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -17,8 +17,9 @@ struct Payment: View {
                     .offset(x: -110)
                 Spacer()
                 VStack(alignment: .leading, spacing: 25) {
-                    PaymentOptionView(image: "ModelFT", text: "Paypal")
-                    PaymentOptionView(image: "", text: "Add Card")
+                    
+                    PaymentOptionView(systemImage: nil, image: "ModelFT", text: "Paypal")
+                    PaymentOptionView(systemImage: "plus.circle", image: nil, text: "Add Card")
                     
                     Spacer()
                 }
@@ -42,6 +43,7 @@ struct Payment: View {
 
 struct PaymentOptionView: View {
     @State var isTap = false
+    let systemImage: String?
     let image: String?
     let text: String?
     var body: some View {
@@ -52,13 +54,28 @@ struct PaymentOptionView: View {
                 .shadow(radius: 4, x: 3, y: 3)
         }.overlay {
             HStack(spacing: 20) {
-                Image(image ?? "star")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .clipShape(Circle())
-                Text(text ?? "Paypal")
-                    .foregroundStyle(Color(isTap ? "Light":"Dark"))
-                    .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
+                if let systemImage = systemImage {
+                    Image(systemName: systemImage)
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                        .foregroundStyle(.gray)
+                } else if let image = image {
+                    Image(image)
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                }
+                if let systemImage = systemImage {
+                    Text(text ?? "Paypal")
+                        .foregroundStyle(.gray)
+                        .font(.custom("PlayfairDisplay-Bold", size: 20))
+                } else if let image = image {
+                    Text(text ?? "Paypal")
+                        .foregroundStyle(Color(isTap ? "Light":"Dark"))
+                        .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
+                }
+                
                 Spacer()
                 Button {} label: {
                     Image(systemName: isTap ? "circle.fill" : "circle")

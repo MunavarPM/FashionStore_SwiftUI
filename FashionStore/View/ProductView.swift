@@ -12,6 +12,7 @@ struct ProductView: View {
     @State private var isFav = false
     @State private var isShowCartView = false
     @Environment(\.dismiss) var dismiss
+    
     var product: Product
     
     var body: some View {
@@ -25,14 +26,13 @@ struct ProductView: View {
                         .aspectRatio(contentMode: .fill)
                         .edgesIgnoringSafeArea(.top)
                     
-                    
                     DescriptionView()
                         .offset(y: -40)
                     
-                        BTHeart(fav: $isFav, action: {
-                            
-                        })
-                        .offset(x: -30, y: -550)
+                    BTHeart(fav: $isFav, action: {
+                        
+                    })
+                    .offset(x: -30, y: -550)
                     
                 }
                 .edgesIgnoringSafeArea(.top)
@@ -43,14 +43,26 @@ struct ProductView: View {
                     DismissView()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                        CartButton(numberOfProduct: 1, action: {
-                            isShowCartView.toggle()
-                        })
+                    CartButton(numberOfProduct: 1, action: {
+                        isShowCartView.toggle()
+                    })
                 }
             }
         }
         .sheet(isPresented: $isShowCartView, content: {
-            MyCart()
+            NavigationStack {
+                MyCart()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                isShowCartView = false // Set this to dismiss the sheet
+                            } label: {
+                                DismissView()
+                                    .offset(x: -7, y: 15)
+                            }
+                        }
+                    }
+            }
         })
         .navigationBarBackButtonHidden()
     }

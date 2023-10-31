@@ -23,11 +23,11 @@ struct WhishlistView: View {
                 }
                
             }
-            .toolbar(content: {
-                ToolbarItem(placement: .topBarLeading) {
-                    DismissView()
-                }
-            })
+//            .toolbar(content: {
+//                ToolbarItem(placement: .topBarLeading) {
+//                    DismissView()
+//                }
+//            })
         }
         .navigationBarBackButtonHidden(true)
     }

@@ -64,13 +64,13 @@ struct MyCart: View {
                         } .overlay {
                             HStack {
                                 Text("Proceed to Pay")
-                                    .font(.custom("PlayfairDisplay-Bold", size: 28))
-                                    .padding()
+                                    .font(.custom("PlayfairDisplay-Bold", size: 25))
+                                    .padding(.leading, 30)
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
                                 Spacer()
                                 Image(systemName: "arrowshape.forward.fill")
-                                    .padding(7)
+                                    .padding(6)
                                     .foregroundStyle(Color("Dark"))
                                     .background(Color("Light"))
                                     .cornerRadius(10)
@@ -79,7 +79,7 @@ struct MyCart: View {
                         }
                         .padding(.bottom)
                     }
-                    .frame(width: UIScreen.main.bounds.width - 30, height: 85)
+                    .frame(width: UIScreen.main.bounds.width - 30, height: 75)
                 }
                 .navigationBarBackButtonHidden(true)
             }
