@@ -7,34 +7,32 @@
 
 import SwiftUI
 
-struct WhishlistView: View {
+struct WishlistView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("My Whishlist")
+                Text("My Wishlist")
                     .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
-                    .offset(x: -80)
+                    .offset(x: -90)
                 Spacer()
+                SearchBar()
+                    .padding(.top)
                 VStack {
                     ForEach(1..<4){ img in
                         WhishlistCardView(image: "OnBoarding"+"\(img)")
+                            .padding(.top, 5)
                     }
                     Spacer()
                 }
                
             }
-//            .toolbar(content: {
-//                ToolbarItem(placement: .topBarLeading) {
-//                    DismissView()
-//                }
-//            })
         }
         .navigationBarBackButtonHidden(true)
     }
 }
 
 #Preview {
-    WhishlistView()
+    WishlistView()
 }
 
 struct WhishlistCardView: View {
@@ -72,7 +70,7 @@ struct WhishlistCardView: View {
                             .fontWeight(.heavy)
                         Spacer()
                         NavigationLink {
-                            CartItemView()
+//                            CartItemView(product: )
                         } label: {
                             CartButton(numberOfProduct: 0, action: {
                                 print("CartButton")

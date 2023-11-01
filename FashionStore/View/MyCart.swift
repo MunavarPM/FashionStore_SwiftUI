@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct MyCart: View {
-    let cartList = ["Antoine", "Bas", "Curt", "Dave", "Erica"]
-    
+    @EnvironmentObject var productManagerVM: ProductManager
+    var product: Product
     
     @State private var totalPrice: Double = 0 // You may want to compute the total price based on the items in the cart
+    @State private var promoCode: String = ""
     
     var body: some View {
         NavigationStack {
@@ -24,16 +25,22 @@ struct MyCart: View {
                             .offset(x: -120)
                         Spacer()
                         List {
-                            ForEach(0 ..< 2, id: \.self) { item in
-                                CartItemView()
-                                    .swipeActions {
-                                        Button {
-                                            // Handle the removal of the item from the cart
-                                        } label: {
-                                            Label("", systemImage: "trash")
+                            if productManagerVM.products.count > 0 {
+                                ForEach(productManagerVM.products, id: \.id) { item in
+                                    CartItemView(product: item)
+                                        .swipeActions {
+                                            Button {
+                                                productManagerVM.removeFromCart(product: product)
+                                            } label: {
+                                                Label("", systemImage: "trash")
+                                            }
+                                            .tint(.black)
                                         }
-                                        .tint(.black)
-                                    }
+                                }
+                            } else {
+                                Text("Cart was Empty ☹️")
+                                    .offset(x: 100)
+                                    .font(.custom("PlayfairDisplay-Regualr", size: 20))
                             }
                         }
                         .listStyle(.plain)
@@ -41,10 +48,31 @@ struct MyCart: View {
                     
                     Spacer()
                     HStack {
-                        HStack {
+                        TextField( text: $promoCode, label: {
+                            Text("Promo Code")
+                        })
+                        .padding(.leading)
+                        .foregroundColor(.clear)
+                        .frame(width: 355, height: 60)
+                        .background(Color(red: 0.95, green: 0.95, blue: 0.95))
+                        .cornerRadius(10)
+                        .overlay {
+                            Button(action: {}, label: {
+                                Text("Apply")
+                                    .bold()
+                                    .foregroundStyle(Color("Light"))
+                            })
+                            .padding(8)
+                            .background(Color("Dark"))
+                            .cornerRadius(8)
+                            .padding(.leading, 260)
+                        }
+                    }
+                    HStack {
+                        HStack(spacing: 5) {
                             Text("Total")
-                                .font(.custom("PlayfairDisplay-Bold", size: 25))
-                            Text("(3 item):").fontWeight(.bold).font(.title2)
+                                .font(.custom("PlayfairDisplay-Bold", size: 22))
+                            Text("(3 item):").fontWeight(.semibold).font(.title3)
                         }
                             .font(.title2).opacity(0.5)
                             .fontWeight(.bold)
@@ -89,10 +117,12 @@ struct MyCart: View {
 
 
 #Preview {
-    MyCart()
+    MyCart(product: productList[1])
+        .environmentObject(ProductManager())
 }
 
 struct CartItemView: View {
+    var product: Product
     var body: some View {
             VStack {
                 ZStack {
@@ -103,20 +133,20 @@ struct CartItemView: View {
                 }
                 .overlay {
                     HStack {
-                        Image(.shoesBoys)
+                        Image(product.imageName)
                             .resizable()
                             .frame(width: 80, height: 80)
                             .cornerRadius(10)
                             .padding()
                         VStack(alignment: .leading) {
-                            Text("Shoes")
+                            Text(product.name)
                                 .font(.custom("PlayfairDisplay-Bold", size: 23))
                             
-                            Text("Brand name")
+                            Text(product.suppliers)
                                 .font(.custom("PlayfairDisplay-Regular", size: 16))
                             Spacer()
                             HStack {
-                                Text("$ 120.00")
+                                Text("\(product.price)")
                                     .fontWeight(.heavy)
                                 Spacer()
                                 ItemQuantityView()

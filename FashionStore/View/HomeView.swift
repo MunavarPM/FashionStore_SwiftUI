@@ -24,9 +24,8 @@ struct HomeView: View {
                         
                         SearchBar()
                         
-                        MostDemandItem(image:UIImage(resource: .shoesClassic), itemName: "Alex Arigato", itemBrand: "Cleam 90's Jacket", rate: 299)
+                        MostDemandItem(itemName: "Alex Arigato", itemBrand: "Cleam 90's Jacket", rate: 299)
                         
-                        /// Categories
                         Text("Categories")
                             .font(.custom("PlayfairDisplay-Bold", size: 26))
                             .fontWeight(.bold)
@@ -60,7 +59,7 @@ struct HomeView: View {
                             let gridColumn: [GridItem] = [GridItem(), GridItem()]
                             if selectedIndex == 0 {
                                 LazyVGrid(columns: gridColumn) {
-                                    NavigationLink(destination: ProductView(product: productList[1])) {
+                                    NavigationLink(destination: ProductView(product: productList[1]).environmentObject(ProductManager())) {
                                         TopItems(image: .modelJacket, fav: $isFav, action: {
                                             withAnimation(.easeInOut) {
                                                 isFav.toggle()
@@ -109,32 +108,32 @@ struct HomeView: View {
                         }
                     }
                 }
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button {
-                            withAnimation(.easeInOut) {
-                                print("MenuBar pressed")
-                            }
-                        }label: {
-                            MenuBar()
-                        }
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                            SettingsView()
-                        } label: {
-                            Image(.modelS)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 40, height: 40)
-                                .background(Color("Dark").opacity(0.2))
-                                .clipShape(Circle())
-                            
-                        }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        ProfileView()
+                    } label: {
+                        Image(.modelS)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 35, height: 35)
+                            .background(Color("Dark").opacity(0.2))
+                            .clipShape(Circle())
+                        
                     }
                 }
-                .navigationBarBackButtonHidden(true)
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        withAnimation(.easeInOut) {
+                            print("MenuBar pressed")
+                        }
+                    }label: {
+                        MenuBar()
+                    }
+                }
             }
+            .navigationBarBackButtonHidden(true)
         }
     }
 }
@@ -147,7 +146,7 @@ struct MenuBar: View {
         ZStack {
             Circle()
                 .fill(Color("Dark"))
-                .frame(width: 40, height: 40)
+                .frame(width: 38, height: 38)
                 .overlay {
                     VStack(alignment: .center, spacing: 4.5) {
                         Rectangle()
@@ -200,13 +199,14 @@ struct CapsuleButton: View {
 }
 
 struct MostDemandItem: View {
-    var image: UIImage
+    @State private var currentIndex = 0
     var itemName: String
     var itemBrand: String
     var rate: Int
+    var slides: [String] = ["ShoesBoys", "ModelSH", "ShoesClassic"]
     var body: some View {
         HStack(spacing: 10) {
-            Image(uiImage: image)
+            Image(slides[currentIndex])
                 .resizable()
                 .frame(width: 120, height: 100)
                 .cornerRadius(20)
@@ -228,7 +228,6 @@ struct MostDemandItem: View {
             .offset(x: 15)
         }
         .padding()
-        
         .background {
             RoundedRectangle(cornerRadius: 30)
                 .stroke(Color.white.opacity(0.4))
@@ -237,6 +236,15 @@ struct MostDemandItem: View {
                 .frame(width: 350, height: 120)
         }
         .offset(x: 40, y: 9)
+        .onAppear {
+            Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
+                if self.currentIndex + 1 == self.slides.count {
+                    self.currentIndex = 0
+                } else {
+                    self.currentIndex += 1
+                }
+            }
+        }
     }
 }
 
@@ -323,41 +331,51 @@ struct SearchBar: View {
                     .stroke(Color.white.opacity(1.0))
                     .blendMode(.overlay)
             }
-            Button {
-                print("sort")
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(Color("Dark"))
-                        .cornerRadius(10)
-                        .frame(width: 45, height: 45)
-                        .overlay {
-                            VStack(alignment: .center, spacing: 7) {
-                                HStack(spacing: -0.6) {
-                                    Circle()
-                                        .frame(width: 7, height: 7)
-                                        .offset(x: 0)
-                                    Rectangle()
-                                        .frame(width: 13, height: 3)
-                                        .offset(x: 5)
-                                        .opacity(0.5)
-                                }
-                                HStack(spacing: -0.6) {
-                                    Rectangle()
-                                        .frame(width: 13, height: 3)
-                                        .offset(x: 0)
-                                        .opacity(0.5)
-                                    Circle()
-                                        .frame(width: 7, height: 7)
-                                        .offset(x: 5)
-                                }
-                            }
-                            .foregroundStyle(Color("Light"))
-                        }
-                }
-            }
-            
+//            Button {
+//                print("sort")
+//            } label: {
+//                ZStack {
+//                    Circle()
+//                        .fill(Color("Dark"))
+//                        .cornerRadius(10)
+//                        .frame(width: 45, height: 45)
+//                        .overlay {
+//                            VStack(alignment: .center, spacing: 7) {
+//                                HStack(spacing: -0.6) {
+//                                    Circle()
+//                                        .frame(width: 7, height: 7)
+//                                        .offset(x: 0)
+//                                    Rectangle()
+//                                        .frame(width: 13, height: 3)
+//                                        .offset(x: 5)
+//                                        .opacity(0.5)
+//                                }
+//                                HStack(spacing: -0.6) {
+//                                    Rectangle()
+//                                        .frame(width: 13, height: 3)
+//                                        .offset(x: 0)
+//                                        .opacity(0.5)
+//                                    Circle()
+//                                        .frame(width: 7, height: 7)
+//                                        .offset(x: 5)
+//                                }
+//                            }
+//                            .foregroundStyle(Color("Light"))
+//                        }
+//                }
+//            }
         }
         .padding(.horizontal, 10)
     }
 }
+enum Tab: String {
+    case Home = "house"
+    
+    var Tabname: String {
+        switch self {
+        case .Home:
+            return "Home"
+        }
+    }
+}
+

@@ -71,13 +71,7 @@ class AuthViewModel: ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let snapshot = try? await Firestore.firestore().collection("user").document(uid).getDocument() else { return }
         self.currentUser = try? snapshot.data(as: User.self)
-        print("😎Current User\(self.currentUser)")
-//        await MainActor.run(body: {
-//            currentUser = snapshot
-//            //MARK: here i used it to give initial value to userName,userUID,profileURL from user fullname , id , profileurl
-//            self.userName = snapshot.userName
-//            self.userUID = snapshot.id
-//        })
+        print("😎Current User\(String(describing: self.currentUser))")
     }
     func reserPassword(email: String) async {
         do {

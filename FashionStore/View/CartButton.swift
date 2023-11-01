@@ -37,5 +37,5 @@ struct CartButton: View {
 }
 
 #Preview {
-    CartButton(numberOfProduct: 2, action: {})
+    CartButton(numberOfProduct: 1, action: {})
 }

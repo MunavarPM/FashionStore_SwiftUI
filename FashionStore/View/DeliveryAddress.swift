@@ -94,7 +94,7 @@ struct DeliveryAddress: View {
                         }
                             
                         Spacer()
-                        TotalCostView(cost: 122)
+                        TotalCostView(cost: 122, text: "Buy Now")
                             .padding()
                             .padding(.horizontal, 10)
                     }

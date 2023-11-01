@@ -15,19 +15,19 @@ struct TabBar: View {
                     Label("Home", systemImage: "house")
                 }
                 .tag(0)
-            MyCart()
+            MyCart(product: productList[1])
                 .tabItem {
                     Label("Cart", systemImage: "cart.fill")
                 }
                 .tag(1)
-            WhishlistView()
+            WishlistView()
                 .tabItem {
                     Label("Whislist", systemImage: "heart.fill")
                 }
                 .tag(2)
-            SettingsView()
+            ProfileView()
                 .tabItem {
-                    Label("Settings", systemImage: "gear")
+                    Label("Settings", systemImage: "person.fill")
                 }
                 .tag(3)
         }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct ProfileView: View {
     @StateObject var authViewModel = AuthViewModel()
     @State var showHome: Bool = false
     @State private var isDarkMode = false
@@ -25,27 +25,30 @@ struct SettingsView: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(Color("Light").opacity(0.8))
-                                    .frame(width: 360, height: 430)
+                                    .frame(width: 360, height: 350)
                             }
                             .overlay {
                                 VStack {
-                                    NavigationLink(destination: withAnimation(.easeIn){MyOrder()}) {
-                                        SettingBTView(imageSF: "person.fill", title: "Personal Details", action: {
-                                        })
+                                    NavigationLink {
+                                    MyOrder()
+                                    } label:{
+                                        SettingBTView(imageSF: "person.fill", title: "Personal Details", action: {})
                                     }
                                     NavigationLink {
                                         MyOrder()
                                     } label: {
                                         SettingBTView(imageSF: "bag.fill", title: "My Order", action: {})
                                     }
-
-                                    SettingBTView(imageSF: "heart.fill", title: "My Favourites", action: {
-                                        print("My Favouites")
-                                    })
-                                    SettingBTView(imageSF: "box.truck.fill", title: "Shipping Address", action: {
-                                        print("")
-                                    })
-                                    SettingBTView(imageSF: "creditcard.fill", title: "My Card", action: {})
+                                    NavigationLink {
+                                        DeliveryAddress()
+                                    } label: {
+                                        SettingBTView(imageSF: "box.truck.fill", title: "Shipping Address", action: {})
+                                    }
+                                    NavigationLink {
+                                        
+                                    } label: {
+                                        SettingBTView(imageSF: "creditcard.fill", title: "My Card", action: {})
+                                    }
                                     HStack(spacing: 20) {
                                         Rectangle()
                                             .fill(Color.gray)
@@ -117,7 +120,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+    ProfileView()
 }
 
 struct ShadowView: View {
@@ -184,9 +187,10 @@ struct SettingBTView: View {
             Text(title)
                 .font(.custom("PlayfairDisplay-Bold", size: 20))
             Spacer()
-            Button(action: {print("")}, label: {
+            Button(action: action, label: {
                 Image(systemName: "chevron.forward")
-                    .font(.subheadline)                                .padding()
+                    .font(.subheadline)
+                    .padding()
             })
         }
         .onTapGesture {

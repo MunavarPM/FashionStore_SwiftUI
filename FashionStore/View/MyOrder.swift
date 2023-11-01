@@ -15,7 +15,7 @@ struct MyOrder: View {
                 Text("My Order")
                     .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
                     .offset(x: -105)
-                
+                Spacer()
                 ScrollView(showsIndicators: false) {
                     HStack {
                         Spacer()
@@ -94,7 +94,7 @@ struct MyOrder: View {
                     }
                 }
             }
-            Spacer()
+            
                 .toolbar(content: {
                     ToolbarItem(placement: .topBarLeading) {
                         DismissView()
@@ -102,7 +102,7 @@ struct MyOrder: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         
                         NavigationLink {
-                            MyCart()
+                            MyCart(product: productList[2])
                         } label: {
                             CartButton(numberOfProduct: 1, action: {
                                 print("CartButton")
@@ -127,7 +127,7 @@ struct DismissView: View {
             }
         }, label: {
             Image(systemName: "xmark.circle.fill")
-                .font(.title)
+                .font(.title2)
         })
     }
 }

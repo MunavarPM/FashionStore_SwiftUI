@@ -66,16 +66,15 @@ struct PaymentOptionView: View {
                         .frame(width: 50, height: 50)
                         .clipShape(Circle())
                 }
-                if let systemImage = systemImage {
+                if systemImage != nil {
                     Text(text ?? "Paypal")
                         .foregroundStyle(.gray)
                         .font(.custom("PlayfairDisplay-Bold", size: 20))
-                } else if let image = image {
+                } else if image != nil {
                     Text(text ?? "Paypal")
                         .foregroundStyle(Color(isTap ? "Light":"Dark"))
                         .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
                 }
-                
                 Spacer()
                 Button {} label: {
                     Image(systemName: isTap ? "circle.fill" : "circle")

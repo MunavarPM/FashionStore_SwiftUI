@@ -32,5 +32,5 @@ var productList = [
     Product(name: "Shirt Chines Nect"
             , imageName: "modelS", suppliers: "AlenSolly", discription: "Ace weekend dressing Shirt from Allen Solly by Allen Solly.", price: 3999, colors: [ColorOption(color: Color(.systemGreen), image: "modelS")]),
     Product(name: "Men Navy T-Shirt"
-            , imageName: "modelSH", suppliers: "AlenSolly", discription: "Ace weekend dressing in this Navt Stripe Polo Neck T-shirt from Allen Solly by Allen Solly.", price: 1799, colors: [ColorOption(color: Color(.blue), image: "modelSH")])
+            , imageName: "ModelSH", suppliers: "AlenSolly", discription: "Ace weekend dressing in this Navt Stripe Polo Neck T-shirt from Allen Solly by Allen Solly.", price: 1799, colors: [ColorOption(color: Color(.blue), image: "modelSH")])
 ]

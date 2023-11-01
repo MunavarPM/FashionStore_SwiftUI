@@ -11,6 +11,7 @@ struct ProductView: View {
     
     @State private var isFav = false
     @State private var isShowCartView = false
+    @EnvironmentObject var productManagerVM: ProductManager
     @Environment(\.dismiss) var dismiss
     
     var product: Product
@@ -30,7 +31,7 @@ struct ProductView: View {
                         .offset(y: -40)
                     
                     BTHeart(fav: $isFav, action: {
-                        
+                        productManagerVM.addtoCart(product: product)
                     })
                     .offset(x: -30, y: -550)
                     
@@ -43,7 +44,7 @@ struct ProductView: View {
                     DismissView()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    CartButton(numberOfProduct: 1, action: {
+                    CartButton(numberOfProduct: productManagerVM.products.count, action: {
                         isShowCartView.toggle()
                     })
                 }
@@ -51,7 +52,7 @@ struct ProductView: View {
         }
         .sheet(isPresented: $isShowCartView, content: {
             NavigationStack {
-                MyCart()
+                MyCart(product: productList[1])
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
@@ -70,6 +71,7 @@ struct ProductView: View {
 
 #Preview {
     ProductView(product: productList[1])
+        .environmentObject(ProductManager())
 }
 
 struct DescriptionView: View {
@@ -128,7 +130,7 @@ struct DescriptionView: View {
                 .padding(.top)
             
             
-            TotalCostView(cost: 1222)
+            TotalCostView(cost: 1222, text: "Add to Cart")
                 .padding(.top, 30)
         }
         .padding()
@@ -141,6 +143,7 @@ struct DescriptionView: View {
 
 struct TotalCostView: View {
     let cost: Int
+    let text: String
     var body: some View {
         HStack {
             NavigationLink {
@@ -164,7 +167,7 @@ struct TotalCostView: View {
             } label: {
                 HStack {
                     Image(systemName: "bag")
-                    Text("Add to cart")
+                    Text(text)
                 }
                 .padding(15)
                 .foregroundStyle(Color("Light"))
