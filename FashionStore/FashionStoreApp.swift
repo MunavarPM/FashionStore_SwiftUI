@@ -10,13 +10,13 @@ import Firebase
 
 @main
 struct FashionStoreApp: App {
-    @StateObject var prodductManager = ProductManager()
+    @StateObject var productManager = ProductManagerViewModel()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
             NavigationStack {
                 TabBar()
-                    .environmentObject(ProductManager())
+                    .environmentObject(productManager)
             }
         }
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BTHeart: View {
-    @Binding var fav: Bool
+    @State var fav: Bool
     let action: () -> ()
     var body: some View {
         HStack {
@@ -36,8 +36,4 @@ struct BTHeart: View {
     }
 }
 
-//#Preview {
-//    BTHeart(fav: $Binding<Bool>, action: {
-//        
-//    })
-//}
+

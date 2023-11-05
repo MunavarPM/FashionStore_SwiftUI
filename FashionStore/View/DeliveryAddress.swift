@@ -92,11 +92,40 @@ struct DeliveryAddress: View {
                                 ProductListView(image: "OnBoarding"+"\(item)", name: "String", brand: "String", cost: "122")
                             })
                         }
-                            
+                        
                         Spacer()
-                        TotalCostView(cost: 122, text: "Buy Now")
-                            .padding()
-                            .padding(.horizontal, 10)
+                        HStack {
+                            NavigationLink {
+                                Payment()
+                            } label: {
+                                VStack(alignment: .leading) {
+                                    Text("Total Price")
+                                        .foregroundStyle(Color("Dark"))
+                                        .font(.custom("PlayfairDisplay-Regular", size: 12))
+                                        .opacity(0.4)
+                                    Text("$\(1222)")
+                                        .font(.title)
+                                        .fontWeight(.heavy)
+                                    
+                                }
+                                .foregroundStyle(Color("Dark"))
+                            }
+                            Spacer()
+                            NavigationLink {
+                                Payment()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "bag")
+                                    Text("Place Order")
+                                }
+                                .padding(15)
+                                .foregroundStyle(Color("Light"))
+                                .background(Color("Dark"))
+                                .clipShape(Capsule())
+                            }
+                        }
+                        .padding()
+                        .padding(.horizontal, 10)
                     }
                 }
             }

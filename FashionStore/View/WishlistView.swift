@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct WishlistView: View {
+    @EnvironmentObject var productManagerVM: ProductManagerViewModel
+    var product: Product
     var body: some View {
         NavigationStack {
             VStack {
@@ -18,13 +20,24 @@ struct WishlistView: View {
                 SearchBar()
                     .padding(.top)
                 VStack {
-                    ForEach(1..<4){ img in
-                        WhishlistCardView(image: "OnBoarding"+"\(img)")
-                            .padding(.top, 5)
+                    if productManagerVM.wishlistProducts.count > 0 {
+                        ForEach(productManagerVM.wishlistProducts, id: \.id){ item in
+                            WhishlistCardView(product: item.product)
+                                .environmentObject(productManagerVM)
+                                .padding(.top, 5)
+                        }
+                        HStack {
+                            Text("Total")
+                            Text("\(productManagerVM.wishlistTotal)")
+                        }
+                    } else {
+                        Image("Cart")
+                            .resizable()
+                            .frame(width: 550, height: 550)
                     }
                     Spacer()
                 }
-               
+                
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -32,12 +45,14 @@ struct WishlistView: View {
 }
 
 #Preview {
-    WishlistView()
+    WishlistView(product: productList[0])
+        .environmentObject(ProductManagerViewModel())
 }
 
 struct WhishlistCardView: View {
     @State private var isFav = false
-    let image: String
+    @EnvironmentObject var productManagerVM: ProductManagerViewModel
+    var product: Product
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 17)
@@ -47,35 +62,45 @@ struct WhishlistCardView: View {
         }
         .overlay {
             HStack {
-                Image(image)
+                Image(product.imageName)
                     .resizable()
                     .frame(width: 80, height: 80)
                     .cornerRadius(10)
                     .padding()
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("Shoes")
+                        Text(product.suppliers)
                             .font(.custom("PlayfairDisplay-Bold", size: 23))
-                        BTHeart(fav: $isFav) {
+                        BTHeart(fav: isFav) {
                             isFav.toggle()
                         }
                         .offset(x: -10,y: 10)
                     }
                     
-                    Text("Brand name")
+                    Text(product.suppliers)
                         .font(.custom("PlayfairDisplay-Regular", size: 16))
                     Spacer()
                     HStack {
-                        Text("$ 120.00")
+                        Text("\(product.price)")
                             .fontWeight(.heavy)
                         Spacer()
-                        NavigationLink {
-//                            CartItemView(product: )
+                        Button {
+                            print("add to cart")
+                            productManagerVM.addtoCart(product: product)
+                            print("\(productManagerVM.products.count)✅")
+                            productManagerVM.removeFromWishlist(product: product)
+                            print("\(productManagerVM.products.count)⚠️")
                         } label: {
-                            CartButton(numberOfProduct: 0, action: {
-                                print("CartButton")
-                            })
-                            .offset(x: -10,y: -11)
+                            HStack {
+                                Image(systemName: "bag")
+                                Text("Add to Cart")
+                            }
+                            .padding()
+                            .frame(width: 150, height: 40)
+                            .foregroundStyle(Color("Light"))
+                            .background(Color("Dark"))
+                            .clipShape(Capsule())
+                            .offset(y: -10)
                         }
                     }
                 }
@@ -86,4 +111,7 @@ struct WhishlistCardView: View {
         }
         .padding(8)
     }
+}
+#Preview {
+    WhishlistCardView(product: productList[1])
 }

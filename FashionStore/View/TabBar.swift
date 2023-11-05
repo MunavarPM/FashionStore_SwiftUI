@@ -10,7 +10,7 @@ import SwiftUI
 struct TabBar: View {
     var body: some View {
         TabView {
-            HomeView()
+            HomeView(product: productList[3])
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
@@ -20,14 +20,14 @@ struct TabBar: View {
                     Label("Cart", systemImage: "cart.fill")
                 }
                 .tag(1)
-            WishlistView()
+            WishlistView(product: productList[0])
                 .tabItem {
                     Label("Whislist", systemImage: "heart.fill")
                 }
                 .tag(2)
             ProfileView()
                 .tabItem {
-                    Label("Settings", systemImage: "person.fill")
+                    Label("Profile", systemImage: "person.fill")
                 }
                 .tag(3)
         }
@@ -38,3 +38,26 @@ struct TabBar: View {
 #Preview {
     TabBar()
 }
+//struct text: View {
+//    var body: some View {
+//        VStack {
+//            text2()
+//        }
+//    }
+//}
+//struct text2: View {
+//    var body: some View {
+//        VStack {
+//            text3()
+//        }
+//    }
+//}
+//struct text3: View {
+//    @EnvironmentObject var vm: haloo
+//    var body: some View {
+//        VStack {
+//            Text(vm.h)
+//        }
+//    }
+//}
+//

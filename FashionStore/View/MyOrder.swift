@@ -102,7 +102,7 @@ struct MyOrder: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         
                         NavigationLink {
-                            MyCart(product: productList[2])
+                            MyCart(product: productList[1])
                         } label: {
                             CartButton(numberOfProduct: 1, action: {
                                 print("CartButton")

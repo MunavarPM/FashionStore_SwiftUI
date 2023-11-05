@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct MyCart: View {
-    @EnvironmentObject var productManagerVM: ProductManager
+    @EnvironmentObject var productManagerVM: ProductManagerViewModel
     var product: Product
     
-    @State private var totalPrice: Double = 0 // You may want to compute the total price based on the items in the cart
+    @State private var totalPrice: Double = 0 
     @State private var promoCode: String = ""
     
     var body: some View {
@@ -20,30 +20,38 @@ struct MyCart: View {
                 Color("Light")
                 VStack {
                     VStack {
-                        Text("My Cart")
-                            .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
-                            .offset(x: -120)
-                        Spacer()
-                        List {
-                            if productManagerVM.products.count > 0 {
-                                ForEach(productManagerVM.products, id: \.id) { item in
-                                    CartItemView(product: item)
-                                        .swipeActions {
-                                            Button {
-                                                productManagerVM.removeFromCart(product: product)
-                                            } label: {
-                                                Label("", systemImage: "trash")
-                                            }
-                                            .tint(.black)
-                                        }
-                                }
-                            } else {
-                                Text("Cart was Empty ☹️")
-                                    .offset(x: 100)
-                                    .font(.custom("PlayfairDisplay-Regualr", size: 20))
-                            }
+                        HStack {
+                            Text("My Cart")
+                                .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
+                                .offset(x: -120)
                         }
-                        .listStyle(.plain)
+                        
+                            VStack {
+                                if productManagerVM.cartProducts.count > 0 {
+                                    ForEach(productManagerVM.cartProducts, id: \.id) { item in
+                                        NavigationLink {
+                                            ProductView(product: item.product)
+                                        } label: {
+                                            CartItemView(product: item.product)
+                                            /*//                                            .swipeActions {
+    //                                                Button {
+    //                                                    productManagerVM.removeFromCart(product: item.product)
+    //                                                } label: {
+    //                                                    Label("", systemImage: "trash")
+    //                                                }
+    //                                                .tint(.black)
+    //                                            }*/
+                                        }
+                                   }
+                                } else {
+                                    Image("Cart")
+                                        .resizable()
+                                        .offset(y: -70)
+                                        .frame(width: 550, height: 550)
+                                        
+                                }
+                            }
+                        Spacer()
                     }
                     
                     Spacer()
@@ -72,12 +80,12 @@ struct MyCart: View {
                         HStack(spacing: 5) {
                             Text("Total")
                                 .font(.custom("PlayfairDisplay-Bold", size: 22))
-                            Text("(3 item):").fontWeight(.semibold).font(.title3)
+                            Text("(\(productManagerVM.getProductCount(product: product)) item):").fontWeight(.semibold).font(.title3)
                         }
-                            .font(.title2).opacity(0.5)
-                            .fontWeight(.bold)
+                        .font(.title2).opacity(0.5)
+                        .fontWeight(.bold)
                         Spacer()
-                        Text("$250")
+                        Text("$\(productManagerVM.cartTotal)")
                             .font(.title)
                             .fontWeight(.bold)
                     }
@@ -118,48 +126,53 @@ struct MyCart: View {
 
 #Preview {
     MyCart(product: productList[1])
-        .environmentObject(ProductManager())
+        .environmentObject(ProductManagerViewModel())
 }
 
 struct CartItemView: View {
     var product: Product
     var body: some View {
-            VStack {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 17)
-                        .fill(Color("Light").opacity(0.8))
-                        .shadow(radius: 5, x: 2, y: 5)
-                        .frame(width: UIScreen.main.bounds.width - 30, height: 110)
-                }
-                .overlay {
-                    HStack {
-                        Image(product.imageName)
-                            .resizable()
-                            .frame(width: 80, height: 80)
-                            .cornerRadius(10)
-                            .padding()
-                        VStack(alignment: .leading) {
-                            Text(product.name)
-                                .font(.custom("PlayfairDisplay-Bold", size: 23))
-                            
-                            Text(product.suppliers)
-                                .font(.custom("PlayfairDisplay-Regular", size: 16))
-                            Spacer()
-                            HStack {
-                                Text("\(product.price)")
-                                    .fontWeight(.heavy)
-                                Spacer()
-                                ItemQuantityView()
-                            }
-                        }
+        VStack {
+            ZStack {
+                RoundedRectangle(cornerRadius: 17)
+                    .fill(Color("Light").opacity(0.8))
+                    .shadow(radius: 5, x: 2, y: 5)
+                    .frame(width: UIScreen.main.bounds.width - 30, height: 110)
+            }
+            .overlay {
+                HStack {
+                    Image(product.imageName)
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .cornerRadius(10)
+                        .padding()
+                    VStack(alignment: .leading) {
+                        Text(product.name)
+                            .font(.custom("PlayfairDisplay-Bold", size: 23))
+                        
+                        Text(product.suppliers)
+                            .font(.custom("PlayfairDisplay-Regular", size: 16))
                         Spacer()
+                        HStack {
+                            Text("\(product.price)")
+                                .fontWeight(.heavy)
+                            Spacer()
+                            ItemQuantityView(product: product)
+                                .offset(y: -10)
+                        }
                     }
-                    .padding(.top)
-                    .padding(.bottom,10)
+                    Spacer()
                 }
-                .padding(8)
+                .padding(.top)
+                .padding(.bottom,10)
+            }
+            .padding(8)
         }
     }
 }
 
 
+
+
+
+

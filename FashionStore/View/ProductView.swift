@@ -11,7 +11,7 @@ struct ProductView: View {
     
     @State private var isFav = false
     @State private var isShowCartView = false
-    @EnvironmentObject var productManagerVM: ProductManager
+    @EnvironmentObject var productManagerVM: ProductManagerViewModel
     @Environment(\.dismiss) var dismiss
     
     var product: Product
@@ -27,24 +27,31 @@ struct ProductView: View {
                         .aspectRatio(contentMode: .fill)
                         .edgesIgnoringSafeArea(.top)
                     
-                    DescriptionView()
+                    DescriptionView(product: product)
                         .offset(y: -40)
                     
-                    BTHeart(fav: $isFav, action: {
-                        productManagerVM.addtoCart(product: product)
+                    BTHeart(fav: isFav, action: {
+                        if isFav {
+                            productManagerVM.addToWishlist(product: product)
+                        } else {
+                            productManagerVM.removeFromWishlist(product: product)
+                        }
                     })
-                    .offset(x: -30, y: -550)
                     
+                    .padding(.top, -550)
+                    .padding(.trailing, 50)
+                }
+                .onAppear {
+                    UIScrollView.appearance().bounces = false
                 }
                 .edgesIgnoringSafeArea(.top)
-                
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     DismissView()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    CartButton(numberOfProduct: productManagerVM.products.count, action: {
+                    CartButton(numberOfProduct: productManagerVM.cartProducts.count, action: {
                         isShowCartView.toggle()
                     })
                 }
@@ -53,9 +60,11 @@ struct ProductView: View {
         .sheet(isPresented: $isShowCartView, content: {
             NavigationStack {
                 MyCart(product: productList[1])
+                    .environmentObject(productManagerVM)
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
+                                print(productManagerVM.products.count)
                                 isShowCartView = false // Set this to dismiss the sheet
                             } label: {
                                 DismissView()
@@ -71,11 +80,16 @@ struct ProductView: View {
 
 #Preview {
     ProductView(product: productList[1])
-        .environmentObject(ProductManager())
+        .environmentObject(ProductManagerViewModel())
 }
 
 struct DescriptionView: View {
+    @EnvironmentObject var productManagerVM: ProductManagerViewModel
+    @State private var selectedProduct: Product?
+    @State var isOption: Bool = false
+    var product: Product
     let sizeArray: [String] = ["S", "M", "L"]
+
     var body: some View {
         VStack(alignment: .leading, spacing: 1) {
             Group {
@@ -84,27 +98,37 @@ struct DescriptionView: View {
             }
             .font(.custom("PlayfairDisplay-Bold", size: 20))
             
-            HStack(spacing: 4) {
-                ForEach(0..<5){ item in
-                    Image(.star)
+            HStack(spacing: 2) {
+                HStack(spacing: 5) {
+                    let rating = product.rating
+                    let intRating: Int = Int(rating)
+                    let halfStar: Int = rating > Float(intRating) ? 1 : 0
+                    var blankStar : Int = rating > Float(intRating) ? 4 - (intRating) : 5 - (intRating)
+                    ForEach(0..<intRating) { index in
+                        RatingStarView(starTypeName: "star.fill")
+                    }
+                    if halfStar == 1 {
+                        RatingStarView(starTypeName: "star.leadinghalf.filled")
+                    }
+                    ForEach(0..<blankStar) { index in
+                        RatingStarView(starTypeName: "star")
+                    }
+                    Text("(\(String(format: "%.1f", rating)))")
+                        .foregroundColor(.gray)
                 }
-                .offset(y: -9)
-                Text("(320 Review)")
-                    .opacity(0.5)
-                    .offset(y: -9)
-                
                 Spacer()
-                VStack {
-                    ItemQuantityView()
+                VStack(spacing: 10) {
+                    ItemQuantityView(product: product)
                     Text("Available Stock")
-                        .fontWeight(.medium)
+                        .fontWeight(.semibold)
                 }
             }
             
             Text("Size")
                 .font(.custom("PlayfairDisplay-Bold", size: 20))
+                .padding(.bottom)
             HStack {
-                ForEach(0..<3) { size in
+                ForEach(sizeArray,id: \.self) { size in
                     Text("\(size)")
                         .bold()
                         .padding()
@@ -114,11 +138,25 @@ struct DescriptionView: View {
                 }
                 Spacer()
                 VStack {
-                    ForEach(0..<3) { color in
-                        Color("Dark")
-                            .clipShape(Circle())
+                    ForEach(product.colors) { color in
+                        HStack {
+                            Text("Colour's").bold()
+                                .font(.custom("PlayfairDisplay-Bold", size: 20))
+                                .onTapGesture {
+                                    isOption.toggle()
+                                }
+                            if isOption {
+                                Group {
+                                    Image(systemName: "circle.fill").foregroundColor(.blue)
+                                    Image(systemName: "circle.fill").foregroundColor(.black)
+                                    Image(systemName: "circle.fill").foregroundColor(.gray)
+                                }
+                                .font(.title)
+                            }
+                                
+                        }
                     }
-                    .frame(width: 50, height: 20)
+                    .frame(width: 80, height: 20)
                 }
                 .offset(x: -30)
             }
@@ -130,7 +168,7 @@ struct DescriptionView: View {
                 .padding(.top)
             
             
-            TotalCostView(cost: 1222, text: "Add to Cart")
+            TotalCostView(cost: product.price, text: "Add to Cart", product: product)
                 .padding(.top, 30)
         }
         .padding()
@@ -142,8 +180,10 @@ struct DescriptionView: View {
 }
 
 struct TotalCostView: View {
+    @EnvironmentObject var productManagerVM: ProductManagerViewModel
     let cost: Int
     let text: String
+    var product: Product
     var body: some View {
         HStack {
             NavigationLink {
@@ -162,8 +202,9 @@ struct TotalCostView: View {
                 .foregroundStyle(Color("Dark"))
             }
             Spacer()
-            NavigationLink {
-                Payment()
+            Button {
+                productManagerVM.addtoCart(product: product)
+                print(productManagerVM.products.count)
             } label: {
                 HStack {
                     Image(systemName: "bag")
@@ -179,27 +220,49 @@ struct TotalCostView: View {
 }
 
 struct ItemQuantityView: View {
+    @EnvironmentObject var productMangerVM: ProductManagerViewModel
+    var product: Product
     var body: some View {
         HStack {
+            let productTotal = productMangerVM.getProductCount(product: product)
             Button {
-                
-            } label: {
-                Image(systemName: "minus")
-                    .font(.footnote)
-            }
-            
-            Text("1")
-            Button {
-                
+                productMangerVM.addtoCart(product: product)
             } label: {
                 Image(systemName: "plus")
                     .font(.footnote)
             }
+            
+            Text("\(productTotal)")
+            
+            if productTotal == 1 {
+                Image(systemName: "trash")
+                    .foregroundStyle(.black)
+                    .onTapGesture {
+                        productMangerVM.removeFromCart(product: product)
+                    }
+            } else {
+                Image(systemName: "minus")
+                    .foregroundStyle(.black)
+                    .onTapGesture {
+                        productMangerVM.minusProductCart(product: product)
+                    }
+            }
         }
         .padding(.horizontal, 4)
-        .padding(7)
+        .padding(10)
         .foregroundStyle(.black)
         .background(Color("Dark").opacity(0.2))
         .clipShape(Capsule())
+    }
+}
+struct RatingStarView: View {
+    var starTypeName: String
+    var body: some View {
+        HStack {
+            Image(systemName: starTypeName)
+                .resizable()
+                .frame(width: 20,height: 20)
+                .foregroundColor(.yellow)
+        }
     }
 }
