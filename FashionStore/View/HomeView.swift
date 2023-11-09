@@ -10,8 +10,9 @@ import SwiftUI
 struct HomeView: View {
     private let categories = ["Dresses", "Jackets", "Jeans", "Shoese"]
     @State private var selectedIndex: Int = 0
-    @State private var isFav = false
+    @State var isFav: Bool = false
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
+    
     var product: Product
     
     var body: some View {
@@ -37,7 +38,9 @@ struct HomeView: View {
                                 ForEach(0 ..< categories.count, id: \.self) { item in
                                     CapsuleButton(isActive: item == selectedIndex, text: categories[item])
                                         .onTapGesture {
-                                            selectedIndex = item
+                                            withAnimation(.easeIn(duration: 0.4)){
+                                                selectedIndex = item
+                                            }
                                         }
                                 }
                             }
@@ -63,19 +66,22 @@ struct HomeView: View {
                                 LazyVGrid(columns: gridColumn) {
                                     ForEach(productList.prefix(2), id: \.id){ item in
                                         NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
-                                            TopItems(product: item, fav: isFav, action: {
-                                                withAnimation(.easeInOut) {
-                                                    isFav.toggle()
-                                                }
-                                            })
+                                            TopItems(product: item) {
+
+                                                    if product.isFavorite {
+                                                      productManagerVM.addToWishlist(product: product)
+                                                    } else {
+                                                        productManagerVM.removeFromWishlist(product: product)
+                                                    }
+                                            }
                                         }
-                                        .isDetailLink(false)
                                     }
-                                    ForEach(productList.prefix(1), id: \.id){ item in
+                                    ForEach(productList.prefix(5), id: \.id){ item in
                                         NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
-                                            TopItems(product: item, fav: isFav, action: {
+                                            TopItems(product: item,  action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
+                                                    productManagerVM.addToWishlist(product: item)
                                                 }
                                             })
                                         }
@@ -85,28 +91,30 @@ struct HomeView: View {
                                 LazyVGrid(columns: gridColumn) {
                                     ForEach(productList.prefix(3), id: \.id){ item in
                                         NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
-                                            TopItems(product: item, fav: isFav, action: {
+                                            TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
+                                                    productManagerVM.addToWishlist(product: item)
                                                 }
                                             })
                                         }
                                     }
-
-                                    ForEach(productList.prefix(1), id: \.id){ item in
+                                    ForEach(productList.prefix(0), id: \.id){ item in
                                         NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
-                                            TopItems(product: item, fav: isFav, action: {
+                                            TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
+                                                    productManagerVM.addToWishlist(product: item)
                                                 }
                                             })
                                         }
-                                    }                                }
+                                    }
+                                }
                             } else if selectedIndex == 2 {
                                 LazyVGrid(columns: gridColumn) {
                                     ForEach(productList.prefix(4), id: \.id){ item in
                                         NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
-                                            TopItems(product: item, fav: isFav, action: {
+                                            TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
                                                 }
@@ -115,7 +123,7 @@ struct HomeView: View {
                                     }
                                     ForEach(productList.prefix(1), id: \.id){ item in
                                         NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
-                                            TopItems(product: item, fav: isFav, action: {
+                                            TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
                                                 }
@@ -127,7 +135,7 @@ struct HomeView: View {
                                 LazyVGrid(columns: gridColumn) {
                                     ForEach(productList.prefix(5), id: \.id){ item in
                                         NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
-                                            TopItems(product: item, fav: isFav, action: {
+                                            TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
                                                 }
@@ -136,7 +144,7 @@ struct HomeView: View {
                                     }
                                     ForEach(productList.prefix(0), id: \.id){ item in
                                         NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
-                                            TopItems(product: item, fav: isFav, action: {
+                                            TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
                                                 }
@@ -152,7 +160,7 @@ struct HomeView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-//                        ProfileView()
+                        //                        ProfileView()
                     } label: {
                         Image(.modelS)
                             .resizable()
@@ -179,7 +187,8 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(product: productList[1])
+    HomeView(isFav: true, product: productList[1])
+        .environmentObject(ProductManagerViewModel())
 }
 
 struct MenuBar: View {
@@ -244,27 +253,29 @@ struct MostDemandItem: View {
     var itemName: String
     var itemBrand: String
     var rate: Int
-    var slides: [String] = ["ShoesBoys", "ModelSH", "ShoesClassic"]
+    var slides: [Product] = [productList[3], productList[1], productList[2]]
     var body: some View {
         HStack(spacing: 10) {
-            Image(slides[currentIndex])
+            Image(slides[currentIndex].imageName)
                 .resizable()
                 .frame(width: 110, height: 100)
                 .cornerRadius(20)
                 .offset(x: -18)
             VStack {
-                Text(itemName)
+                Text(slides[currentIndex].name)
                     .font(.custom("PlayfairDisplay-Regular", size: 20))
                 Text(itemBrand)
                     .font(.custom("PlayfairDisplay-Regular", size: 15))
                     .foregroundStyle(.gray)
-                Text("$ \(rate)")
+                Text("$ \(slides[currentIndex].price)")
                     .fontWeight(.bold)
                     .padding(.top, 0.1)
             }
             
-            BackButton(forward: true) {
-                print("Demand buttin tapped")
+            NavigationLink {
+                
+            } label: {
+                BackButton(forward: true) {}
             }
             .offset(x: 15)
         }
@@ -304,8 +315,8 @@ struct BackButton: View {
 }
 
 struct TopItems: View {
+    @EnvironmentObject var productManagerVM: ProductManagerViewModel
     var product: Product
-    @State var fav: Bool
     let action: () -> Void
     var body: some View {
         VStack {
@@ -315,34 +326,31 @@ struct TopItems: View {
                     .clipShape(RoundedRectangle(cornerRadius: 30))
                     .frame(width: 160, height: 200)
                 VStack {
-                    HStack {
-                        Spacer()
-                        Button {
-                            fav.toggle()
-                            print("Button was tapped")
-                            action()
-                        } label: {
-                            Image(systemName: fav ? "heart.fill" : "heart" )
-                                .padding(1)
-                                .foregroundStyle(.black)
-                                .cornerRadius(50)
-                                .onTapGesture {
-                                    fav.toggle()
-                                }
+                    Button(action: {
+                        action()
+                        if product.isFavorite {
+                          productManagerVM.addToWishlist(product: product)
+                        } else {
+                            productManagerVM.removeFromWishlist(product: product)
                         }
-                        .padding()
-                    }
-                    Spacer()
+                    }, label: {
+                        Image(systemName: product.isFavorite ? "heart.fill" : "heart" )
+                            .font(.title3)
+                            .foregroundStyle(.black)
+                            .cornerRadius(50)
+                            .padding(7)
+                    })
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                 }
-                
+                .padding(10)
             }
             
-            Text("LP Hut")
-                .font(.custom("PlayfairDisplay-Bold", size: 20))
-            Text("LP")
+            Text(product.imageName)
+                .font(.custom("PlayfairDisplay-Bold", size: 18))
+            Text(product.suppliers)
                 .font(.custom("PlayfairDisplay-Regular", size: 15))
                 .foregroundStyle(.gray)
-            Text("$ 199")
+            Text("$ \(product.price)")
                 .fontWeight(.bold)
         }
         .shadow(color: Color("Dark").opacity(0.2), radius: 10, x: 5, y: 10)
@@ -372,39 +380,39 @@ struct SearchBar: View {
                     .stroke(Color.white.opacity(1.0))
                     .blendMode(.overlay)
             }
-            //            Button {
-            //                print("sort")
-            //            } label: {
-            //                ZStack {
-            //                    Circle()
-            //                        .fill(Color("Dark"))
-            //                        .cornerRadius(10)
-            //                        .frame(width: 45, height: 45)
-            //                        .overlay {
-            //                            VStack(alignment: .center, spacing: 7) {
-            //                                HStack(spacing: -0.6) {
-            //                                    Circle()
-            //                                        .frame(width: 7, height: 7)
-            //                                        .offset(x: 0)
-            //                                    Rectangle()
-            //                                        .frame(width: 13, height: 3)
-            //                                        .offset(x: 5)
-            //                                        .opacity(0.5)
-            //                                }
-            //                                HStack(spacing: -0.6) {
-            //                                    Rectangle()
-            //                                        .frame(width: 13, height: 3)
-            //                                        .offset(x: 0)
-            //                                        .opacity(0.5)
-            //                                    Circle()
-            //                                        .frame(width: 7, height: 7)
-            //                                        .offset(x: 5)
-            //                                }
-            //                            }
-            //                            .foregroundStyle(Color("Light"))
-            //                        }
-            //                }
-            //            }
+            /*//            Button {
+             //                print("sort")
+             //            } label: {
+             //                ZStack {
+             //                    Circle()
+             //                        .fill(Color("Dark"))
+             //                        .cornerRadius(10)
+             //                        .frame(width: 45, height: 45)
+             //                        .overlay {
+             //                            VStack(alignment: .center, spacing: 7) {
+             //                                HStack(spacing: -0.6) {
+             //                                    Circle()
+             //                                        .frame(width: 7, height: 7)
+             //                                        .offset(x: 0)
+             //                                    Rectangle()
+             //                                        .frame(width: 13, height: 3)
+             //                                        .offset(x: 5)
+             //                                        .opacity(0.5)
+             //                                }
+             //                                HStack(spacing: -0.6) {
+             //                                    Rectangle()
+             //                                        .frame(width: 13, height: 3)
+             //                                        .offset(x: 0)
+             //                                        .opacity(0.5)
+             //                                    Circle()
+             //                                        .frame(width: 7, height: 7)
+             //                                        .offset(x: 5)
+             //                                }
+             //                            }
+             //                            .foregroundStyle(Color("Light"))
+             //                        }
+             //                }
+             //            }*/
         }
         .padding(.horizontal, 10)
     }

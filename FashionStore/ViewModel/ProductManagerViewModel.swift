@@ -48,10 +48,7 @@ class ProductManagerViewModel: ObservableObject {
                 cartProducts[existingProductIndex].productCount -= 1
                 cartTotal -= product.price
             }
-            
-            
         }
-       
     }
     
     func getProductCount(product: Product) -> Int {
@@ -77,10 +74,17 @@ class ProductManagerViewModel: ObservableObject {
     }
     
     func addToWishlist(product: Product) {
-        let wish = WishlistProduct(product: product)
-        wishlistProducts.append(wish)
-        wishlistTotal += product.price
-        print("\(wishlistProducts.count) ❤️Wishlist")
+        if let exist = wishlistProducts.first(where: {
+            $0.product == product
+        }) {
+            exist.productCount += 1
+        } else {
+            let wish = WishlistProduct(product: product)
+            wishlistProducts.append(wish)
+            wishlistTotal += product.price
+            print("\(wishlistProducts.count) ❤️Wishlist")
+        }
+        
     }
     
     func removeFromWishlist(product: Product) {
@@ -89,6 +93,17 @@ class ProductManagerViewModel: ObservableObject {
         }
         wishlistTotal -= product.price
     }
+    
+    func toggleFavorite(_ product: Product) {
+            if let index = products.firstIndex(where: { $0.id == product.id }) {
+                products[index].isFavorite.toggle()  // Toggle the favorite status
+                if products[index].isFavorite {
+                    addToWishlist(product: product)
+                } else {
+                    removeFromWishlist(product: product)
+                }
+            }
+        }
 }
 
 class CartProduct: Identifiable{

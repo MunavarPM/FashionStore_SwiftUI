@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductView: View {
     
-    @State private var isFav = false
+    @State var isFav: Bool = false
     @State private var isShowCartView = false
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
     @Environment(\.dismiss) var dismiss
@@ -30,21 +30,25 @@ struct ProductView: View {
                     DescriptionView(product: product)
                         .offset(y: -40)
                     
-                    BTHeart(fav: isFav, action: {
-                        if isFav {
-                            productManagerVM.addToWishlist(product: product)
-                        } else {
-                            productManagerVM.removeFromWishlist(product: product)
-                        }
+                    BTHeart(isFav: $isFav, product: product, action: {
+                        isFav.toggle()
+                        productManagerVM.addToWishlist(product: product)
                     })
-                    
-                    .padding(.top, -550)
+                    .padding(.top, -470)
                     .padding(.trailing, 50)
                 }
                 .onAppear {
                     UIScrollView.appearance().bounces = false
                 }
                 .edgesIgnoringSafeArea(.top)
+            }
+            .ignoresSafeArea()
+            .overlay(alignment: .bottom) {
+                TotalCostView(cost: product.price, text: "Add to Cart", product: product)
+                    .background(RoundedRectangle(cornerRadius: 35).fill(.ultraThinMaterial).frame(width: 380, height: 88))
+                    .padding(.horizontal, 25)
+                    .padding(.bottom, 5)
+                    .offset(y: 20)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -104,13 +108,13 @@ struct DescriptionView: View {
                     let intRating: Int = Int(rating)
                     let halfStar: Int = rating > Float(intRating) ? 1 : 0
                     var blankStar : Int = rating > Float(intRating) ? 4 - (intRating) : 5 - (intRating)
-                    ForEach(0..<intRating) { index in
+                    ForEach(0...intRating, id: \.self) { index in
                         RatingStarView(starTypeName: "star.fill")
                     }
                     if halfStar == 1 {
                         RatingStarView(starTypeName: "star.leadinghalf.filled")
                     }
-                    ForEach(0..<blankStar) { index in
+                    ForEach(0...blankStar, id: \.self) { index in
                         RatingStarView(starTypeName: "star")
                     }
                     Text("(\(String(format: "%.1f", rating)))")
@@ -132,9 +136,9 @@ struct DescriptionView: View {
                     Text("\(size)")
                         .bold()
                         .padding()
-                        .background(Color("Dark"))
-                        .clipShape(Circle())
-                        .opacity(0.3)
+                        .background {
+                            Circle().fill(.ultraThinMaterial)
+                        }
                 }
                 Spacer()
                 VStack {
@@ -167,9 +171,6 @@ struct DescriptionView: View {
                 .font(.custom("PlayfairDisplay-Regular", size: 12)).opacity(0.6)
                 .padding(.top)
             
-            
-            TotalCostView(cost: product.price, text: "Add to Cart", product: product)
-                .padding(.top, 30)
         }
         .padding()
         .padding(.top)
@@ -220,13 +221,14 @@ struct TotalCostView: View {
 }
 
 struct ItemQuantityView: View {
-    @EnvironmentObject var productMangerVM: ProductManagerViewModel
+    @EnvironmentObject var productManagerVM: ProductManagerViewModel
     var product: Product
     var body: some View {
         HStack {
-            let productTotal = productMangerVM.getProductCount(product: product)
+            let productTotal = productManagerVM.getProductCount(product: product)
             Button {
-                productMangerVM.addtoCart(product: product)
+                productManagerVM.addToWishlist(product: product)
+                productManagerVM.addtoCart(product: product)
             } label: {
                 Image(systemName: "plus")
                     .font(.footnote)
@@ -238,21 +240,20 @@ struct ItemQuantityView: View {
                 Image(systemName: "trash")
                     .foregroundStyle(.black)
                     .onTapGesture {
-                        productMangerVM.removeFromCart(product: product)
+                        productManagerVM.removeFromCart(product: product)
                     }
             } else {
                 Image(systemName: "minus")
                     .foregroundStyle(.black)
                     .onTapGesture {
-                        productMangerVM.minusProductCart(product: product)
+                        productManagerVM.minusProductCart(product: product)
                     }
             }
         }
         .padding(.horizontal, 4)
         .padding(10)
         .foregroundStyle(.black)
-        .background(Color("Dark").opacity(0.2))
-        .clipShape(Capsule())
+        .background(RoundedRectangle(cornerRadius: 30).fill(.ultraThinMaterial))
     }
 }
 struct RatingStarView: View {

@@ -19,6 +19,11 @@ struct Product: Identifiable {
     var productCount: Int
     var colors: [ColorOption]
     var rating: Float
+    var isFavorite: Bool
+    
+    mutating func toggleFavorite() {
+        isFavorite.toggle()
+    }
 }
 
 extension Product: Equatable {
@@ -40,11 +45,11 @@ struct ColorOption: Identifiable {
 
 var productList = [
     Product(name: "White Stripe Polo Neck T-Shirt"
-            , imageName: "ModelJacket", suppliers: "AlenSolly", discription: " Polo Neck T-shirt .", price: 1999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 5),
+            , imageName: "ModelJacket", suppliers: "AlenSolly", discription: " Polo Neck T-shirt .", price: 1999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 5, isFavorite: false),
     Product(name: "Brown Jacket"
-            , imageName: "ModelS", suppliers: "Jack & John", discription: "Jacket Long using Winter time.", price: 5999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 2),
-    Product(name: "Shirt Chines Nect"
-            , imageName: "ModelSH", suppliers: "AlenSolly", discription: "Ace weekend dressing Shirt from Allen Solly by Allen Solly.", price: 3999, productCount: 1, colors: [ColorOption(color: Color(.black), color2: Color(.brown), color3: Color(.gray))], rating: 4),
-    Product(name: "Men Navy T-Shirt"
-            , imageName: "ModelSH", suppliers: "AlenSolly", discription: "Ace weekend dressing in this Navt Stripe Polo Neck T-shirt from Allen Solly by Allen Solly.", price: 1799, productCount: 1, colors: [ColorOption(color: Color(.yellow), color2: Color(.green), color3: Color(.red))], rating: 3)
+            , imageName: "ModelS", suppliers: "Jack & John", discription: "Jacket Long using Winter time.", price: 5999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 2, isFavorite: false),
+    Product(name: "RoadAxe"
+            , imageName: "ShoesBoys", suppliers: "Kalvin", discription: "Main Design for Street look, And road shoes.", price: 3999, productCount: 1, colors: [ColorOption(color: Color(.black), color2: Color(.brown), color3: Color(.gray))], rating: 4, isFavorite: false),
+    Product(name: "Men Classic"
+            , imageName: "ShoesClassic", suppliers: "Bricks", discription: "Mainly Design for office and casul uses.", price: 1799, productCount: 1, colors: [ColorOption(color: Color(.yellow), color2: Color(.green), color3: Color(.red))], rating: 3, isFavorite: false)
 ]

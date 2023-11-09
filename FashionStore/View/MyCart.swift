@@ -11,7 +11,7 @@ struct MyCart: View {
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
     var product: Product
     
-    @State private var totalPrice: Double = 0 
+    @State private var totalPrice: Double = 0
     @State private var promoCode: String = ""
     
     var body: some View {
@@ -19,13 +19,13 @@ struct MyCart: View {
             ZStack {
                 Color("Light")
                 VStack {
-                    VStack {
-                        HStack {
-                            Text("My Cart")
-                                .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
-                                .offset(x: -120)
-                        }
-                        
+                    ScrollView(showsIndicators: false){
+                        VStack {
+                            HStack {
+                                Text("My Cart")
+                                    .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
+                                    .offset(x: -120)
+                            }
                             VStack {
                                 if productManagerVM.cartProducts.count > 0 {
                                     ForEach(productManagerVM.cartProducts, id: \.id) { item in
@@ -34,89 +34,90 @@ struct MyCart: View {
                                         } label: {
                                             CartItemView(product: item.product)
                                             /*//                                            .swipeActions {
-    //                                                Button {
-    //                                                    productManagerVM.removeFromCart(product: item.product)
-    //                                                } label: {
-    //                                                    Label("", systemImage: "trash")
-    //                                                }
-    //                                                .tint(.black)
-    //                                            }*/
+                                             //                                                Button {
+                                             //                                                    productManagerVM.removeFromCart(product: item.product)
+                                             //                                                } label: {
+                                             //                                                    Label("", systemImage: "trash")
+                                             //                                                }
+                                             //                                                .tint(.black)
+                                             //                                            }*/
                                         }
-                                   }
+                                    }
                                 } else {
                                     Image("Cart")
                                         .resizable()
                                         .offset(y: -70)
                                         .frame(width: 550, height: 550)
-                                        
+                                    
                                 }
                             }
-                        Spacer()
+                            Spacer()
+                        }
                     }
-                    
                     Spacer()
-                    HStack {
-                        TextField( text: $promoCode, label: {
-                            Text("Promo Code")
-                        })
-                        .padding(.leading)
-                        .foregroundColor(.clear)
-                        .frame(width: 355, height: 60)
-                        .background(Color(red: 0.95, green: 0.95, blue: 0.95))
-                        .cornerRadius(10)
-                        .overlay {
-                            Button(action: {}, label: {
-                                Text("Apply")
-                                    .bold()
-                                    .foregroundStyle(Color("Light"))
+                    VStack {
+                        HStack {
+                            TextField( text: $promoCode, label: {
+                                Text("Promo Code")
                             })
-                            .padding(8)
-                            .background(Color("Dark"))
-                            .cornerRadius(8)
-                            .padding(.leading, 260)
-                        }
-                    }
-                    HStack {
-                        HStack(spacing: 5) {
-                            Text("Total")
-                                .font(.custom("PlayfairDisplay-Bold", size: 22))
-                            Text("(\(productManagerVM.getProductCount(product: product)) item):").fontWeight(.semibold).font(.title3)
-                        }
-                        .font(.title2).opacity(0.5)
-                        .fontWeight(.bold)
-                        Spacer()
-                        Text("$\(productManagerVM.cartTotal)")
-                            .font(.title)
-                            .fontWeight(.bold)
-                    }
-                    .padding()
-                    NavigationLink {
-                        DeliveryAddress()
-                    } label: {
-                        ZStack {
-                            Rectangle()
-                                .fill(Color("Dark"))
-                                .cornerRadius(20)
-                        } .overlay {
-                            HStack {
-                                Text("Proceed to Pay")
-                                    .font(.custom("PlayfairDisplay-Bold", size: 25))
-                                    .padding(.leading, 30)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
-                                Spacer()
-                                Image(systemName: "arrowshape.forward.fill")
-                                    .padding(6)
-                                    .foregroundStyle(Color("Dark"))
-                                    .background(Color("Light"))
-                                    .cornerRadius(10)
-                                    .padding(.horizontal, 15)
+                            .padding(.leading)
+                            .foregroundColor(.clear)
+                            .frame(width: 355, height: 60)
+                            .background(Color(red: 0.95, green: 0.95, blue: 0.95))
+                            .cornerRadius(10)
+                            .overlay {
+                                Button(action: {}, label: {
+                                    Text("Apply")
+                                        .bold()
+                                        .foregroundStyle(Color("Light"))
+                                })
+                                .padding(8)
+                                .background(Color("Dark"))
+                                .cornerRadius(8)
+                                .padding(.leading, 260)
                             }
                         }
-                        .padding(.bottom)
+                        
+                        HStack(spacing: 5) {
+                            Text("Total")
+                                .font(.system(size: 22).bold())
+                            Text("(\(productManagerVM.getProductCount(product: product)) item):").fontWeight(.semibold).font(.system(size: 21))
+                                .font(.title2).opacity(0.5)
+                                .fontWeight(.bold)
+                            Text("$\(productManagerVM.cartTotal)")
+                                .font(.system(size: 22))
+                                .fontWeight(.bold)
+                        }
+                        .offset(x: -75)
+                        NavigationLink {
+                            DeliveryAddress()
+                        } label: {
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color("Dark"))
+                                    .cornerRadius(20)
+                            } .overlay {
+                                HStack {
+                                    Text("Proceed to Pay").bold()
+                                        .font(.system(size: 25))
+                                        .padding(.leading, 30)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(10)
+                                    Spacer()
+                                    Image(systemName: "arrowshape.forward.fill")
+                                        .padding(6)
+                                        .foregroundStyle(Color("Dark"))
+                                        .background(Color("Light"))
+                                        .cornerRadius(10)
+                                        .padding(.horizontal, 15)
+                                }
+                            }
+                            .padding(.bottom)
+                        }
+                        .frame(width: UIScreen.main.bounds.width - 30, height: 75)
                     }
-                    .frame(width: UIScreen.main.bounds.width - 30, height: 75)
                 }
+                .padding(.bottom, 8)
                 .navigationBarBackButtonHidden(true)
             }
         }

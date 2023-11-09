@@ -23,13 +23,13 @@ struct WishlistView: View {
                     if productManagerVM.wishlistProducts.count > 0 {
                         ForEach(productManagerVM.wishlistProducts, id: \.id){ item in
                             WhishlistCardView(product: item.product)
-                                .environmentObject(productManagerVM)
                                 .padding(.top, 5)
                         }
                         HStack {
-                            Text("Total")
-                            Text("\(productManagerVM.wishlistTotal)")
+                            Text("Total:")
+                            Text("\(productManagerVM.wishlistTotal)").bold()
                         }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding()
                     } else {
                         Image("Cart")
                             .resizable()
@@ -37,7 +37,6 @@ struct WishlistView: View {
                     }
                     Spacer()
                 }
-                
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -50,7 +49,7 @@ struct WishlistView: View {
 }
 
 struct WhishlistCardView: View {
-    @State private var isFav = false
+    @State var isFav = false
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
     var product: Product
     var body: some View {
@@ -71,9 +70,8 @@ struct WhishlistCardView: View {
                     HStack {
                         Text(product.suppliers)
                             .font(.custom("PlayfairDisplay-Bold", size: 23))
-                        BTHeart(fav: isFav) {
-                            isFav.toggle()
-                        }
+                        BTHeart(isFav: $isFav, product: product, action: {})
+                            .environmentObject(productManagerVM)
                         .offset(x: -10,y: 10)
                     }
                     

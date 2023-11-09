@@ -18,9 +18,9 @@ struct ViewAll: View {
                         LazyVGrid(columns: column) {
                             ForEach(productList, id: \.id) { item in
                                 NavigationLink {
-                                    TopItems(product: item, fav: isFav, action: {})
+                                    TopItems(product: item, action: {})
                                 } label: {
-                                    TopItems(product: item, fav: isFav, action: {})
+                                    TopItems(product: item, action: {})
                                 }
                             }
                         }
