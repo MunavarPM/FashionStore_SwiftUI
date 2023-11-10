@@ -15,7 +15,7 @@ struct TabBar: View {
                     Label("Home", systemImage: "house")
                 }
                 .tag(0)
-            MyCart(product: productList[1])
+            MyCart(product: productList[1], isFav: .constant(false))
                 .tabItem {
                     Label("Cart", systemImage: "cart.fill")
                 }

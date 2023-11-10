@@ -45,7 +45,7 @@ struct ColorOption: Identifiable {
 
 var productList = [
     Product(name: "White Stripe Polo Neck T-Shirt"
-            , imageName: "ModelJacket", suppliers: "AlenSolly", discription: " Polo Neck T-shirt .", price: 1999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 5, isFavorite: false),
+            , imageName: "ModelJacket", suppliers: "AlenSolly", discription: " Polo Neck T-shirt .", price: 1999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 5, isFavorite: true),
     Product(name: "Brown Jacket"
             , imageName: "ModelS", suppliers: "Jack & John", discription: "Jacket Long using Winter time.", price: 5999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 2, isFavorite: false),
     Product(name: "RoadAxe"

@@ -70,7 +70,7 @@ struct WhishlistCardView: View {
                     HStack {
                         Text(product.suppliers)
                             .font(.custom("PlayfairDisplay-Bold", size: 23))
-                        BTHeart(isFav: $isFav, product: product, action: {})
+                        BTHeart(isFav: isFav, product: product, action: {})
                             .environmentObject(productManagerVM)
                         .offset(x: -10,y: 10)
                     }

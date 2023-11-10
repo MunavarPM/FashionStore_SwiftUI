@@ -214,10 +214,10 @@
 			isa = PBXGroup;
 			children = (
 				DB76FFCD2ACBF12400AEDD9F /* WelcomeView.swift */,
-				DB76FFDB2ACEFD0D00AEDD9F /* OnBoarding.swift */,
 				DB76FFE02ACF3E1100AEDD9F /* OnBoardingTapView.swift */,
 				DB6FF39A2AD04186003E8541 /* Signin.swift */,
 				DB6FF3962ACFEE4D003E8541 /* CustomTF.swift */,
+				DB76FFDB2ACEFD0D00AEDD9F /* OnBoarding.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";

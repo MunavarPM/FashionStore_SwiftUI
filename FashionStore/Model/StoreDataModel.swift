@@ -25,3 +25,5 @@
 //    // Define your SignUpResponseModel properties here
 //    let token: String
 //}
+
+

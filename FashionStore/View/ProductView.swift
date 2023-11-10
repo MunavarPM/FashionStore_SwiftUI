@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductView: View {
     
-    @State var isFav: Bool = false
+    @Binding var isFav: Bool
     @State private var isShowCartView = false
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
     @Environment(\.dismiss) var dismiss
@@ -26,16 +26,14 @@ struct ProductView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .edgesIgnoringSafeArea(.top)
+                        .overlay(alignment: .bottomTrailing) {
+                            BTHeart(isFav: isFav, product: product) {
+                                isFav.toggle()
+                            }
+                            .padding(30)
+                        }
                     
                     DescriptionView(product: product)
-                        .offset(y: -40)
-                    
-                    BTHeart(isFav: $isFav, product: product, action: {
-                        isFav.toggle()
-                        productManagerVM.addToWishlist(product: product)
-                    })
-                    .padding(.top, -470)
-                    .padding(.trailing, 50)
                 }
                 .onAppear {
                     UIScrollView.appearance().bounces = false
@@ -63,7 +61,7 @@ struct ProductView: View {
         }
         .sheet(isPresented: $isShowCartView, content: {
             NavigationStack {
-                MyCart(product: productList[1])
+                MyCart(product: productList[1], isFav: .constant(false))
                     .environmentObject(productManagerVM)
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
@@ -83,7 +81,7 @@ struct ProductView: View {
 }
 
 #Preview {
-    ProductView(product: productList[1])
+    ProductView(isFav: .constant(true), product: productList[3])
         .environmentObject(ProductManagerViewModel())
 }
 
@@ -93,16 +91,16 @@ struct DescriptionView: View {
     @State var isOption: Bool = false
     var product: Product
     let sizeArray: [String] = ["S", "M", "L"]
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 1) {
             Group {
-                Text("ModelSH")
-                Text("LP")
+                Text(product.name)
+                Text(product.suppliers)
             }
             .font(.custom("PlayfairDisplay-Bold", size: 20))
             
-            HStack(spacing: 2) {
+            HStack(spacing: 0) {
                 HStack(spacing: 5) {
                     let rating = product.rating
                     let intRating: Int = Int(rating)
@@ -120,6 +118,7 @@ struct DescriptionView: View {
                     Text("(\(String(format: "%.1f", rating)))")
                         .foregroundColor(.gray)
                 }
+                .offset(y: -18)
                 Spacer()
                 VStack(spacing: 10) {
                     ItemQuantityView(product: product)
@@ -130,7 +129,7 @@ struct DescriptionView: View {
             
             Text("Size")
                 .font(.custom("PlayfairDisplay-Bold", size: 20))
-                .padding(.bottom)
+                .offset(y: -20)
             HStack {
                 ForEach(sizeArray,id: \.self) { size in
                     Text("\(size)")
@@ -157,19 +156,19 @@ struct DescriptionView: View {
                                 }
                                 .font(.title)
                             }
-                                
+                            
                         }
                     }
                     .frame(width: 80, height: 20)
                 }
-                .offset(x: -30)
+                .padding()
             }
             .offset(y: -9)
             Text("Description")
                 .font(.custom("PlayfairDisplay-Bold", size: 20))
-            Text("Get a little lift from these Sam Edelman sandals featuring ruched straps and leather lace-up ties, while a braided jute sole makes a fresh statement for summer.")
+            Text(product.discription)
                 .font(.custom("PlayfairDisplay-Regular", size: 12)).opacity(0.6)
-                .padding(.top)
+                .padding(.top, 150)
             
         }
         .padding()
@@ -247,7 +246,7 @@ struct ItemQuantityView: View {
                     .foregroundStyle(.black)
                     .onTapGesture {
                         productManagerVM.minusProductCart(product: product)
-                    }
+                }
             }
         }
         .padding(.horizontal, 4)

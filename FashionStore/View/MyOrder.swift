@@ -102,7 +102,7 @@ struct MyOrder: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         
                         NavigationLink {
-                            MyCart(product: productList[1])
+                            MyCart(product: productList[1], isFav: .constant(false))
                         } label: {
                             CartButton(numberOfProduct: 1, action: {
                                 print("CartButton")
@@ -127,7 +127,9 @@ struct DismissView: View {
             }
         }, label: {
             Image(systemName: "xmark.circle.fill")
+                .foregroundStyle(Color("Dark"))
                 .font(.title2)
+                
         })
     }
 }

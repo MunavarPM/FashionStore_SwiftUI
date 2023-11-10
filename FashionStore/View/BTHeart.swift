@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BTHeart: View {
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
-    @Binding var isFav: Bool
+    @State var isFav: Bool
     var product: Product
     let action: () -> ()
     var body: some View {
@@ -35,7 +35,7 @@ struct BTHeart: View {
     }
 }
 #Preview {
-    BTHeart(isFav: .constant(false), product: productList[1], action: {})
+    BTHeart(isFav: true, product: productList[1], action: {})
         .environmentObject(ProductManagerViewModel())
         .preferredColorScheme(.dark)
 }

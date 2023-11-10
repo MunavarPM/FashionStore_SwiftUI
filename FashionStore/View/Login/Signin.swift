@@ -23,8 +23,7 @@ struct Signin: View {
     @State var alertTittle: String = ""
     @State var showAlert: Bool = false
     @State var showHome: Bool = false
-//    @State private var Email: String = ""
-//    @State private var Password: String = ""
+
     
     @StateObject var authViewModel = AuthViewModel()
     

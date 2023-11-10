@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     private let categories = ["Dresses", "Jackets", "Jeans", "Shoese"]
     @State private var selectedIndex: Int = 0
-    @State var isFav: Bool = false
+    @State var isFav: Bool
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
     
     var product: Product
@@ -65,7 +65,7 @@ struct HomeView: View {
                             if selectedIndex == 0 {
                                 LazyVGrid(columns: gridColumn) {
                                     ForEach(productList.prefix(2), id: \.id){ item in
-                                        NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
+                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item) {
 
                                                     if product.isFavorite {
@@ -77,7 +77,7 @@ struct HomeView: View {
                                         }
                                     }
                                     ForEach(productList.prefix(5), id: \.id){ item in
-                                        NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
+                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item,  action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
@@ -90,7 +90,7 @@ struct HomeView: View {
                             } else if selectedIndex == 1 {
                                 LazyVGrid(columns: gridColumn) {
                                     ForEach(productList.prefix(3), id: \.id){ item in
-                                        NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
+                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
@@ -100,7 +100,7 @@ struct HomeView: View {
                                         }
                                     }
                                     ForEach(productList.prefix(0), id: \.id){ item in
-                                        NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
+                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
@@ -113,7 +113,7 @@ struct HomeView: View {
                             } else if selectedIndex == 2 {
                                 LazyVGrid(columns: gridColumn) {
                                     ForEach(productList.prefix(4), id: \.id){ item in
-                                        NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
+                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
@@ -122,7 +122,7 @@ struct HomeView: View {
                                         }
                                     }
                                     ForEach(productList.prefix(1), id: \.id){ item in
-                                        NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
+                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
@@ -134,7 +134,7 @@ struct HomeView: View {
                             } else if selectedIndex == 3 {
                                 LazyVGrid(columns: gridColumn) {
                                     ForEach(productList.prefix(5), id: \.id){ item in
-                                        NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
+                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
@@ -143,7 +143,7 @@ struct HomeView: View {
                                         }
                                     }
                                     ForEach(productList.prefix(0), id: \.id){ item in
-                                        NavigationLink(destination: ProductView(product: item).environmentObject(productManagerVM)) {
+                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeInOut) {
                                                     isFav.toggle()
@@ -328,11 +328,6 @@ struct TopItems: View {
                 VStack {
                     Button(action: {
                         action()
-                        if product.isFavorite {
-                          productManagerVM.addToWishlist(product: product)
-                        } else {
-                            productManagerVM.removeFromWishlist(product: product)
-                        }
                     }, label: {
                         Image(systemName: product.isFavorite ? "heart.fill" : "heart" )
                             .font(.title3)
@@ -341,6 +336,9 @@ struct TopItems: View {
                             .padding(7)
                     })
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                    .onTapGesture {
+                        productManagerVM.addToWishlist(product: product)
+                    }
                 }
                 .padding(10)
             }
@@ -380,39 +378,39 @@ struct SearchBar: View {
                     .stroke(Color.white.opacity(1.0))
                     .blendMode(.overlay)
             }
-            /*//            Button {
-             //                print("sort")
-             //            } label: {
-             //                ZStack {
-             //                    Circle()
-             //                        .fill(Color("Dark"))
-             //                        .cornerRadius(10)
-             //                        .frame(width: 45, height: 45)
-             //                        .overlay {
-             //                            VStack(alignment: .center, spacing: 7) {
-             //                                HStack(spacing: -0.6) {
-             //                                    Circle()
-             //                                        .frame(width: 7, height: 7)
-             //                                        .offset(x: 0)
-             //                                    Rectangle()
-             //                                        .frame(width: 13, height: 3)
-             //                                        .offset(x: 5)
-             //                                        .opacity(0.5)
-             //                                }
-             //                                HStack(spacing: -0.6) {
-             //                                    Rectangle()
-             //                                        .frame(width: 13, height: 3)
-             //                                        .offset(x: 0)
-             //                                        .opacity(0.5)
-             //                                    Circle()
-             //                                        .frame(width: 7, height: 7)
-             //                                        .offset(x: 5)
-             //                                }
-             //                            }
-             //                            .foregroundStyle(Color("Light"))
-             //                        }
-             //                }
-             //            }*/
+            Button {
+                print("sort")
+            } label: {
+                ZStack {
+                    Circle()
+                        .fill(Color("Dark"))
+                        .cornerRadius(10)
+                        .frame(width: 45, height: 45)
+                        .overlay {
+                            VStack(alignment: .center, spacing: 7) {
+                                HStack(spacing: -0.6) {
+                                    Circle()
+                                        .frame(width: 7, height: 7)
+                                        .offset(x: 0)
+                                    Rectangle()
+                                        .frame(width: 13, height: 3)
+                                        .offset(x: 5)
+                                        .opacity(0.5)
+                                }
+                                HStack(spacing: -0.6) {
+                                    Rectangle()
+                                        .frame(width: 13, height: 3)
+                                        .offset(x: 0)
+                                        .opacity(0.5)
+                                    Circle()
+                                        .frame(width: 7, height: 7)
+                                        .offset(x: 5)
+                                }
+                            }
+                            .foregroundStyle(Color("Light"))
+                        }
+                }
+            }
         }
         .padding(.horizontal, 10)
     }

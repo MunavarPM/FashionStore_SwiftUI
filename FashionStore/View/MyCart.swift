@@ -13,6 +13,7 @@ struct MyCart: View {
     
     @State private var totalPrice: Double = 0
     @State private var promoCode: String = ""
+    @Binding var isFav: Bool
     
     var body: some View {
         NavigationStack {
@@ -30,7 +31,7 @@ struct MyCart: View {
                                 if productManagerVM.cartProducts.count > 0 {
                                     ForEach(productManagerVM.cartProducts, id: \.id) { item in
                                         NavigationLink {
-                                            ProductView(product: item.product)
+                                            ProductView(isFav: $isFav, product: item.product)
                                         } label: {
                                             CartItemView(product: item.product)
                                             /*//                                            .swipeActions {
@@ -77,18 +78,23 @@ struct MyCart: View {
                                 .padding(.leading, 260)
                             }
                         }
-                        
-                        HStack(spacing: 5) {
-                            Text("Total")
-                                .font(.system(size: 22).bold())
-                            Text("(\(productManagerVM.getProductCount(product: product)) item):").fontWeight(.semibold).font(.system(size: 21))
-                                .font(.title2).opacity(0.5)
-                                .fontWeight(.bold)
-                            Text("$\(productManagerVM.cartTotal)")
-                                .font(.system(size: 22))
-                                .fontWeight(.bold)
+                        VStack(alignment: .leading){
+                            HStack(spacing: 5) {
+                                Text("Total")
+                                    .font(.system(size: 22).bold())
+                                Text("(\(productManagerVM.getProductCount(product: product)) item): ").fontWeight(.semibold).font(.system(size: 21))
+                                    .font(.title2).opacity(0.5)
+                                    .fontWeight(.bold)
+                                Text("$\(productManagerVM.cartTotal)")
+                                    .font(.system(size: 22))
+                                    .fontWeight(.bold)
+                            }
+                            .offset(x: -78)
                         }
-                        .offset(x: -75)
+                        .padding()
+                        .frame(width: 360)
+                        .background(RoundedRectangle(cornerRadius: 15).stroke(Color.gray, lineWidth: 1.5).opacity(0.6).background(Color(red: 0.95, green: 0.95, blue: 0.95))).cornerRadius(15)
+                        .padding(3)
                         NavigationLink {
                             DeliveryAddress()
                         } label: {
@@ -98,18 +104,11 @@ struct MyCart: View {
                                     .cornerRadius(20)
                             } .overlay {
                                 HStack {
-                                    Text("Proceed to Pay").bold()
+                                    Text("Proceed to Pay")
                                         .font(.system(size: 25))
-                                        .padding(.leading, 30)
+                                        .padding()
                                         .foregroundColor(.white)
                                         .cornerRadius(10)
-                                    Spacer()
-                                    Image(systemName: "arrowshape.forward.fill")
-                                        .padding(6)
-                                        .foregroundStyle(Color("Dark"))
-                                        .background(Color("Light"))
-                                        .cornerRadius(10)
-                                        .padding(.horizontal, 15)
                                 }
                             }
                             .padding(.bottom)
@@ -126,7 +125,7 @@ struct MyCart: View {
 
 
 #Preview {
-    MyCart(product: productList[1])
+    MyCart(product: productList[1], isFav: .constant(false))
         .environmentObject(ProductManagerViewModel())
 }
 
