@@ -10,23 +10,10 @@ import Firebase
 
 struct Signin: View {
     
-    //    @ObservedObject var authViewModel = AuthViewModel()
-    
-    @State var username: String = ""
-    @State var email: String = ""
-    @State var password: String = ""
-    @State var conformPassword: String = ""
-    @State private var rotationEffect: Double = 0.0
-    @State private var signinToggle: Bool = true
-    @State var isLoading: Bool = false
-    @State var alertMessage: String = ""
-    @State var alertTittle: String = ""
-    @State var showAlert: Bool = false
-    @State var showHome: Bool = false
-
-    
+    @FocusState private var emailIsFoucused: Bool
     @StateObject var authViewModel = AuthViewModel()
-    
+    @State var rotationEffect: Double = 0.0
+    @ObservedObject var viewModel = LoginRegisterViewModel()
     
     var body: some View {
         //        if authViewModel.isAuthenticated {
@@ -40,36 +27,37 @@ struct Signin: View {
                     .padding(.bottom, 50)
                     .offset(x: -15)
                 VStack(alignment: .leading) {
-                    Text(signinToggle ?  "Welcome !" : "Sign Up")
+                    Text(viewModel.signinToggle ?  "Welcome !" : "Sign Up")
                         .font(.custom("PlayfairDisplay-Bold", size: 25))
                         .padding(.bottom, 5)
-                    Text(signinToggle ?  "please login or sign up to continue with our app" : "Create an new account")
+                    Text(viewModel.signinToggle ?  "please login or sign up to continue with our app" : "Create an new account")
                         .font(.custom("PlayfairDisplay-Regular", size: 15))
                         .foregroundStyle(.gray)
                         .padding(.bottom, 25)
                     VStack(spacing: 25) {
-                        if !signinToggle {
-                            CustomTF(hint: "Username", value: $username)
-                                .font(.custom("PlayfairDisplay-Regular", size: 17))
+                        if !viewModel.signinToggle {
+                            CustomTF(hint: "Username", value: $viewModel.username)
                                 .autocapitalization(.none)
+                                .font(.custom("PlayfairDisplay-Regular", size: 17))
                         }
-                        CustomTF(hint: "Email", value: $email)
+                        CustomTF(hint: "Email", value: $viewModel.email)
+                            .autocapitalization(.none)
+                            .focused($emailIsFoucused)
+                            .font(.custom("PlayfairDisplay-Regular", size: 17))
+                            .textContentType(.emailAddress)
+                        CustomTF(hint: "Password",isPassword: true, value: $viewModel.password)
                             .autocapitalization(.none)
                             .font(.custom("PlayfairDisplay-Regular", size: 17))
-                            .autocapitalization(.none)
-                        CustomTF(hint: "Password",isPassword: true, value: $password)
-                            .font(.custom("PlayfairDisplay-Regular", size: 17))
-                            .autocapitalization(.none)
                             .padding(.top, 5)
-                        if !signinToggle {
-                            CustomTF(hint: "Conform Password", isPassword: true, value: $conformPassword)
-                                .font(.custom("PlayfairDisplay-Regular", size: 17))
+                        if !viewModel.signinToggle {
+                            CustomTF(hint: "Conform Password", isPassword: true, value: $viewModel.conformPassword)
                                 .autocapitalization(.none)
+                                .font(.custom("PlayfairDisplay-Regular", size: 17))
                         }
-                        if signinToggle {
+                        if viewModel.signinToggle {
                             Button {
                                 Task {
-                                    await authViewModel.reserPassword(email: email)
+                                    await authViewModel.reserPassword(email: viewModel.email)
                                 }
                             } label: {
                                 Text("Forgot Password?")
@@ -83,62 +71,51 @@ struct Signin: View {
                             .overlay {
                                 Button {
                                     Task {
-//                                        /*do {
-//                                            if !signinToggle {
-//                                                try await authViewModel.createUser(withEmail: Email, password: Password, userName: username)
-//                                            } else {
-//                                                try await
-//                                                authViewModel.signIn(withEmail: email, password: password)
-//                                            }
-//                                        } catch {
-//                                            showAlert.toggle()
-//                                            self.alertMessage = error.localizedDescription
-//                                        }*/
-                                        
                                         do {
-                                            if signinToggle {
-                                                try await authViewModel.signIn(withEmail: email, password: password)
+                                            if viewModel.signinToggle {
+                                                try await authViewModel.signIn(withEmail: viewModel.email, password: viewModel.password)
                                             } else {
-                                                try await authViewModel.createUser(withEmail: email, password: password, userName: username)
+                                                try await authViewModel.createUser(withEmail: viewModel.email, password: viewModel.password, userName: viewModel.username)
                                             }
                                         } catch {
                                             print("😿 Button of login and signin\(error.localizedDescription)")
-                                            showAlert.toggle()
-                                            self.alertMessage = error.localizedDescription
-                                            self.alertTittle = "⚠️"
+                                            viewModel.showAlert.toggle()
+                                            self.viewModel.alertMessage = error.localizedDescription
+                                            self.viewModel.alertTittle = "⚠️"
                                         }
                                     }
                                 } label: {
-                                    Text(signinToggle ? "Login" : "Submit")
+                                    Text(viewModel.signinToggle ? "Login" : "Submit")
                                         .font(.custom("PlayfairDisplay-Bold", size: 17))
                                         .foregroundStyle(.light)
                                         .padding(.horizontal, 35)
                                         .padding(.vertical, 12)
                                         .background(.dark)
                                         .clipShape(Capsule())
-                                        .disabledWithOpacity( email.isEmpty || password.isEmpty)
+                                        .disabledWithOpacity( viewModel.email.isEmpty || viewModel.password.isEmpty)
                                 }
                                 .onAppear {
                                     Auth.auth().addStateDidChangeListener { auth, user in
                                         if user != nil {
-                                            showHome.toggle()
+                                            viewModel.showHome.toggle()
                                         }
                                     }
                                 }
-                                .alert(alertMessage, isPresented:$showAlert, actions: {})
+                                .alert(viewModel.alertMessage, isPresented:$viewModel.showAlert, actions: {})
                             }
+                        
                         Spacer()
                         
                         HStack {
-                            Text(signinToggle ? "Don't have an Account?" :  "Already have an account" )
+                            Text(viewModel.signinToggle ? "Don't have an Account?" :  "Already have an account")
                                 .font(.custom("PlayfairDisplay-Regular", size: 15))
                             Button {
                                 withAnimation(.easeInOut(duration: 0.7)) {
-                                    signinToggle.toggle()
+                                    viewModel.signinToggle.toggle()
                                     self.rotationEffect += 180
                                 }
                             } label: {
-                                Text(signinToggle ? "Sign up" : "Sign in")
+                                Text(viewModel.signinToggle ? "Sign up" : "Sign in")
                                     .font(.custom("PlayfairDisplay-Bold", size: 17))
                                     .fontWeight(.bold)
                                     .tint(.black)
@@ -152,33 +129,24 @@ struct Signin: View {
                 .padding(.vertical, 25)
             }
             .rotation3DEffect(Angle(degrees: rotationEffect), axis: (x: 0.0, y: 5.0, z: 0.0))
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text(alertTittle), message: Text(alertMessage), dismissButton: .cancel())
+            .alert(isPresented: $viewModel.showAlert) {
+                Alert(title: Text(viewModel.alertTittle), message: Text(viewModel.alertMessage), dismissButton: .cancel())
         }
         .rotation3DEffect(Angle(degrees: rotationEffect), axis: (x: 0.0, y: 5.0, z: 0.0))
         
         }
-        .fullScreenCover(isPresented: $showHome, content: {
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                self.emailIsFoucused = true
+            }
+        }
+        .fullScreenCover(isPresented: $viewModel.showHome, content: {
             withAnimation(.easeIn) {
                 TabBar()
             }
         })
     }
 }
-//    func register() {
-//        /// Linking the firebase when tap the button
-//        Task {
-//            do {
-//                //                isLoading = true
-//                try await authViewModel.signUp(signUpData: SignUpDataModel(username: username, email: email, password: password))
-//                //                isLoggedIn = true
-//                //                isLoading = false
-//            } catch {
-//                alertMessage = error.localizedDescription
-//            }
-//        }
-//    }
-//}
 
 #Preview {
     Signin()

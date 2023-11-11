@@ -78,19 +78,17 @@ struct MyCart: View {
                                 .padding(.leading, 260)
                             }
                         }
-                        VStack(alignment: .leading){
                             HStack(spacing: 5) {
                                 Text("Total")
-                                    .font(.system(size: 22).bold())
-                                Text("(\(productManagerVM.getProductCount(product: product)) item): ").fontWeight(.semibold).font(.system(size: 21))
+                                    .font(.system(size: 20).bold())
+                                Text("(\(productManagerVM.getProductCount(product: product)) item): ").fontWeight(.semibold).font(.system(size: 19))
                                     .font(.title2).opacity(0.5)
                                     .fontWeight(.bold)
                                 Text("$\(productManagerVM.cartTotal)")
-                                    .font(.system(size: 22))
+                                    .font(.system(size: 20))
                                     .fontWeight(.bold)
                             }
-                            .offset(x: -78)
-                        }
+                            
                         .padding()
                         .frame(width: 360)
                         .background(RoundedRectangle(cornerRadius: 15).stroke(Color.gray, lineWidth: 1.5).opacity(0.6).background(Color(red: 0.95, green: 0.95, blue: 0.95))).cornerRadius(15)
@@ -105,7 +103,7 @@ struct MyCart: View {
                             } .overlay {
                                 HStack {
                                     Text("Proceed to Pay")
-                                        .font(.system(size: 25))
+                                        .font(.system(size: 20).bold())
                                         .padding()
                                         .foregroundColor(.white)
                                         .cornerRadius(10)
