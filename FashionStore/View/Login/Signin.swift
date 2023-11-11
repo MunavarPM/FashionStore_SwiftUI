@@ -79,9 +79,9 @@ struct Signin: View {
                                             }
                                         } catch {
                                             print("😿 Button of login and signin\(error.localizedDescription)")
-                                            viewModel.showAlert.toggle()
-                                            self.viewModel.alertMessage = error.localizedDescription
-                                            self.viewModel.alertTittle = "⚠️"
+                                            authViewModel.showAlert.toggle()
+                                            self.authViewModel.alertMessage = error.localizedDescription
+                                            self.authViewModel.alertTittle = "⚠️"
                                         }
                                     }
                                 } label: {
@@ -101,7 +101,6 @@ struct Signin: View {
                                         }
                                     }
                                 }
-                                .alert(viewModel.alertMessage, isPresented:$viewModel.showAlert, actions: {})
                             }
                         
                         Spacer()
@@ -129,8 +128,8 @@ struct Signin: View {
                 .padding(.vertical, 25)
             }
             .rotation3DEffect(Angle(degrees: rotationEffect), axis: (x: 0.0, y: 5.0, z: 0.0))
-            .alert(isPresented: $viewModel.showAlert) {
-                Alert(title: Text(viewModel.alertTittle), message: Text(viewModel.alertMessage), dismissButton: .cancel())
+            .alert(isPresented: $authViewModel.showAlert) {
+                Alert(title: Text(authViewModel.alertTittle), message: Text(authViewModel.alertMessage), dismissButton: .cancel())
         }
         .rotation3DEffect(Angle(degrees: rotationEffect), axis: (x: 0.0, y: 5.0, z: 0.0))
         

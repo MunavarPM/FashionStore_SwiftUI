@@ -92,7 +92,6 @@ struct ProfileView: View {
                         }
                         Button(action: {
                             authViewModel.signOut()
-                            showHome = true
                         }, label: {
                             HStack {
                                 Image(systemName: "rectangle.portrait.and.arrow.forward.fill")
@@ -100,19 +99,32 @@ struct ProfileView: View {
                                     .font(.caption)
                                 Text("LogOut").foregroundStyle(Color("Light"))
                             }
+                            .alert(isPresented: $authViewModel.showAlert) {
+                                Alert(
+                                    title: Text(authViewModel.alertTittle),
+                                    message: Text(authViewModel.alertMessage),
+                                    dismissButton: .default(
+                                        Text("OK"),
+                                        action: {
+                                            // Additional logic if needed
+                                            showHome = true
+                                        }
+                                    )
+                                )
+                            }
+
                             .frame(width: UIScreen.main.bounds.width - 23, height: 50)
                             .background(Color("Dark"))
                             .cornerRadius(17)
                             .padding()
                         })
                     }
-                    
-                    
                     .fullScreenCover(isPresented: $showHome, content: {
                         withAnimation(.easeOut) {
                             Signin()
                         }
                     })
+                    
                 }
             }
         }

@@ -15,8 +15,6 @@ class LoginRegisterViewModel: ObservableObject {
     @Published var signinToggle: Bool = true
     @Published var isLoading: Bool = false
     @Published var alertMessage: String = ""
-    @Published var alertTittle: String = ""
-    @Published var showAlert: Bool = false
     @Published var showHome: Bool = false
 }
 

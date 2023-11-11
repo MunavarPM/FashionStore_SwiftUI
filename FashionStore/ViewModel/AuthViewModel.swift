@@ -15,6 +15,9 @@ import FirebaseFirestore
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
+    @Published var alertTittle: String = ""
+    @Published var alertMessage: String = ""
+    @Published var showAlert: Bool = false
     
 //    @AppStorage("user_name") private var userName: String = ""
 //    @AppStorage("user_UID")private var userUID: String = ""
@@ -28,13 +31,14 @@ class AuthViewModel: ObservableObject {
     
     
     func signIn(withEmail email: String, password: String) async throws {
-        print("🥶in")
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
             await fetchUser()
         } catch {
-            print("😿in signIn\(error.localizedDescription)")
+            self.alertTittle = "Uh-oh!"
+            self.alertMessage = (error.localizedDescription)
+            self.showAlert.toggle()
         }
     }
     
@@ -48,9 +52,10 @@ class AuthViewModel: ObservableObject {
             await fetchUser()
             
         } catch {
-            print("Error in CreatingUser\(error.localizedDescription)")
+            self.alertTittle = "Uh-oh!"
+            self.alertMessage = (error.localizedDescription)
+            self.showAlert.toggle()
         }
-        print("🥶")
     }
     
     func signOut() {
@@ -58,8 +63,13 @@ class AuthViewModel: ObservableObject {
             try Auth.auth().signOut()
             self.userSession = nil
             self.currentUser = nil
+            self.alertTittle = "See You Later!"
+            self.alertMessage = "Thank you for being a part of our community. We'll miss you! Come back soon for more smiles and great experiences😊👋🏼."
+            self.showAlert.toggle()
         } catch {
-            print("Enrror in the signOut👋🏼\(error.localizedDescription)")
+            self.alertTittle = "Uh-oh!"
+            self.alertMessage = (error.localizedDescription)
+            self.showAlert.toggle()
         }
     }
     
@@ -73,11 +83,17 @@ class AuthViewModel: ObservableObject {
         self.currentUser = try? snapshot.data(as: User.self)
         print("😎Current User\(String(describing: self.currentUser))")
     }
+    
     func reserPassword(email: String) async {
         do {
             try await Auth.auth().sendPasswordReset(withEmail: email)
+            self.alertTittle = "Password reset email sent"
+            self.alertMessage = ("Check you email inbox for an email to reset you're password 📥")
+            self.showAlert.toggle()
         } catch {
-            print("Error of SendReset Password\(error.localizedDescription)")
+            self.alertTittle = "Uh-oh!"
+            self.alertMessage = (error.localizedDescription)
+            self.showAlert.toggle()
         }
     }
 }

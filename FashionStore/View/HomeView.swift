@@ -42,8 +42,8 @@ struct HomeView: View {
                                                 selectedIndex = item
                                             }
                                         }
+                                    }
                                 }
-                            }
                             .padding(EdgeInsets(top: 4, leading: 10, bottom: 10, trailing: 20))
                         }
                         HStack {
@@ -67,19 +67,19 @@ struct HomeView: View {
                                     ForEach(productList.prefix(2), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item) {
-
-                                                    if product.isFavorite {
-                                                      productManagerVM.addToWishlist(product: product)
-                                                    } else {
-                                                        productManagerVM.removeFromWishlist(product: product)
-                                                    }
+                                                
+                                                if product.isFavorite {
+                                                    productManagerVM.addToWishlist(product: product)
+                                                } else {
+                                                    productManagerVM.removeFromWishlist(product: product)
+                                                }
                                             }
                                         }
                                     }
                                     ForEach(productList.prefix(5), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item,  action: {
-                                                withAnimation(.easeInOut) {
+                                                withAnimation(.easeOut) {
                                                     isFav.toggle()
                                                     productManagerVM.addToWishlist(product: item)
                                                 }
@@ -92,7 +92,7 @@ struct HomeView: View {
                                     ForEach(productList.prefix(3), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
-                                                withAnimation(.easeInOut) {
+                                                withAnimation(.easeOut) {
                                                     isFav.toggle()
                                                     productManagerVM.addToWishlist(product: item)
                                                 }
@@ -102,7 +102,7 @@ struct HomeView: View {
                                     ForEach(productList.prefix(0), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
-                                                withAnimation(.easeInOut) {
+                                                withAnimation(.easeOut) {
                                                     isFav.toggle()
                                                     productManagerVM.addToWishlist(product: item)
                                                 }
@@ -115,7 +115,7 @@ struct HomeView: View {
                                     ForEach(productList.prefix(4), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
-                                                withAnimation(.easeInOut) {
+                                                withAnimation(.easeOut) {
                                                     isFav.toggle()
                                                 }
                                             })
@@ -124,7 +124,7 @@ struct HomeView: View {
                                     ForEach(productList.prefix(1), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
-                                                withAnimation(.easeInOut) {
+                                                withAnimation(.easeOut) {
                                                     isFav.toggle()
                                                 }
                                             })
@@ -136,7 +136,7 @@ struct HomeView: View {
                                     ForEach(productList.prefix(5), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
-                                                withAnimation(.easeInOut) {
+                                                withAnimation(.easeOut) {
                                                     isFav.toggle()
                                                 }
                                             })
@@ -145,7 +145,7 @@ struct HomeView: View {
                                     ForEach(productList.prefix(0), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
-                                                withAnimation(.easeInOut) {
+                                                withAnimation(.easeOut) {
                                                     isFav.toggle()
                                                 }
                                             })
@@ -408,7 +408,7 @@ struct SearchBar: View {
                                 }
                             }
                             .foregroundStyle(Color("Light"))
-                        }
+                    }
                 }
             }
         }
