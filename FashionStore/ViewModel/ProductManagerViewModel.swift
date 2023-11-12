@@ -18,6 +18,7 @@ class ProductManagerViewModel: ObservableObject {
     @Published private(set) var cartTotal: Int = 0
     
     
+    
     func addtoCart(product: Product) {
         if let existingProduct = cartProducts.first(where: { $0.product == product }) {
             existingProduct.productCount += 1

@@ -98,6 +98,7 @@ struct Signin: View {
                                     Auth.auth().addStateDidChangeListener { auth, user in
                                         if user != nil {
                                             viewModel.showHome.toggle()
+                                            viewModel.clearPassword()
                                         }
                                     }
                                 }

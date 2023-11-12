@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Start from here
 struct OnBoardingTapView: View {
     @State private var currentPage = 0
     @State private var isOnboardingComplete = false
