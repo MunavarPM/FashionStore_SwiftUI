@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import PhotosUI
+import FirebaseStorage
+
 
 struct ProfileView: View {
     @StateObject var authViewModel = AuthViewModel()
+    @StateObject var viewModel = ProductManagerViewModel()
     @State private var isDarkMode = false
     @Environment(\.presentationMode) var presentationMode
-  @State var showHome: Bool = false
-    
+    @State var showHome: Bool = false
+    @State private var isImageSelected: PhotosPickerItem? = nil
     
     var body: some View {
         ZStack {
@@ -20,7 +24,48 @@ struct ProfileView: View {
             
         NavigationStack {
                 VStack {
-                    ShadowView(name: authViewModel.currentUser?.userName ?? User.munavar.userName, email: authViewModel.currentUser?.email ?? User.munavar.email)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(Color("Light").opacity(0.8))
+                            .shadow(radius: 15, x: 5, y: 10)
+                            .frame(width: 360, height: 120)
+                    }
+                    .overlay(
+                        HStack {
+                                Image(.onBoarding1)
+                                    .resizable()
+                                    .frame(width: 90, height: 90)
+                                    .cornerRadius(20)
+                            
+                            
+                            Button(action: {}, label: {
+                                ZStack {
+                                    PhotosPicker(selection: $isImageSelected, matching: .images, photoLibrary: .shared()){
+                                        Image(systemName: "pencil.line")
+                                            .foregroundStyle(.black).font(.footnote).bold()
+                                    }
+                                }
+                                .onChange(of: isImageSelected) { value in
+                                    if let value {
+                                        viewModel.saveProductImage(item: value)
+                                    }
+                                }
+                                .padding()
+                                .frame(width: 25, height: 25)
+                                .background(Color("Light").opacity(0.8))
+                                .cornerRadius(7)
+                            })
+                            .offset(x: -20, y: 40)
+                            
+                            VStack(alignment: .leading) {
+                                Text(authViewModel.currentUser?.userName ?? User.munavar.userName )
+                                    .font(.custom("PlayfairDisplay-Regular", size: 25)).bold()
+                                Text(authViewModel.currentUser?.email ?? User.munavar.email).opacity(0.4)
+                                }
+                            }
+                            .padding(.horizontal, 30)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    )
                         .padding(.top)
                     ScrollView(showsIndicators: false) {
                         VStack {
@@ -108,9 +153,7 @@ struct ProfileView: View {
                                     dismissButton: .default(
                                         Text("OK"),
                                         action: {
-                                            // Additional logic if needed
                                             showHome = true
-//                                            presentationMode.wrappedValue.dismiss()
                                         }
                                     )
                                 )
@@ -139,47 +182,6 @@ struct ProfileView: View {
     ProfileView()
 }
 
-struct ShadowView: View {
-    let name: String?
-    let email: String?
-    var body: some View {
-        ZStack {
-            
-            RoundedRectangle(cornerRadius: 15)
-                .fill(Color("Light").opacity(0.8))
-                .shadow(radius: 15, x: 5, y: 10)
-                .frame(width: 360, height: 120)
-        }
-        .overlay(
-            HStack {
-                Image(.onBoarding1)
-                    .resizable()
-                    .frame(width: 90, height: 90)
-                    .cornerRadius(20)
-                
-                Button(action: {}, label: {
-                    ZStack {
-                        Image(systemName: "pencil.line")
-                            .foregroundStyle(.black).font(.footnote).bold()
-                    }
-                    .padding()
-                    .frame(width: 25, height: 25)
-                    .background(Color("Light").opacity(0.8))
-                    .cornerRadius(7)
-                })
-                .offset(x: -20, y: 40)
-                
-                VStack(alignment: .leading) {
-                    Text(name ?? "")
-                        .font(.custom("PlayfairDisplay-Regular", size: 25)).bold()
-                    Text(email ?? "").opacity(0.4)
-                }
-            }
-                .padding(.horizontal, 30)
-                .frame(maxWidth: .infinity, alignment: .leading)
-        )
-    }
-}
 
 struct SettingBTView: View {
     let imageSF: String

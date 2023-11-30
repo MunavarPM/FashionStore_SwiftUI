@@ -6,7 +6,9 @@
 //
 
 import Foundation
-
+import SwiftUI
+import PhotosUI
+import FirebaseFirestore
 
 class ProductManagerViewModel: ObservableObject {
     
@@ -86,7 +88,6 @@ class ProductManagerViewModel: ObservableObject {
             wishlistTotal += product.price
             print("\(wishlistProducts.count) ❤️Wishlist")
         }
-        
     }
     
     func removeFromWishlist(product: Product) {
@@ -106,6 +107,15 @@ class ProductManagerViewModel: ObservableObject {
                 }
             }
         }
+    func saveProductImage(item: PhotosPickerItem) {
+        Task {
+            guard let data = try await item.loadTransferable(type: Data.self) else { return }
+            let (path, name) = try await StorageManager.shared.saveImage(data: data)
+            print("ProductImageSaved")
+            print(path, name)
+            
+        }
+    }
     
 //    func filterSelectedOption(option: FilterOption) async throws {
 //        switch option {

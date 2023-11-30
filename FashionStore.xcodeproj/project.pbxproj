@@ -45,6 +45,7 @@
 		DBB23DD62AFF5E0A00CE2A84 /* LoginRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB23DD52AFF5E0A00CE2A84 /* LoginRegisterViewModel.swift */; };
 		DBBFE9FC2AE3896500F6F9A0 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBFE9FB2AE3896500F6F9A0 /* TabBar.swift */; };
 		DBD8D89A2AF23D9F006CBD5F /* ProductManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD8D8992AF23D9F006CBD5F /* ProductManagerViewModel.swift */; };
+		DBEFDECC2B18954D009E2988 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEFDECB2B18954D009E2988 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,7 @@
 		DBB23DD52AFF5E0A00CE2A84 /* LoginRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewModel.swift; sourceTree = "<group>"; };
 		DBBFE9FB2AE3896500F6F9A0 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		DBD8D8992AF23D9F006CBD5F /* ProductManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductManagerViewModel.swift; sourceTree = "<group>"; };
+		DBEFDECB2B18954D009E2988 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 			children = (
 				DB6FF3A42AD13868003E8541 /* StoreViewModel.swift */,
 				DB6CA1F22AE3109D0012339F /* AuthViewModel.swift */,
+				DBEFDECB2B18954D009E2988 /* StorageManager.swift */,
 				DBD8D8992AF23D9F006CBD5F /* ProductManagerViewModel.swift */,
 				DBB23DD52AFF5E0A00CE2A84 /* LoginRegisterViewModel.swift */,
 			);
@@ -321,6 +324,7 @@
 				DB76FFE12ACF3E1100AEDD9F /* OnBoardingTapView.swift in Sources */,
 				DBBFE9FC2AE3896500F6F9A0 /* TabBar.swift in Sources */,
 				DB7AC19B2ADED59C00C7D15D /* Product.swift in Sources */,
+				DBEFDECC2B18954D009E2988 /* StorageManager.swift in Sources */,
 				DB76FFCE2ACBF12400AEDD9F /* WelcomeView.swift in Sources */,
 				DB6FF3972ACFEE4D003E8541 /* CustomTF.swift in Sources */,
 				DB951EA22AE3AC0400D779A1 /* ContentView.swift in Sources */,
