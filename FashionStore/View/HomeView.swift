@@ -187,7 +187,7 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(isFav: true, product: productList[1])
+    HomeView(isFav: true, product: productList[3])
         .environmentObject(ProductManagerViewModel())
 }
 
@@ -359,6 +359,7 @@ struct TopItems: View {
 
 struct SearchBar: View {
     @State private var search: String = ""
+    @EnvironmentObject var productManagerViewModel: ProductManagerViewModel
     var body: some View {
         HStack {
             HStack(spacing: 12) {
@@ -378,8 +379,12 @@ struct SearchBar: View {
                     .stroke(Color.white.opacity(1.0))
                     .blendMode(.overlay)
             }
-            Button {
-                print("sort")
+            Menu {
+                ForEach(FilterOption.allCases, id: \.self) { Identifiable in
+                    Button(Identifiable.rawValue) {
+                        
+                    }
+                }
             } label: {
                 ZStack {
                     Circle()

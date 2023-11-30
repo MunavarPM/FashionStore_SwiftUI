@@ -21,23 +21,26 @@ struct ProductView: View {
             ZStack {
                 Color("Light")
                     .ignoresSafeArea(.all)
-                ScrollView(showsIndicators: false){
-                    Image(product.imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .edgesIgnoringSafeArea(.top)
-                        .overlay(alignment: .bottomTrailing) {
-                            BTHeart(isFav: isFav, product: product) {
-                                isFav.toggle()
+                ScrollView {
+                    VStack {
+                        Image(product.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .edgesIgnoringSafeArea(.top)
+                            .overlay(alignment: .bottomTrailing) {
+                                BTHeart(isFav: isFav, product: product) {
+                                    isFav.toggle()
+                                }
+                                .padding(30)
                             }
-                            .padding(30)
-                        }
+                        
+                        DescriptionView(product: product)
+                    }
                     
-                    DescriptionView(product: product)
                 }
-                .onAppear {
-                    UIScrollView.appearance().bounces = false
-                }
+//                .onAppear {
+//                    UIScrollView.appearance().bounces = false
+//                }
                 .edgesIgnoringSafeArea(.top)
             }
             .ignoresSafeArea()
@@ -48,6 +51,7 @@ struct ProductView: View {
                     .padding(.bottom, 5)
                     .offset(y: 20)
             }
+            .toolbar(.hidden, for: .tabBar)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     DismissView()
@@ -93,89 +97,84 @@ struct DescriptionView: View {
     let sizeArray: [String] = ["S", "M", "L"]
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 1) {
-            Group {
-                Text(product.name)
-                Text(product.suppliers)
-            }
-            .font(.custom("PlayfairDisplay-Bold", size: 20))
-            
-            HStack(spacing: 0) {
-                HStack(spacing: 5) {
-                    let rating = product.rating
-                    let intRating: Int = Int(rating)
-                    let halfStar: Int = rating > Float(intRating) ? 1 : 0
-                    var blankStar : Int = rating > Float(intRating) ? 4 - (intRating) : 5 - (intRating)
-                    ForEach(0...intRating, id: \.self) { index in
-                        RatingStarView(starTypeName: "star.fill")
-                    }
-                    if halfStar == 1 {
-                        RatingStarView(starTypeName: "star.leadinghalf.filled")
-                    }
-                    ForEach(0...blankStar, id: \.self) { index in
-                        RatingStarView(starTypeName: "star")
-                    }
-                    Text("(\(String(format: "%.1f", rating)))")
-                        .foregroundColor(.gray)
+            VStack(alignment: .leading, spacing: 1) {
+                Group {
+                    Text(product.name)
+                    Text(product.suppliers)
                 }
-                .offset(y: -18)
-                Spacer()
-                VStack(spacing: 10) {
-                    ItemQuantityView(product: product)
-                    Text("Available Stock")
-                        .fontWeight(.semibold)
-                }
-            }
-            
-            Text("Size")
                 .font(.custom("PlayfairDisplay-Bold", size: 20))
-                .offset(y: -20)
-            HStack {
-                ForEach(sizeArray,id: \.self) { size in
-                    Text("\(size)")
-                        .bold()
-                        .padding()
-                        .background {
-                            Circle().fill(.ultraThinMaterial)
-                        }
-                }
-                Spacer()
-                VStack {
-                    ForEach(product.colors) { color in
-                        HStack {
-                            Text("Colour's").bold()
-                                .font(.custom("PlayfairDisplay-Bold", size: 20))
-                                .onTapGesture {
-                                    isOption.toggle()
-                                }
-                            if isOption {
-                                Group {
-                                    Image(systemName: "circle.fill").foregroundColor(.blue)
-                                    Image(systemName: "circle.fill").foregroundColor(.black)
-                                    Image(systemName: "circle.fill").foregroundColor(.gray)
-                                }
-                                .font(.title)
+                
+                HStack(spacing: 0) {
+                    HStack(spacing: 5) {
+                        let rating = product.rating
+                        let intRating: Int = Int(rating)
+                        let hasHalfStar: Bool = rating > Float(intRating)
+                        
+                        ForEach(0..<5) { index in
+                            if index < intRating {
+                                RatingStarView(starTypeName: "star.fill")
+                            } else if hasHalfStar, index == intRating {
+                                RatingStarView(starTypeName: "star.leadinghalf.filled")
+                            } else {
+                                RatingStarView(starTypeName: "star")
                             }
-                            
                         }
+                        
+                        Text("(\(String(format: "%.1f", rating)))")
+                            .foregroundColor(.gray)
                     }
-                    .frame(width: 80, height: 20)
+                    .offset(y: -18)
+                    Spacer()
+                    VStack(spacing: 10) {
+                        ItemQuantityView(product: product)
+                        Text("Available Stock")
+                            .fontWeight(.semibold)
+                    }
                 }
-                .padding()
+                
+                Text("Size")
+                    .font(.custom("PlayfairDisplay-Bold", size: 20))
+                    .offset(y: -20)
+                HStack {
+                    ForEach(sizeArray,id: \.self) { size in
+                        Text("\(size)")
+                            .bold()
+                            .padding()
+                            .background {
+                                Circle().fill(.ultraThinMaterial)
+                            }
+                    }
+                    Spacer()
+                    VStack {
+                        ForEach(product.colors) { color in
+                            HStack {
+                                Text("Colour's").bold()
+                                    .font(.custom("PlayfairDisplay-Bold", size: 20))
+                                    .onTapGesture {
+                                        isOption.toggle()
+                                    }
+                                if isOption {
+                                    ColorDotView(color: .blue)
+                                    ColorDotView(color: .green)
+                                    ColorDotView(color: .black)
+                                }
+                            }
+                        }
+                        .frame(width: 80, height: 20)
+                    }
+                    .padding()
+                }
+                .offset(y: -9)
+                Text("Description")
+                    .font(.custom("PlayfairDisplay-Bold", size: 20))
+                Text(product.discription)
+                    .font(.custom("PlayfairDisplay-Regular", size: 12)).opacity(0.6)
+                    .padding(.top, 5)
             }
-            .offset(y: -9)
-            Text("Description")
-                .font(.custom("PlayfairDisplay-Bold", size: 20))
-            Text(product.discription)
-                .font(.custom("PlayfairDisplay-Regular", size: 12)).opacity(0.6)
-                .padding(.top, 150)
-            
-        }
-        .padding()
-        .padding(.top)
-        .background(Color("Light"))
-        .cornerRadius(40)
-        
+            .padding()
+            .padding(.bottom, 85)
+            .background(Color("Light"))
+            .cornerRadius(40)
     }
 }
 
@@ -264,5 +263,13 @@ struct RatingStarView: View {
                 .frame(width: 20,height: 20)
                 .foregroundColor(.yellow)
         }
+    }
+}
+struct ColorDotView: View {
+    let color: Color
+    var body: some View {
+        color
+            .frame(width: 25, height: 25)
+            .clipShape(Circle())
     }
 }

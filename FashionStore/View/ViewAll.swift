@@ -14,6 +14,8 @@ struct ViewAll: View {
 
     var body: some View {
         NavigationStack {
+                SearchBar()
+                .padding()
                     ScrollView(showsIndicators: false) {
                         LazyVGrid(columns: column) {
                             ForEach(productList, id: \.id) { item in

@@ -15,7 +15,7 @@ struct FashionStoreApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                Signin()
+                OnBoardingTapView()
                     .environmentObject(productManager)
             }
         }

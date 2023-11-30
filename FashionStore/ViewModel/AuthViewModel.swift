@@ -18,9 +18,7 @@ class AuthViewModel: ObservableObject {
     @Published var alertTittle: String = ""
     @Published var alertMessage: String = ""
     @Published var showAlert: Bool = false
-    
-//    @AppStorage("user_name") private var userName: String = ""
-//    @AppStorage("user_UID")private var userUID: String = ""
+
     
     init() {
         self.userSession = Auth.auth().currentUser
@@ -63,8 +61,8 @@ class AuthViewModel: ObservableObject {
             try Auth.auth().signOut()
             self.userSession = nil
             self.currentUser = nil
-            self.alertTittle = "See You Later!"
-            self.alertMessage = "Thank you for being a part of our community. We'll miss you! Come back soon for more smiles and great experiences😊👋🏼."
+            self.alertTittle = "See You Later😊!"
+            self.alertMessage = "Thank you for being a part of our community. We'll miss you!👋🏼."
             self.showAlert.toggle()
         } catch {
             self.alertTittle = "Uh-oh!"

@@ -51,5 +51,5 @@ var productList = [
     Product(name: "RoadAxe"
             , imageName: "ShoesBoys", suppliers: "Kalvin", discription: "Main Design for Street look, And road shoes.", price: 3999, productCount: 1, colors: [ColorOption(color: Color(.black), color2: Color(.brown), color3: Color(.gray))], rating: 4, isFavorite: false),
     Product(name: "Men Classic"
-            , imageName: "ShoesClassic", suppliers: "Bricks", discription: "Mainly Design for office and casul uses.", price: 1799, productCount: 1, colors: [ColorOption(color: Color(.yellow), color2: Color(.green), color3: Color(.red))], rating: 3, isFavorite: false)
+            , imageName: "ShoesClassic", suppliers: "Bricks", discription: "Mainly Design for office and casual use.", price: 1799, productCount: 1, colors: [ColorOption(color: Color(.yellow), color2: Color(.green), color3: Color(.red))], rating: 3, isFavorite: false)
 ]

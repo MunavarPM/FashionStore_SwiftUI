@@ -10,8 +10,8 @@ import SwiftUI
 struct ProfileView: View {
     @StateObject var authViewModel = AuthViewModel()
     @State private var isDarkMode = false
-    @ObservedObject var viewModel = LoginRegisterViewModel()
     @Environment(\.presentationMode) var presentationMode
+  @State var showHome: Bool = false
     
     
     var body: some View {
@@ -109,9 +109,8 @@ struct ProfileView: View {
                                         Text("OK"),
                                         action: {
                                             // Additional logic if needed
-//                                            showHome = true
-//                                            viewModel.password = ""
-                                            presentationMode.wrappedValue.dismiss()
+                                            showHome = true
+//                                            presentationMode.wrappedValue.dismiss()
                                         }
                                     )
                                 )
@@ -123,12 +122,12 @@ struct ProfileView: View {
                             .padding()
                         })
                     }
-//                    .fullScreenCover(isPresented: $showHome, content: {
-//                        withAnimation(.easeOut) {
-//                            Signin()
-//                            
-//                        }
-//                    })
+                    .fullScreenCover(isPresented: $showHome, content: {
+                        withAnimation(.easeOut) {
+                            Signin()
+                            
+                        }
+                    })
                     
                 }
             }

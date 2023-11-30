@@ -38,26 +38,4 @@ struct TabBar: View {
 #Preview {
     TabBar()
 }
-//struct text: View {
-//    var body: some View {
-//        VStack {
-//            text2()
-//        }
-//    }
-//}
-//struct text2: View {
-//    var body: some View {
-//        VStack {
-//            text3()
-//        }
-//    }
-//}
-//struct text3: View {
-//    @EnvironmentObject var vm: haloo
-//    var body: some View {
-//        VStack {
-//            Text(vm.h)
-//        }
-//    }
-//}
-//
+

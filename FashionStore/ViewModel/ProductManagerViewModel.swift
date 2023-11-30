@@ -16,6 +16,7 @@ class ProductManagerViewModel: ObservableObject {
     @Published private(set) var wishlistTotal: Int = 0
     @Published private(set) var cartProducts: [CartProduct] = []
     @Published private(set) var cartTotal: Int = 0
+    @Published var selectedFilter: FilterOption? = nil
     
     
     
@@ -105,6 +106,18 @@ class ProductManagerViewModel: ObservableObject {
                 }
             }
         }
+    
+//    func filterSelectedOption(option: FilterOption) async throws {
+//        switch option {
+//        case .noFilter:
+//            self.products = try await productList
+//        case .priceHigh:
+//            self.products = try await productList.
+//        }
+//    }
+//    func getAllroductSortedByPrice(desending: Bool) async throws -> [Product]{
+//        
+//    }
 }
 
 class CartProduct: Identifiable{
@@ -122,4 +135,9 @@ class WishlistProduct: Identifiable {
         self.product = product
         self.productCount = 1
     }
+}
+enum FilterOption: String, CaseIterable {
+    case noFilter
+    case priceHigh
+    case priceLow
 }
