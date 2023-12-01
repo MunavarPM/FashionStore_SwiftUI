@@ -107,12 +107,14 @@ class ProductManagerViewModel: ObservableObject {
                 }
             }
         }
-    func saveProductImage(item: PhotosPickerItem) {
+    func saveProductImage(item: PhotosPickerItem, parent: String, child: String) {
         Task {
             guard let data = try await item.loadTransferable(type: Data.self) else { return }
-            let (path, name) = try await StorageManager.shared.saveImage(data: data)
+            let (path, name) = try await StorageManager.shared.saveImage(data: data, parent: parent, child: child)
             print("ProductImageSaved")
-            print(path, name)
+            print("\(path)🛣️")
+            print("\(name)🙋🏽‍♂️")
+//            try await StorageManager.shared.
             
         }
     }

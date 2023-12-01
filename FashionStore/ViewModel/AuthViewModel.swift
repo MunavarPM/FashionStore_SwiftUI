@@ -24,6 +24,7 @@ class AuthViewModel: ObservableObject {
         self.userSession = Auth.auth().currentUser
         Task {
             await fetchUser()
+            print(currentUser?.imagePath ?? "🙄")
         }
     }
     
@@ -46,7 +47,7 @@ class AuthViewModel: ObservableObject {
             self.userSession = result.user
             let user = User(id: result.user.uid, userName: userName, email: email)
             let encodedUser = try Firestore.Encoder().encode(user)
-            try await Firestore.firestore().collection("user").document(user.id).setData(encodedUser)
+            try await Firestore.firestore().collection("user").document(user.id ?? "").setData(encodedUser)
             await fetchUser()
             
         } catch {

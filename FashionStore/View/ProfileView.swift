@@ -11,18 +11,20 @@ import FirebaseStorage
 
 
 struct ProfileView: View {
+    
     @StateObject var authViewModel = AuthViewModel()
     @StateObject var viewModel = ProductManagerViewModel()
     @State private var isDarkMode = false
     @Environment(\.presentationMode) var presentationMode
     @State var showHome: Bool = false
     @State private var isImageSelected: PhotosPickerItem? = nil
-    
+    @State var imageData: Data? = nil
+
     var body: some View {
         ZStack {
             Color(Color("Light"))
             
-        NavigationStack {
+            NavigationStack {
                 VStack {
                     ZStack {
                         RoundedRectangle(cornerRadius: 15)
@@ -32,10 +34,12 @@ struct ProfileView: View {
                     }
                     .overlay(
                         HStack {
-                                Image(.onBoarding1)
+                            if let imageData, let image = UIImage(data: imageData) {
+                                Image(uiImage: image ?? .onBoarding2)
                                     .resizable()
                                     .frame(width: 90, height: 90)
                                     .cornerRadius(20)
+                            }
                             
                             
                             Button(action: {}, label: {
@@ -45,9 +49,14 @@ struct ProfileView: View {
                                             .foregroundStyle(.black).font(.footnote).bold()
                                     }
                                 }
+                                .task {
+                                    if (authViewModel.currentUser != nil), let path = authViewModel.currentUser?.imagePath {
+                                        let data = try? await StorageManager.shared.getData(path: path)
+                                    }
+                                }
                                 .onChange(of: isImageSelected) { value in
                                     if let value {
-                                        viewModel.saveProductImage(item: value)
+                                        viewModel.saveProductImage(item: value, parent: "product_image", child: "jacket")
                                     }
                                 }
                                 .padding()
@@ -58,15 +67,15 @@ struct ProfileView: View {
                             .offset(x: -20, y: 40)
                             
                             VStack(alignment: .leading) {
-                                Text(authViewModel.currentUser?.userName ?? User.munavar.userName )
+                                Text((authViewModel.currentUser?.userName ?? User.munavar.userName) ?? "" )
                                     .font(.custom("PlayfairDisplay-Regular", size: 25)).bold()
-                                Text(authViewModel.currentUser?.email ?? User.munavar.email).opacity(0.4)
-                                }
+                                Text((authViewModel.currentUser?.email ?? User.munavar.email) ?? "").opacity(0.4)
                             }
+                        }
                             .padding(.horizontal, 30)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     )
-                        .padding(.top)
+                    .padding(.top)
                     ScrollView(showsIndicators: false) {
                         VStack {
                             ZStack {
@@ -77,7 +86,7 @@ struct ProfileView: View {
                             .overlay {
                                 VStack {
                                     NavigationLink {
-                                    MyOrder()
+                                        MyOrder()
                                     } label:{
                                         SettingBTView(imageSF: "person.fill", title: "Personal Details", action: {})
                                     }
@@ -158,7 +167,7 @@ struct ProfileView: View {
                                     )
                                 )
                             }
-
+                            
                             .frame(width: UIScreen.main.bounds.width - 23, height: 50)
                             .background(Color("Dark"))
                             .cornerRadius(17)

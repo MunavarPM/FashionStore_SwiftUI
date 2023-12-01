@@ -10,16 +10,18 @@ import SwiftUI
 
 
 struct Product: Identifiable {
-    var id = UUID()
-    var name: String
-    var imageName: String
-    var suppliers: String
-    var discription: String
-    var price: Int
+    let id = UUID()
+    let name: String
+    let imageName: String
+    let suppliers: String
+    let discription: String
+    let price: Int
     var productCount: Int
-    var colors: [ColorOption]
-    var rating: Float
+    let colors: [ColorOption]
+    let rating: Float
     var isFavorite: Bool
+    let profileImagePath: String?
+     
     
     mutating func toggleFavorite() {
         isFavorite.toggle()
@@ -45,11 +47,11 @@ struct ColorOption: Identifiable {
 
 var productList = [
     Product(name: "White Stripe Polo Neck T-Shirt"
-            , imageName: "ModelJacket", suppliers: "AlenSolly", discription: " Polo Neck T-shirt .", price: 1999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 5, isFavorite: true),
+            , imageName: "ModelJacket", suppliers: "AlenSolly", discription: " Polo Neck T-shirt .", price: 1999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 5, isFavorite: true, profileImagePath: ""),
     Product(name: "Brown Jacket"
-            , imageName: "ModelS", suppliers: "Jack & John", discription: "Jacket Long using Winter time.", price: 5999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 2, isFavorite: false),
+            , imageName: "ModelS", suppliers: "Jack & John", discription: "Jacket Long using Winter time.", price: 5999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 2, isFavorite: false, profileImagePath: ""),
     Product(name: "RoadAxe"
-            , imageName: "ShoesBoys", suppliers: "Kalvin", discription: "Main Design for Street look, And road shoes.", price: 3999, productCount: 1, colors: [ColorOption(color: Color(.black), color2: Color(.brown), color3: Color(.gray))], rating: 4, isFavorite: false),
+            , imageName: "ShoesBoys", suppliers: "Kalvin", discription: "Main Design for Street look, And road shoes.", price: 3999, productCount: 1, colors: [ColorOption(color: Color(.black), color2: Color(.brown), color3: Color(.gray))], rating: 4, isFavorite: false, profileImagePath: ""),
     Product(name: "Men Classic"
-            , imageName: "ShoesClassic", suppliers: "Bricks", discription: "Mainly Design for office and casual use.", price: 1799, productCount: 1, colors: [ColorOption(color: Color(.yellow), color2: Color(.green), color3: Color(.red))], rating: 3, isFavorite: false)
+            , imageName: "ShoesClassic", suppliers: "Bricks", discription: "Mainly Design for office and casual use.", price: 1799, productCount: 1, colors: [ColorOption(color: Color(.yellow), color2: Color(.green), color3: Color(.red))], rating: 3, isFavorite: false, profileImagePath: "")
 ]

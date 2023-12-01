@@ -8,9 +8,10 @@
 import Foundation
 
 struct User: Identifiable, Codable {
-    let id: String
-    let userName:  String
-    let email: String
+    let id: String?
+    let userName:  String?
+    let email: String?
+    var imagePath: String? = nil
     
     
 }
