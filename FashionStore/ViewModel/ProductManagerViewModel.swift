@@ -22,6 +22,7 @@ class ProductManagerViewModel: ObservableObject {
     
     
     
+    
     func addtoCart(product: Product) {
         if let existingProduct = cartProducts.first(where: { $0.product == product }) {
             existingProduct.productCount += 1
@@ -132,7 +133,7 @@ class ProductManagerViewModel: ObservableObject {
 //    }
 }
 
-class CartProduct: Identifiable{
+class CartProduct: Identifiable {
     var product: Product
     var productCount: Int
     init(product: Product) {

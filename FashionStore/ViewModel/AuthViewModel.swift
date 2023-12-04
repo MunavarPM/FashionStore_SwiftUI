@@ -22,6 +22,9 @@ class AuthViewModel: ObservableObject {
     
     init() {
         self.userSession = Auth.auth().currentUser
+        if let userData = userSession {
+            print("\(userData)user")
+        }
         Task {
             await fetchUser()
             print(currentUser?.imagePath ?? "🙄")

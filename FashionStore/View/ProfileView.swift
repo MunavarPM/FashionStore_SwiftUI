@@ -35,28 +35,17 @@ struct ProfileView: View {
                     .overlay(
                         HStack {
                             if let imageData, let image = UIImage(data: imageData) {
-                                Image(uiImage: image ?? .onBoarding2)
+                                Image(uiImage: image )
                                     .resizable()
                                     .frame(width: 90, height: 90)
                                     .cornerRadius(20)
                             }
-                            
                             
                             Button(action: {}, label: {
                                 ZStack {
                                     PhotosPicker(selection: $isImageSelected, matching: .images, photoLibrary: .shared()){
                                         Image(systemName: "pencil.line")
                                             .foregroundStyle(.black).font(.footnote).bold()
-                                    }
-                                }
-                                .task {
-                                    if (authViewModel.currentUser != nil), let path = authViewModel.currentUser?.imagePath {
-                                        let data = try? await StorageManager.shared.getData(path: path)
-                                    }
-                                }
-                                .onChange(of: isImageSelected) { value in
-                                    if let value {
-                                        viewModel.saveProductImage(item: value, parent: "product_image", child: "jacket")
                                     }
                                 }
                                 .padding()
@@ -181,6 +170,17 @@ struct ProfileView: View {
                         }
                     })
                     
+                }
+                .task {
+                    if (authViewModel.currentUser != nil), let path = authViewModel.currentUser?.imagePath {
+                        let data = try? await StorageManager.shared.getData(path: path)
+                        self.imageData = data
+                    }
+                }
+                .onChange(of: isImageSelected) { value in
+                    if let value {
+                        viewModel.saveProductImage(item: value, parent: "product_image", child: "jacket")
+                    }
                 }
             }
         }

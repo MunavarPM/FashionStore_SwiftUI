@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 
 final class StorageManager {
-    
+
     static let shared = StorageManager()
     private init(){ }
     
@@ -39,5 +39,18 @@ final class StorageManager {
     
     func getData(path: String) async throws -> Data {
         try await storage.child(path).data(maxSize: 3 * 1024 * 1024)
+    }
+    
+//    func getData(path: String) async throws -> UIImage {
+//        let data = try await getData(path: path)
+//        
+//        guard let image = UIImage(data: data) else {
+//            throw URLError(.badServerResponse)
+//        }
+//        return image
+//    }
+    
+    func getProductData(parent: String, child: String) async throws -> Data {
+        try await productReference(parent: parent, child: child).data(maxSize: 3 * 1024 * 1024)
     }
 }

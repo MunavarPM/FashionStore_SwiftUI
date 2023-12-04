@@ -64,28 +64,28 @@ struct HomeView: View {
                             let gridColumn: [GridItem] = [GridItem(), GridItem()]
                             if selectedIndex == 0 {
                                 LazyVGrid(columns: gridColumn) {
-                                    ForEach(productList.prefix(2), id: \.id){ item in
-                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
-                                            TopItems(product: item) {
-                                                
-                                                if product.isFavorite {
-                                                    productManagerVM.addToWishlist(product: product)
-                                                } else {
-                                                    productManagerVM.removeFromWishlist(product: product)
-                                                }
-                                            }
-                                        }
-                                    }
-                                    ForEach(productList.prefix(5), id: \.id){ item in
-                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
-                                            TopItems(product: item,  action: {
-                                                withAnimation(.easeOut) {
-                                                    isFav.toggle()
-                                                    productManagerVM.addToWishlist(product: item)
-                                                }
-                                            })
-                                        }
-                                    }
+//                                    ForEach(productList.prefix(2), id: \.id){ item in
+//                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
+//                                            TopItems(product: item) {
+//                                                if product.isFavorite {
+//                                                    productManagerVM.addToWishlist(product: product)
+//                                                } else {
+//                                                    productManagerVM.removeFromWishlist(product: product)
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                    ForEach(productList.prefix(5), id: \.id){ item in
+//                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
+//                                            TopItems(product: item,  action: {
+//                                                withAnimation(.easeOut) {
+//                                                    isFav.toggle()
+//                                                    productManagerVM.addToWishlist(product: item)
+//                                                }
+//                                            })
+//                                        }
+//                                    }
+
                                 }
                             } else if selectedIndex == 1 {
                                 LazyVGrid(columns: gridColumn) {
@@ -156,11 +156,14 @@ struct HomeView: View {
                         }
                     }
                 }
+//                .task {
+//
+//                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        //                        ProfileView()
+//                        ProfileView()
                     } label: {
                         Image(.modelS)
                             .resizable()

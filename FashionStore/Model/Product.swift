@@ -45,6 +45,10 @@ struct ColorOption: Identifiable {
     var color3: Color
 }
 
+enum CodingKeys: String, CodingKey {
+    case jacket = "jacket"
+}
+
 var productList = [
     Product(name: "White Stripe Polo Neck T-Shirt"
             , imageName: "ModelJacket", suppliers: "AlenSolly", discription: " Polo Neck T-shirt .", price: 1999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 5, isFavorite: true, profileImagePath: ""),
