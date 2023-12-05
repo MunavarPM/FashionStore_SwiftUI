@@ -19,7 +19,6 @@ class AuthViewModel: ObservableObject {
     @Published var alertMessage: String = ""
     @Published var showAlert: Bool = false
 
-    
     init() {
         self.userSession = Auth.auth().currentUser
         if let userData = userSession {
@@ -27,10 +26,18 @@ class AuthViewModel: ObservableObject {
         }
         Task {
             await fetchUser()
-            print(currentUser?.imagePath ?? "🙄")
+            print(currentUser?.userName ?? "id!😕", currentUser?.email ?? "email!🙄")
         }
     }
     
+    func getAuthUser() throws -> User {
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badServerResponse)
+        }
+        print("\(user)😎")
+        let userName = currentUser?.userName
+        return User(id: user.uid, userName: userName, email: user.email)
+    }
     
     func signIn(withEmail email: String, password: String) async throws {
         do {
@@ -48,7 +55,7 @@ class AuthViewModel: ObservableObject {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
-            let user = User(id: result.user.uid, userName: userName, email: email)
+            let user = User(id: result.user.uid, userName: userName, email: result.user.email) ///Here name was come from the para
             let encodedUser = try Firestore.Encoder().encode(user)
             try await Firestore.firestore().collection("user").document(user.id ?? "").setData(encodedUser)
             await fetchUser()
@@ -76,7 +83,7 @@ class AuthViewModel: ObservableObject {
     }
     
     func deleteAccount() {
-        
+//        guard let userName = currentUser?.userName else { return }
     }
     
     func fetchUser() async {

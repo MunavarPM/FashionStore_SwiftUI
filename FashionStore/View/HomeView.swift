@@ -13,6 +13,7 @@ struct HomeView: View {
     @State var isFav: Bool
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
     
+    
     var product: Product
     
     var body: some View {
@@ -160,6 +161,7 @@ struct HomeView: View {
 //
 //                }
             }
+            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

@@ -97,10 +97,12 @@ struct Signin: View {
                                 .onAppear {
                                     Auth.auth().addStateDidChangeListener { auth, user in
                                         if user != nil {
-                                            viewModel.showHome.toggle()
+                                            viewModel.showLogin.toggle()
                                             viewModel.clearPassword()
                                         }
                                     }
+//                                    let authUser = try? authViewModel.getAuthUser()
+//                                    self.viewModel.showLogin = authUser == nil
                                 }
                             }
                         
@@ -140,7 +142,7 @@ struct Signin: View {
                 self.emailIsFoucused = true
             }
         }
-        .fullScreenCover(isPresented: $viewModel.showHome, content: {
+        .fullScreenCover(isPresented: $viewModel.showLogin, content: {
             withAnimation(.easeIn) {
                 TabBar()
             }

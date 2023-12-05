@@ -15,7 +15,7 @@ class LoginRegisterViewModel: ObservableObject {
     @Published var signinToggle: Bool = true
     @Published var isLoading: Bool = false
     @Published var alertMessage: String = ""
-    @Published var showHome: Bool = false
+    @Published var showLogin: Bool = false
     
     func clearPassword() {
         password = ""

@@ -16,7 +16,7 @@ struct ProfileView: View {
     @StateObject var viewModel = ProductManagerViewModel()
     @State private var isDarkMode = false
     @Environment(\.presentationMode) var presentationMode
-    @State var showHome: Bool = false
+    @State var showLogin: Bool = false
     @State private var isImageSelected: PhotosPickerItem? = nil
     @State var imageData: Data? = nil
 
@@ -56,9 +56,9 @@ struct ProfileView: View {
                             .offset(x: -20, y: 40)
                             
                             VStack(alignment: .leading) {
-                                Text((authViewModel.currentUser?.userName ?? User.munavar.userName) ?? "" )
+                                Text((authViewModel.currentUser?.userName) ?? "" )
                                     .font(.custom("PlayfairDisplay-Regular", size: 25)).bold()
-                                Text((authViewModel.currentUser?.email ?? User.munavar.email) ?? "").opacity(0.4)
+                                Text((authViewModel.currentUser?.email) ?? "").opacity(0.4)
                             }
                         }
                             .padding(.horizontal, 30)
@@ -151,7 +151,7 @@ struct ProfileView: View {
                                     dismissButton: .default(
                                         Text("OK"),
                                         action: {
-                                            showHome = true
+                                            showLogin = true
                                         }
                                     )
                                 )
@@ -163,13 +163,17 @@ struct ProfileView: View {
                             .padding()
                         })
                     }
-                    .fullScreenCover(isPresented: $showHome, content: {
+                    .fullScreenCover(isPresented: $showLogin, content: {
                         withAnimation(.easeOut) {
                             Signin()
                             
                         }
                     })
                     
+                }
+                .onAppear {
+                    guard let auth = try? authViewModel.getAuthUser() else { return }
+                    print("\(auth)userrrrrrr")
                 }
                 .task {
                     if (authViewModel.currentUser != nil), let path = authViewModel.currentUser?.imagePath {
