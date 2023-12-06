@@ -15,10 +15,18 @@ final class StorageManager {
     static let shared = StorageManager()
     private init(){ }
     
+    private let db = Firestore.firestore()
+    
     private let storage = Storage.storage().reference()
     
 //    private var productImageReference: StorageReference {
 //        storage.child("product_image")
+//    }
+    
+//    func geProduct() {
+//        db.collection("product").getDocuments { (QuerySnapshot?, Error?) in
+//            
+//        }
 //    }
     
     private func productReference(parent: String, child: String) -> StorageReference {

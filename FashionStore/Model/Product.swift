@@ -7,10 +7,13 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+
 
 
 struct Product: Identifiable {
-    let id = UUID()
+    @DocumentID var id: String?
     let name: String
     let imageName: String
     let suppliers: String

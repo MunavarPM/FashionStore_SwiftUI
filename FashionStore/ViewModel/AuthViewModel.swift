@@ -18,6 +18,7 @@ class AuthViewModel: ObservableObject {
     @Published var alertTittle: String = ""
     @Published var alertMessage: String = ""
     @Published var showAlert: Bool = false
+    @Published private(set) var user: User? = nil
 
     init() {
         self.userSession = Auth.auth().currentUser
@@ -30,12 +31,16 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    
+    
     func getAuthUser() throws -> User {
         guard let user = Auth.auth().currentUser else {
             throw URLError(.badServerResponse)
         }
         print("\(user)😎")
         let userName = currentUser?.userName
+        self.user = currentUser
+        print("\(user)✨✅")
         return User(id: user.uid, userName: userName, email: user.email)
     }
     
@@ -82,8 +87,11 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func deleteAccount() {
-//        guard let userName = currentUser?.userName else { return }
+    func deleteAccount() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw URLError(.badServerResponse)
+        }
+        try await user.delete()
     }
     
     func fetchUser() async {

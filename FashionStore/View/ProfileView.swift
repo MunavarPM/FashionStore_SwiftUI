@@ -19,7 +19,9 @@ struct ProfileView: View {
     @State var showLogin: Bool = false
     @State private var isImageSelected: PhotosPickerItem? = nil
     @State var imageData: Data? = nil
-
+    @State private var userName: String = ""
+    @State private var email: String = ""
+    
     var body: some View {
         ZStack {
             Color(Color("Light"))
@@ -56,9 +58,9 @@ struct ProfileView: View {
                             .offset(x: -20, y: 40)
                             
                             VStack(alignment: .leading) {
-                                Text((authViewModel.currentUser?.userName) ?? "" )
+                                Text(userName)
                                     .font(.custom("PlayfairDisplay-Regular", size: 25)).bold()
-                                Text((authViewModel.currentUser?.email) ?? "").opacity(0.4)
+                                Text(email).opacity(0.4)
                             }
                         }
                             .padding(.horizontal, 30)
@@ -173,6 +175,8 @@ struct ProfileView: View {
                 }
                 .onAppear {
                     guard let auth = try? authViewModel.getAuthUser() else { return }
+                    userName = auth.id ?? ""
+                    email = auth.email ?? ""
                     print("\(auth)userrrrrrr")
                 }
                 .task {
