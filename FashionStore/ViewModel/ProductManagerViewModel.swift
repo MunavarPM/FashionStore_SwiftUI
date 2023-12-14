@@ -10,6 +10,7 @@ import SwiftUI
 import PhotosUI
 import FirebaseFirestore
 
+@MainActor
 class ProductManagerViewModel: ObservableObject {
     
     @Published private(set) var products: [Product] = []
@@ -19,10 +20,20 @@ class ProductManagerViewModel: ObservableObject {
     @Published private(set) var cartProducts: [CartProduct] = []
     @Published private(set) var cartTotal: Int = 0
     @Published var selectedFilter: FilterOption? = nil
+    @Published var productList: [Product] = []
     
     
-    
-    
+    func toggleFavorite(_ product: Product) {
+        if let index = products.firstIndex(where: { $0.id == product.id }) {
+            products[index].isFavorite.toggle()  // Toggle the favorite status
+            if products[index].isFavorite {
+                addToWishlist(product: product)
+            } else {
+                removeFromWishlist(product: product)
+            }
+        }
+    }
+ 
     func addtoCart(product: Product) {
         if let existingProduct = cartProducts.first(where: { $0.product == product }) {
             existingProduct.productCount += 1
@@ -98,39 +109,91 @@ class ProductManagerViewModel: ObservableObject {
         wishlistTotal -= product.price
     }
     
-    func toggleFavorite(_ product: Product) {
-            if let index = products.firstIndex(where: { $0.id == product.id }) {
-                products[index].isFavorite.toggle()  // Toggle the favorite status
-                if products[index].isFavorite {
-                    addToWishlist(product: product)
+    
+//    func saveProductImage(item: PhotosPickerItem, parent: String) {
+//        Task {
+//            guard let data = try await item.loadTransferable(type: Data.self) else { return }
+//            let (path, name) = try await StorageManager.shared.saveImage(data: data, parent: parent)
+//            print("ProductImageSaved")
+//            print("\(path ?? "")🛣️")
+//            print("\(name ?? "")🙋🏽‍♂️")
+//        }
+//    }
+    func saveProductImage(item: PhotosPickerItem, parent: String) {
+        Task {
+            guard let data = try? await item.loadTransferable(type: Data.self) else { return }
+            
+            do {
+                let (path, name, url) = try await StorageManager.shared.saveImage(data: data, parent: parent)
+                
+                if let path = path, let name = name, let url = url {
+                    print("Product Image Saved")
+                    print("Path: \(path)")
+                    print("Name: \(name)")
+                    print("URL: \(url)")
                 } else {
-                    removeFromWishlist(product: product)
+                    print("Failed to get image details")
                 }
+            } catch {
+                // Handle the specific error, print or propagate as needed
+                print("Error saving product image: \(error)")
             }
         }
-    func saveProductImage(item: PhotosPickerItem, parent: String, child: String) {
+    }
+
+    
+    func fetData(){
         Task {
-            guard let data = try await item.loadTransferable(type: Data.self) else { return }
-            let (path, name) = try await StorageManager.shared.saveImage(data: data, parent: parent, child: child)
-            print("ProductImageSaved")
-            print("\(path)🛣️")
-            print("\(name)🙋🏽‍♂️")
-//            try await StorageManager.shared.
-            
+            do {
+                self.productList = try await StorageManager.shared.getProductList()
+                print("Data fetched successfully")
+            } catch {
+                print("Error fetching data: \(error)")
+            }
         }
     }
     
-//    func filterSelectedOption(option: FilterOption) async throws {
-//        switch option {
-//        case .noFilter:
-//            self.products = try await productList
-//        case .priceHigh:
-//            self.products = try await productList.
-//        }
-//    }
-//    func getAllroductSortedByPrice(desending: Bool) async throws -> [Product]{
+//    func getProductList() async throws -> [Product] {
+//        let product = Firestore.firestore().collection("productList")
 //        
 //    }
+    
+//    func saveProductImage(item: PhotosPickerItem, parent: String) {
+//            Task {
+//                do {
+//                    guard let data = try await item.loadTransferable(type: Data.self) else { return }
+//                    let (path, name) = try await StorageManager.shared.saveImage(data: data, parent: parent)
+//                    print("ProductImageSaved")
+//                    print("\(path ?? "")🛣️")
+//                    print("\(name ?? "")🙋🏽‍♂️")
+//
+//                    // Assuming StorageManager.shared.saveImage returns the path to the saved image
+//                    if let imagePath = path {
+//                        // Load the saved image using the path
+//                        if let uiImage = UIImage(contentsOfFile: imagePath) {
+//                            // Update the @Published property
+//                            DispatchQueue.main.async {
+//                                self.retrievedImage.append(uiImage)
+//                                print("\(self.retrievedImage.count)➕")
+//                            }
+//                        }
+//                    }
+//                } catch {
+//                    print("Error saving or loading image: \(error)")
+//                }
+//            }
+//        }
+    //    func filterSelectedOption(option: FilterOption) async throws {
+    //        switch option {
+    //        case .noFilter:
+    //            self.products = try await productList
+    //        case .priceHigh:
+    //            self.products = try await productList.
+    //        }
+    //    }
+    //    func getAllroductSortedByPrice(desending: Bool) async throws -> [Product]{
+    //
+    //    }
 }
 
 class CartProduct: Identifiable {

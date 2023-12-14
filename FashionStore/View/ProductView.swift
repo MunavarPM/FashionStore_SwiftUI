@@ -22,19 +22,21 @@ struct ProductView: View {
                 Color("Light")
                     .ignoresSafeArea(.all)
                 ScrollView {
-                    VStack {
-                        Image(product.imageName)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .edgesIgnoringSafeArea(.top)
-                            .overlay(alignment: .bottomTrailing) {
-                                BTHeart(isFav: isFav, product: product) {
-                                    isFav.toggle()
+                    ForEach(product.imageName, id: \.self){ img in
+                        VStack {
+                            Image(img)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .edgesIgnoringSafeArea(.top)
+                                .overlay(alignment: .bottomTrailing) {
+                                    BTHeart(isFav: isFav, product: product) {
+                                        isFav.toggle()
+                                    }
+                                    .padding(30)
                                 }
-                                .padding(30)
-                            }
-                        
-                        DescriptionView(product: product)
+                            
+                            DescriptionView(product: product)
+                        }
                     }
                     
                 }
@@ -146,7 +148,7 @@ struct DescriptionView: View {
                     }
                     Spacer()
                     VStack {
-                        ForEach(product.colors) { color in
+                        ForEach(product.colors, id: \.self) { color in
                             HStack {
                                 Text("Colour's").bold()
                                     .font(.custom("PlayfairDisplay-Bold", size: 20))
@@ -154,9 +156,9 @@ struct DescriptionView: View {
                                         isOption.toggle()
                                     }
                                 if isOption {
-                                    ColorDotView(color: .blue)
-                                    ColorDotView(color: .green)
-                                    ColorDotView(color: .black)
+                                    let colorViews = product.colors.map { colorName in
+                                        ColorDotView(color: convertToColor(colorName))
+                                    }
                                 }
                             }
                         }
@@ -167,7 +169,7 @@ struct DescriptionView: View {
                 .offset(y: -9)
                 Text("Description")
                     .font(.custom("PlayfairDisplay-Bold", size: 20))
-                Text(product.discription)
+                Text(product.description)
                     .font(.custom("PlayfairDisplay-Regular", size: 12)).opacity(0.6)
                     .padding(.top, 5)
             }
@@ -175,6 +177,18 @@ struct DescriptionView: View {
             .padding(.bottom, 85)
             .background(Color("Light"))
             .cornerRadius(40)
+    }
+    func convertToColor(_ colorName: String) -> Color {
+        switch colorName.lowercased() {
+        case "white":
+            return Color.white
+        case "brown":
+            return Color.brown
+        case "gray":
+            return Color.gray
+        default:
+            return Color.black // or any default color you prefer
+        }
     }
 }
 

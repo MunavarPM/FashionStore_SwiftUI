@@ -60,49 +60,51 @@ struct WhishlistCardView: View {
                 .frame(width: UIScreen.main.bounds.width - 30, height: 110)
         }
         .overlay {
-            HStack {
-                Image(product.imageName)
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .cornerRadius(10)
-                    .padding()
-                VStack(alignment: .leading) {
-                    HStack {
+            ForEach(product.imageName, id: \.self){ img in
+                HStack {
+                    Image(img)
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .cornerRadius(10)
+                        .padding()
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(product.suppliers)
+                                .font(.custom("PlayfairDisplay-Bold", size: 23))
+                            BTHeart(isFav: isFav, product: product, action: {})
+                                .environmentObject(productManagerVM)
+                            .offset(x: -10,y: 10)
+                        }
+                        
                         Text(product.suppliers)
-                            .font(.custom("PlayfairDisplay-Bold", size: 23))
-                        BTHeart(isFav: isFav, product: product, action: {})
-                            .environmentObject(productManagerVM)
-                        .offset(x: -10,y: 10)
-                    }
-                    
-                    Text(product.suppliers)
-                        .font(.custom("PlayfairDisplay-Regular", size: 16))
-                    Spacer()
-                    HStack {
-                        Text("\(product.price)")
-                            .fontWeight(.heavy)
+                            .font(.custom("PlayfairDisplay-Regular", size: 16))
                         Spacer()
-                        Button {
-                            print("add to cart")
-                            productManagerVM.addtoCart(product: product)
-                            print("\(productManagerVM.products.count)✅")
-                            productManagerVM.removeFromWishlist(product: product)
-                            print("\(productManagerVM.products.count)⚠️")
-                        } label: {
-                            HStack {
-                                Image(systemName: "bag")
-                                Text("Add to Cart")
+                        HStack {
+                            Text("\(product.price)")
+                                .fontWeight(.heavy)
+                            Spacer()
+                            Button {
+                                print("add to cart")
+                                productManagerVM.addtoCart(product: product)
+                                print("\(productManagerVM.products.count)✅")
+                                productManagerVM.removeFromWishlist(product: product)
+                                print("\(productManagerVM.products.count)⚠️")
+                            } label: {
+                                HStack {
+                                    Image(systemName: "bag")
+                                    Text("Add to Cart")
+                                }
+                                .padding()
+                                .frame(width: 150, height: 40)
+                                .foregroundStyle(Color("Light"))
+                                .background(Color("Dark"))
+                                .clipShape(Capsule())
+                                .offset(y: -10)
                             }
-                            .padding()
-                            .frame(width: 150, height: 40)
-                            .foregroundStyle(Color("Light"))
-                            .background(Color("Dark"))
-                            .clipShape(Capsule())
-                            .offset(y: -10)
                         }
                     }
+                    Spacer()
                 }
-                Spacer()
             }
             .padding(.top)
             .padding(.bottom,10)

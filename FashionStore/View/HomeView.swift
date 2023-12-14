@@ -7,12 +7,12 @@
 
 import SwiftUI
 
+
 struct HomeView: View {
     private let categories = ["Dresses", "Jackets", "Jeans", "Shoese"]
     @State private var selectedIndex: Int = 0
     @State var isFav: Bool
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
-    
     
     var product: Product
     
@@ -166,6 +166,7 @@ struct HomeView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
 //                        ProfileView()
+                        productManagerVM.fetData()
                     } label: {
                         Image(.modelS)
                             .resizable()
@@ -260,29 +261,31 @@ struct MostDemandItem: View {
     var rate: Int
     var slides: [Product] = [productList[3], productList[1], productList[2]]
     var body: some View {
-        HStack(spacing: 10) {
-            Image(slides[currentIndex].imageName)
-                .resizable()
-                .frame(width: 110, height: 100)
-                .cornerRadius(20)
-                .offset(x: -18)
-            VStack {
-                Text(slides[currentIndex].name)
-                    .font(.custom("PlayfairDisplay-Regular", size: 20))
-                Text(itemBrand)
-                    .font(.custom("PlayfairDisplay-Regular", size: 15))
-                    .foregroundStyle(.gray)
-                Text("$ \(slides[currentIndex].price)")
-                    .fontWeight(.bold)
-                    .padding(.top, 0.1)
-            }
-            
-            NavigationLink {
+        ForEach(slides[currentIndex].imageName, id: \.self){ slide in
+            HStack(spacing: 10) {
+                Image(slide)
+                    .resizable()
+                    .frame(width: 110, height: 100)
+                    .cornerRadius(20)
+                    .offset(x: -18)
+                VStack {
+                    Text(slides[currentIndex].name)
+                        .font(.custom("PlayfairDisplay-Regular", size: 20))
+                    Text(itemBrand)
+                        .font(.custom("PlayfairDisplay-Regular", size: 15))
+                        .foregroundStyle(.gray)
+                    Text("$ \(slides[currentIndex].price)")
+                        .fontWeight(.bold)
+                        .padding(.top, 0.1)
+                }
                 
-            } label: {
-                BackButton(forward: true) {}
+                NavigationLink {
+                    
+                } label: {
+                    BackButton(forward: true) {}
+                }
+                .offset(x: 15)
             }
-            .offset(x: 15)
         }
         .padding()
         .background {
@@ -324,37 +327,41 @@ struct TopItems: View {
     var product: Product
     let action: () -> Void
     var body: some View {
-        VStack {
-            ZStack {
-                Image(product.imageName)
-                    .resizable()
-                    .clipShape(RoundedRectangle(cornerRadius: 30))
-                    .frame(width: 160, height: 200)
-                VStack {
-                    Button(action: {
-                        action()
-                    }, label: {
-                        Image(systemName: product.isFavorite ? "heart.fill" : "heart" )
-                            .font(.title3)
-                            .foregroundStyle(.black)
-                            .cornerRadius(50)
-                            .padding(7)
-                    })
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                    .onTapGesture {
-                        productManagerVM.addToWishlist(product: product)
+        ForEach(product.imageName, id: \.self){ img in
+            VStack {
+                ZStack {
+                    Image(img)
+                        .resizable()
+                        .clipShape(RoundedRectangle(cornerRadius: 30))
+                        .frame(width: 160, height: 200)
+                    VStack {
+                        Button(action: {
+                            action()
+                        }, label: {
+                            Image(systemName: product.isFavorite ? "heart.fill" : "heart" )
+                                .font(.title3)
+                                .foregroundStyle(.black)
+                                .cornerRadius(50)
+                                .padding(7)
+                        })
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                        .onTapGesture {
+                            productManagerVM.addToWishlist(product: product)
+                        }
                     }
+                    .padding(10)
                 }
-                .padding(10)
+                
+                ForEach(product.imageName, id: \.self){ img in
+                    Text(img)
+                        .font(.custom("PlayfairDisplay-Bold", size: 18))
+                    Text(product.suppliers)
+                        .font(.custom("PlayfairDisplay-Regular", size: 15))
+                        .foregroundStyle(.gray)
+                    Text("$ \(product.price)")
+                        .fontWeight(.bold)
+                }
             }
-            
-            Text(product.imageName)
-                .font(.custom("PlayfairDisplay-Bold", size: 18))
-            Text(product.suppliers)
-                .font(.custom("PlayfairDisplay-Regular", size: 15))
-                .foregroundStyle(.gray)
-            Text("$ \(product.price)")
-                .fontWeight(.bold)
         }
         .shadow(color: Color("Dark").opacity(0.2), radius: 10, x: 5, y: 10)
         .padding(.horizontal)

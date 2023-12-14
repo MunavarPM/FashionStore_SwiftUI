@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 import FirebaseStorage
+import FirebaseFirestore
 
 
 struct ProfileView: View {
@@ -21,6 +22,7 @@ struct ProfileView: View {
     @State var imageData: Data? = nil
     @State private var userName: String = ""
     @State private var email: String = ""
+    @State var retriveImage: [UIImage] = []
     
     var body: some View {
         ZStack {
@@ -36,14 +38,23 @@ struct ProfileView: View {
                     }
                     .overlay(
                         HStack {
-                            if let imageData, let image = UIImage(data: imageData) {
-                                Image(uiImage: image )
+//                            if let imageData = UIImage(data: imageData ?? Data()) {
+//                                Image(uiImage: imageData)
+//                                    .resizable()
+//                                    .frame(width: 90, height: 90)
+//                                    .cornerRadius(20)
+//                               
+//                            }
+                            ForEach(retriveImage, id: \.self) { image in
+                                Image(uiImage: image)
                                     .resizable()
                                     .frame(width: 90, height: 90)
                                     .cornerRadius(20)
                             }
                             
-                            Button(action: {}, label: {
+                            Button(action: {
+                                
+                            }, label: {
                                 ZStack {
                                     PhotosPicker(selection: $isImageSelected, matching: .images, photoLibrary: .shared()){
                                         Image(systemName: "pencil.line")
@@ -158,7 +169,6 @@ struct ProfileView: View {
                                     )
                                 )
                             }
-                            
                             .frame(width: UIScreen.main.bounds.width - 23, height: 50)
                             .background(Color("Dark"))
                             .cornerRadius(17)
@@ -173,21 +183,59 @@ struct ProfileView: View {
                     })
                     
                 }
+                
                 .onAppear {
                     guard let auth = try? authViewModel.getAuthUser() else { return }
+                    let path = "product_image/\(CodingKeys.jacket).jpg"
                     userName = auth.id ?? ""
                     email = auth.email ?? ""
-                    print("\(auth)userrrrrrr")
+                    print("\(auth)userrrrrrr!")
+                    let data = StorageManager.shared.productCollection(imageRef: path)
+                    print(data)
+                    print(imageData ?? "no data")
+                    fetchImage()
+                    print("✅\(retriveImage)")
+                    
                 }
                 .task {
                     if (authViewModel.currentUser != nil), let path = authViewModel.currentUser?.imagePath {
                         let data = try? await StorageManager.shared.getData(path: path)
                         self.imageData = data
+                        
                     }
                 }
                 .onChange(of: isImageSelected) { value in
                     if let value {
-                        viewModel.saveProductImage(item: value, parent: "product_image", child: "jacket")
+                        viewModel.saveProductImage(item: value, parent: "jacket")
+                        
+                    }
+                }
+            }
+        }
+    }
+    func fetchImage() {
+        let db = Firestore.firestore()
+        db.collection("productList").getDocuments { (snap, err) in
+            if let err = err {
+                print(err.localizedDescription)
+                return
+            }
+            var path = [String]()
+            for i in snap!.documents {
+                path.append(i["imageName"] as! String)
+            }
+            for path in path {
+                let storageRef = Storage.storage().reference(forURL: path)
+                let fileRef = storageRef.child(path)
+                fileRef.getData(maxSize: 1024 * 1024) { (data, err) in
+                    if let err = err {
+                        print(err.localizedDescription)
+                        return
+                    }
+                    if let data = UIImage(data: data!) {
+                        DispatchQueue.main.async {
+                            retriveImage.append(data)
+                        }
                     }
                 }
             }

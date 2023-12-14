@@ -15,50 +15,78 @@ import FirebaseFirestoreSwift
 struct Product: Identifiable {
     @DocumentID var id: String?
     let name: String
-    let imageName: String
+    let imageName: [String]
     let suppliers: String
-    let discription: String
+    let description: String
     let price: Int
     var productCount: Int
-    let colors: [ColorOption]
+    let colors: [String]
     let rating: Float
-    var isFavorite: Bool
+    var isFavorite: Bool = false
     let profileImagePath: String?
      
     
     mutating func toggleFavorite() {
-        isFavorite.toggle()
+        let currentValue = isFavorite
+        isFavorite = !currentValue
     }
+//        init(user: User) {
+//            self.isFavorite = false
+//        }
+    //    init(isFavorite: Bool? = nil) {
+    //        self.isFavorite = isFavorite
+    //    }
+    //    func toggleFav() -> Product {
+    //        let currentValue = isFavorite ?? false
+    //        return Product(isFavorite: !currentValue)
+    //    }
 }
 
 extension Product: Equatable {
-    // Product sınıfının diğer özellikleri ve fonksiyonları
-
     static func ==(lhs: Product, rhs: Product) -> Bool {
-        // Burada Product sınıfının eşitlik kontrolü nasıl yapılacaksa onu belirtin
-        // Örneğin, ürünlerin bir benzersiz kimliklerine (ID) sahip olduğunu varsayalım
         return lhs.id == rhs.id
     }
 }
 
 struct ColorOption: Identifiable {
     var id = UUID()
-    var color: Color
-    var color2: Color
-    var color3: Color
+    var color: String
+    var color2: String
+    var color3: String
 }
 
 enum CodingKeys: String, CodingKey {
     case jacket = "jacket"
+    case shirt = "shirt"
+    case shoes = "shoes"
+    case tshirt = "tshirt"
 }
+
+enum CustomColor: String {
+    case white = "white"
+    case brown = "brown"
+    case gray = "gray"
+    
+    func toUIColor() -> UIColor {
+        switch self {
+        case .white:
+            return UIColor.white
+        case .brown:
+            return UIColor.brown
+        case .gray:
+            return UIColor.gray
+        }
+    }
+}
+
 
 var productList = [
     Product(name: "White Stripe Polo Neck T-Shirt"
-            , imageName: "ModelJacket", suppliers: "AlenSolly", discription: " Polo Neck T-shirt .", price: 1999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 5, isFavorite: true, profileImagePath: ""),
+            , imageName: ["ModelJacket"], suppliers: "AlenSolly", description: "Polo Neck T-shirt.", price: 1999, productCount: 1, colors: ["white", "brown", "gray"], rating: 5, isFavorite: true, profileImagePath: ""),
     Product(name: "Brown Jacket"
-            , imageName: "ModelS", suppliers: "Jack & John", discription: "Jacket Long using Winter time.", price: 5999, productCount: 1, colors: [ColorOption(color: Color(.white), color2: Color(.brown), color3: Color(.gray))], rating: 2, isFavorite: false, profileImagePath: ""),
+            , imageName: ["ModelS"], suppliers: "Jack & John", description: "Jacket Long using Winter time.", price: 5999, productCount: 1, colors: ["white", "brown", "gray"], rating: 2, isFavorite: false, profileImagePath: ""),
     Product(name: "RoadAxe"
-            , imageName: "ShoesBoys", suppliers: "Kalvin", discription: "Main Design for Street look, And road shoes.", price: 3999, productCount: 1, colors: [ColorOption(color: Color(.black), color2: Color(.brown), color3: Color(.gray))], rating: 4, isFavorite: false, profileImagePath: ""),
+            , imageName: ["ShoesBoys"], suppliers: "Kalvin", description: "Main Design for Street look, And road shoes.", price: 3999, productCount: 1, colors: ["white", "brown", "gray"], rating: 4, isFavorite: false, profileImagePath: ""),
     Product(name: "Men Classic"
-            , imageName: "ShoesClassic", suppliers: "Bricks", discription: "Mainly Design for office and casual use.", price: 1799, productCount: 1, colors: [ColorOption(color: Color(.yellow), color2: Color(.green), color3: Color(.red))], rating: 3, isFavorite: false, profileImagePath: "")
+            , imageName: ["ShoesClassic"], suppliers: "Bricks", description: "Mainly Design for office and casual use.", price: 1799, productCount: 1, colors: ["white", "brown", "gray"], rating: 3, isFavorite: false, profileImagePath: "")
 ]

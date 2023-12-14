@@ -138,28 +138,30 @@ struct CartItemView: View {
                     .frame(width: UIScreen.main.bounds.width - 30, height: 110)
             }
             .overlay {
-                HStack {
-                    Image(product.imageName)
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                        .cornerRadius(10)
-                        .padding()
-                    VStack(alignment: .leading) {
-                        Text(product.name)
-                            .font(.custom("PlayfairDisplay-Bold", size: 23))
-                        
-                        Text(product.suppliers)
-                            .font(.custom("PlayfairDisplay-Regular", size: 16))
-                        Spacer()
-                        HStack {
-                            Text("\(product.price)")
-                                .fontWeight(.heavy)
+                ForEach(product.imageName, id: \.self){ img in
+                    HStack {
+                        Image(img)
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                            .cornerRadius(10)
+                            .padding()
+                        VStack(alignment: .leading) {
+                            Text(product.name)
+                                .font(.custom("PlayfairDisplay-Bold", size: 23))
+                            
+                            Text(product.suppliers)
+                                .font(.custom("PlayfairDisplay-Regular", size: 16))
                             Spacer()
-                            ItemQuantityView(product: product)
-                                .offset(y: -10)
+                            HStack {
+                                Text("\(product.price)")
+                                    .fontWeight(.heavy)
+                                Spacer()
+                                ItemQuantityView(product: product)
+                                    .offset(y: -10)
+                            }
                         }
+                        Spacer()
                     }
-                    Spacer()
                 }
                 .padding(.top)
                 .padding(.bottom,10)
