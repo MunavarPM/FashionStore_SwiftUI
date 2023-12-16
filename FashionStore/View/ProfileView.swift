@@ -193,9 +193,8 @@ struct ProfileView: View {
                     let data = StorageManager.shared.productCollection(imageRef: path)
                     print(data)
                     print(imageData ?? "no data")
-                    fetchImage()
+//                    fetchImage()
                     print("✅\(retriveImage)")
-                    
                 }
                 .task {
                     if (authViewModel.currentUser != nil), let path = authViewModel.currentUser?.imagePath {
@@ -206,41 +205,41 @@ struct ProfileView: View {
                 }
                 .onChange(of: isImageSelected) { value in
                     if let value {
-                        viewModel.saveProductImage(item: value, parent: "jacket")
+                        viewModel.saveProductImage(item: value, parent: "shoes")
                         
                     }
                 }
             }
         }
     }
-    func fetchImage() {
-        let db = Firestore.firestore()
-        db.collection("productList").getDocuments { (snap, err) in
-            if let err = err {
-                print(err.localizedDescription)
-                return
-            }
-            var path = [String]()
-            for i in snap!.documents {
-                path.append(i["imageName"] as! String)
-            }
-            for path in path {
-                let storageRef = Storage.storage().reference(forURL: path)
-                let fileRef = storageRef.child(path)
-                fileRef.getData(maxSize: 1024 * 1024) { (data, err) in
-                    if let err = err {
-                        print(err.localizedDescription)
-                        return
-                    }
-                    if let data = UIImage(data: data!) {
-                        DispatchQueue.main.async {
-                            retriveImage.append(data)
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    func fetchImage() {
+//        let db = Firestore.firestore()
+//        db.collection("productList").getDocuments { (snap, err) in
+//            if let err = err {
+//                print(err.localizedDescription)
+//                return
+//            }
+//            var path = [String]()
+//            for i in snap!.documents {
+//                path.append(i["imageName"] as! String)
+//            }
+//            for path in path {
+//                let storageRef = Storage.storage().reference(forURL: path)
+//                let fileRef = storageRef.child(path)
+//                fileRef.getData(maxSize: 1024 * 1024) { (data, err) in
+//                    if let err = err {
+//                        print(err.localizedDescription)
+//                        return
+//                    }
+//                    if let data = UIImage(data: data!) {
+//                        DispatchQueue.main.async {
+//                            retriveImage.append(data)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 #Preview {

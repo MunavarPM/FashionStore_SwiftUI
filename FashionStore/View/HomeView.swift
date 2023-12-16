@@ -43,8 +43,8 @@ struct HomeView: View {
                                                 selectedIndex = item
                                             }
                                         }
-                                    }
                                 }
+                            }
                             .padding(EdgeInsets(top: 4, leading: 10, bottom: 10, trailing: 20))
                         }
                         HStack {
@@ -65,32 +65,37 @@ struct HomeView: View {
                             let gridColumn: [GridItem] = [GridItem(), GridItem()]
                             if selectedIndex == 0 {
                                 LazyVGrid(columns: gridColumn) {
-//                                    ForEach(productList.prefix(2), id: \.id){ item in
-//                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
-//                                            TopItems(product: item) {
-//                                                if product.isFavorite {
-//                                                    productManagerVM.addToWishlist(product: product)
-//                                                } else {
-//                                                    productManagerVM.removeFromWishlist(product: product)
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                    ForEach(productList.prefix(5), id: \.id){ item in
-//                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
-//                                            TopItems(product: item,  action: {
-//                                                withAnimation(.easeOut) {
-//                                                    isFav.toggle()
-//                                                    productManagerVM.addToWishlist(product: item)
-//                                                }
-//                                            })
-//                                        }
-//                                    }
-
+                                    ForEach(productManagerVM.tshirtList.prefix(2), id: \.id){ item in
+                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
+                                            TopItems(product: item) {
+                                                if product.isFavorite {
+                                                    productManagerVM.addToWishlist(product: product)
+                                                } else {
+                                                    productManagerVM.removeFromWishlist(product: product)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .onAppear {
+                                        productManagerVM.fetchTshirtData()
+                                    }
+                                    ForEach(productManagerVM.shirtList.prefix(5), id: \.id){ item in
+                                        NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
+                                            TopItems(product: item,  action: {
+                                                withAnimation(.easeOut) {
+                                                    isFav.toggle()
+                                                    productManagerVM.addToWishlist(product: item)
+                                                }
+                                            })
+                                        }
+                                    }
+                                }
+                                .onAppear {
+                                    productManagerVM.fetchShirtData()
                                 }
                             } else if selectedIndex == 1 {
                                 LazyVGrid(columns: gridColumn) {
-                                    ForEach(productList.prefix(3), id: \.id){ item in
+                                    ForEach(productManagerVM.jacketList.prefix(3), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeOut) {
@@ -100,7 +105,7 @@ struct HomeView: View {
                                             })
                                         }
                                     }
-                                    ForEach(productList.prefix(0), id: \.id){ item in
+                                    ForEach(productManagerVM.jacketList.prefix(0), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeOut) {
@@ -110,10 +115,13 @@ struct HomeView: View {
                                             })
                                         }
                                     }
+                                }
+                                .onAppear {
+                                    productManagerVM.fetchJacketData()
                                 }
                             } else if selectedIndex == 2 {
                                 LazyVGrid(columns: gridColumn) {
-                                    ForEach(productList.prefix(4), id: \.id){ item in
+                                    ForEach(productManagerVM.shirtList.prefix(4), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeOut) {
@@ -122,7 +130,7 @@ struct HomeView: View {
                                             })
                                         }
                                     }
-                                    ForEach(productList.prefix(1), id: \.id){ item in
+                                    ForEach(productManagerVM.shirtList.prefix(1), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeOut) {
@@ -132,9 +140,12 @@ struct HomeView: View {
                                         }
                                     }
                                 }
+                                .onAppear {
+                                    productManagerVM.fetchShirtData()
+                                }
                             } else if selectedIndex == 3 {
                                 LazyVGrid(columns: gridColumn) {
-                                    ForEach(productList.prefix(5), id: \.id){ item in
+                                    ForEach(productManagerVM.shoesList.prefix(5), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeOut) {
@@ -143,7 +154,7 @@ struct HomeView: View {
                                             })
                                         }
                                     }
-                                    ForEach(productList.prefix(0), id: \.id){ item in
+                                    ForEach(productManagerVM.shoesList.prefix(0), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeOut) {
@@ -152,22 +163,19 @@ struct HomeView: View {
                                             })
                                         }
                                     }
+                                }
+                                .onAppear {
+                                    productManagerVM.fetchShoesData()
                                 }
                             }
                         }
                     }
                 }
-//                .task {
-//
-//                }
             }
             
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-//                        ProfileView()
-                        productManagerVM.fetData()
-                    } label: {
+                    Button {} label: {
                         Image(.modelS)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -326,14 +334,22 @@ struct TopItems: View {
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
     var product: Product
     let action: () -> Void
+
     var body: some View {
-        ForEach(product.imageName, id: \.self){ img in
-            VStack {
+        VStack {
+            ForEach(product.imageName, id: \.self) { img in
                 ZStack {
-                    Image(img)
-                        .resizable()
-                        .clipShape(RoundedRectangle(cornerRadius: 30))
-                        .frame(width: 160, height: 200)
+                    if let url = URL(string: img) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .clipShape(RoundedRectangle(cornerRadius: 30))
+                                .frame(width: 160, height: 200)
+                        } placeholder: {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                        }
+                    }
                     VStack {
                         Button(action: {
                             action()
@@ -351,9 +367,9 @@ struct TopItems: View {
                     }
                     .padding(10)
                 }
-                
-                ForEach(product.imageName, id: \.self){ img in
-                    Text(img)
+
+                VStack {
+                    Text(product.name) // Display the product name
                         .font(.custom("PlayfairDisplay-Bold", size: 18))
                     Text(product.suppliers)
                         .font(.custom("PlayfairDisplay-Regular", size: 15))
@@ -361,13 +377,14 @@ struct TopItems: View {
                     Text("$ \(product.price)")
                         .fontWeight(.bold)
                 }
+                .padding(10)
             }
         }
         .shadow(color: Color("Dark").opacity(0.2), radius: 10, x: 5, y: 10)
         .padding(.horizontal)
-        
     }
 }
+
 
 struct SearchBar: View {
     @State private var search: String = ""
@@ -425,7 +442,7 @@ struct SearchBar: View {
                                 }
                             }
                             .foregroundStyle(Color("Light"))
-                    }
+                        }
                 }
             }
         }

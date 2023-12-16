@@ -31,8 +31,6 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    
-    
     func getAuthUser() throws -> User {
         guard let user = Auth.auth().currentUser else {
             throw URLError(.badServerResponse)

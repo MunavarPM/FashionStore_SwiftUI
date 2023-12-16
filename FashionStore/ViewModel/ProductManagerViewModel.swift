@@ -21,6 +21,10 @@ class ProductManagerViewModel: ObservableObject {
     @Published private(set) var cartTotal: Int = 0
     @Published var selectedFilter: FilterOption? = nil
     @Published var productList: [Product] = []
+    @Published var jacketList: [Product] = []
+    @Published var shirtList: [Product] = []
+    @Published var tshirtList: [Product] = []
+    @Published var shoesList: [Product] = []
     
     
     func toggleFavorite(_ product: Product) {
@@ -119,6 +123,7 @@ class ProductManagerViewModel: ObservableObject {
 //            print("\(name ?? "")🙋🏽‍♂️")
 //        }
 //    }
+    
     func saveProductImage(item: PhotosPickerItem, parent: String) {
         Task {
             guard let data = try? await item.loadTransferable(type: Data.self) else { return }
@@ -152,6 +157,61 @@ class ProductManagerViewModel: ObservableObject {
             }
         }
     }
+    
+    
+    func fetchJacketData(){
+        let id = "4QM1bM5XTtBAP1bkQvrK"
+        Task {
+            do {
+                self.jacketList = try await StorageManager.shared.getProductList(forDocumentID: id)
+                print("fetchJacketData fetched successfully")
+            } catch {
+                print("Error fetching data: \(error)")
+            }
+        }
+    }
+    
+    func fetchShirtData() {
+        let id = "9dYggpK29qD3C7IuNx8s"
+        Task {
+            do {
+                self.shirtList = try await StorageManager.shared.getProductList(forDocumentID: id)
+                print("fetchShirtData successfully")
+            } catch {
+                print("Error fetching data: \(error)")
+            }
+        }
+    }
+    
+    func fetchTshirtData() {
+        let id = "3SBlq8zm1jNfibzGEo5m"
+        Task {
+            do {
+                self.tshirtList = try await StorageManager.shared.getProductList(forDocumentID: id)
+                print("fetchTshirtData successfully")
+            } catch {
+                print("Error fetching data: \(error)")
+            }
+        }
+    }
+    
+    func fetchShoesData() {
+        let id = "GjvxIo5QOilAMDoMx23P"
+        Task {
+            do {
+                self.shoesList = try await StorageManager.shared.getProductList(forDocumentID: id)
+                print("fetchShoesData successfully")
+            } catch {
+                print("Error fetching data: \(error)")
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
     
 //    func getProductList() async throws -> [Product] {
 //        let product = Firestore.firestore().collection("productList")

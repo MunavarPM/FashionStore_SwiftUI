@@ -13,7 +13,7 @@ import FirebaseFirestoreSwift
 
 
 struct Product: Identifiable {
-    @DocumentID var id: String?
+    let id: String?
     let name: String
     let imageName: [String]
     let suppliers: String
@@ -81,12 +81,12 @@ enum CustomColor: String {
 
 
 var productList = [
-    Product(name: "White Stripe Polo Neck T-Shirt"
+    Product(id: UUID().uuidString, name: "White Stripe Polo Neck T-Shirt"
             , imageName: ["ModelJacket"], suppliers: "AlenSolly", description: "Polo Neck T-shirt.", price: 1999, productCount: 1, colors: ["white", "brown", "gray"], rating: 5, isFavorite: true, profileImagePath: ""),
-    Product(name: "Brown Jacket"
+    Product(id: UUID().uuidString, name: "Brown Jacket"
             , imageName: ["ModelS"], suppliers: "Jack & John", description: "Jacket Long using Winter time.", price: 5999, productCount: 1, colors: ["white", "brown", "gray"], rating: 2, isFavorite: false, profileImagePath: ""),
-    Product(name: "RoadAxe"
+    Product(id: UUID().uuidString, name: "RoadAxe"
             , imageName: ["ShoesBoys"], suppliers: "Kalvin", description: "Main Design for Street look, And road shoes.", price: 3999, productCount: 1, colors: ["white", "brown", "gray"], rating: 4, isFavorite: false, profileImagePath: ""),
-    Product(name: "Men Classic"
+    Product(id: UUID().uuidString, name: "Men Classic"
             , imageName: ["ShoesClassic"], suppliers: "Bricks", description: "Mainly Design for office and casual use.", price: 1799, productCount: 1, colors: ["white", "brown", "gray"], rating: 3, isFavorite: false, profileImagePath: "")
 ]

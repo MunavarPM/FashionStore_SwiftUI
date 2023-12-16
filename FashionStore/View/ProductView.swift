@@ -24,16 +24,25 @@ struct ProductView: View {
                 ScrollView {
                     ForEach(product.imageName, id: \.self){ img in
                         VStack {
-                            Image(img)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .edgesIgnoringSafeArea(.top)
+                            if let url = URL(string: img) {
+                                AsyncImage(url: url) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .edgesIgnoringSafeArea(.top)
+                                        .frame(width: UIScreen.main.bounds.width, height: 300)
+                                        .clipped()
+                                } placeholder: {
+                                    ProgressView()
+                                }
                                 .overlay(alignment: .bottomTrailing) {
                                     BTHeart(isFav: isFav, product: product) {
                                         isFav.toggle()
                                     }
                                     .padding(30)
                                 }
+                                
+                            }
                             
                             DescriptionView(product: product)
                         }

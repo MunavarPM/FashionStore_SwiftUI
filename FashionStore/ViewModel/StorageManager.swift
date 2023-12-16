@@ -21,11 +21,12 @@ final class StorageManager {
     private let storage = Storage.storage().reference()
     
     func productCollection(imageRef: String) {
-        let product = Product(name: "White Stripe Polo Neck T-Shirt"
+        let product = Product(id: UUID().uuidString, name: "White Stripe Polo Neck T-Shirt"
                            , imageName: [imageRef],
                            suppliers: "AlenSolly", description: "Polo Neck T-shirt .", price: 1999, productCount: 1, colors: ["white", "brown", "gray"], rating: 5, isFavorite: true, profileImagePath: "")
 
         let data: [String: Any] = [
+                "id": product.id ?? "",
                 "name": product.name,
                 "imageName": product.imageName,
                 "suppliers": product.suppliers,
@@ -40,6 +41,7 @@ final class StorageManager {
         
         db.collection("productList").document().setData(data)
     }
+    
     func getProductList() async throws -> [Product] {
         let product = Firestore.firestore().collection("productList")
         let snapshot = try await product.getDocuments()
@@ -58,12 +60,43 @@ final class StorageManager {
             let profileImagePath = data["profileImagePath"] as? String ?? ""
             let colors = data["colors"] as? [String] ?? []
             
-            let product = Product(name: name, imageName: imageName, suppliers: suppliers, description: description, price: price, productCount: productCount, colors: colors, rating: rating, profileImagePath: profileImagePath)
+            let product = Product(id: id, name: name, imageName: imageName, suppliers: suppliers, description: description, price: price, productCount: productCount, colors: colors, rating: rating, profileImagePath: profileImagePath)
             productList.append(product)
         }
         print("\(productList)⚽️")
         return productList
     }
+    
+    func getProductList(forDocumentID documentID: String) async throws -> [Product] {
+        let product = Firestore.firestore().collection("productList").document(documentID)
+        let snapshot = try await product.getDocument()
+
+        var productList: [Product] = []
+
+        if snapshot.exists {
+            let data = snapshot.data()!
+            let id = snapshot.documentID
+            let name = data["name"] as? String ?? ""
+            let imageName = data["imageName"] as? [String] ?? []
+            let suppliers = data["suppliers"] as? String ?? ""
+            let description = data["description"] as? String ?? ""
+            let price = data["price"] as? Int ?? 0
+            let isFavorite = data["isFavorite"] as? Bool ?? false
+            let productCount = data["productCount"] as? Int ?? 0
+            let rating = data["rating"] as? Float ?? 0.0
+            let profileImagePath = data["profileImagePath"] as? String ?? ""
+            let colors = data["colors"] as? [String] ?? []
+
+            let product = Product(id: id, name: name, imageName: imageName, suppliers: suppliers, description: description, price: price, productCount: productCount, colors: colors, rating: rating, profileImagePath: profileImagePath)
+            
+            productList.append(product)
+        } else {
+            print("Document with ID \(documentID) does not exist.")
+        }
+
+        return productList
+    }
+
     
 //    private var productImageReference: StorageReference {
 //        storage.child("product_image")

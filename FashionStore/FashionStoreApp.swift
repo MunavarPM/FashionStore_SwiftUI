@@ -18,7 +18,7 @@ struct FashionStoreApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                Signin()
+                TabBar()
                     .environmentObject(productManager)
             }
         }
@@ -27,7 +27,7 @@ struct FashionStoreApp: App {
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
-        print("Configure Firebase🚀")
+//        print("Configure Firebase🚀")
         return true
     }
 }

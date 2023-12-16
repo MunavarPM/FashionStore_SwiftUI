@@ -14,20 +14,22 @@ struct ViewAll: View {
 
     var body: some View {
         NavigationStack {
-                SearchBar()
+            SearchBar()
                 .padding()
-                    ScrollView(showsIndicators: false) {
-                        LazyVGrid(columns: column) {
-                            ForEach(productList, id: \.id) { item in
-                                NavigationLink {
-                                    TopItems(product: item, action: {})
-                                } label: {
-                                    TopItems(product: item, action: {})
-                                }
-                            }
+            ScrollView(showsIndicators: false) {
+                LazyVGrid(columns: column) {
+                    ForEach(productManagerVM.productList, id: \.id) { item in
+                        NavigationLink {
+                            TopItems(product: item, action: {})
+                        } label: {
+                            TopItems(product: item, action: {})
                         }
                     }
-            
+                }
+            }
+        }
+        .onAppear {
+            productManagerVM.fetData()
         }
         .navigationTitle("View All").navigationBarTitleDisplayMode(.automatic)
         .toolbar(content: {

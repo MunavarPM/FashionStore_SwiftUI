@@ -10,7 +10,7 @@ import Firebase
 
 struct Signin: View {
     
-    @FocusState private var emailIsFoucused: Bool
+//    @FocusState private var emailIsFoucused: Bool
     @StateObject var authViewModel = AuthViewModel()
     @State var rotationEffect: Double = 0.0
     @ObservedObject var viewModel = LoginRegisterViewModel()
@@ -42,7 +42,7 @@ struct Signin: View {
                         }
                         CustomTF(hint: "Email", value: $viewModel.email)
                             .autocapitalization(.none)
-                            .focused($emailIsFoucused)
+//                            .focused($emailIsFoucused)
                             .font(.custom("PlayfairDisplay-Regular", size: 17))
                             .textContentType(.emailAddress)
                         CustomTF(hint: "Password",isPassword: true, value: $viewModel.password)
@@ -97,7 +97,7 @@ struct Signin: View {
                                 .onAppear {
                                     Auth.auth().addStateDidChangeListener { auth, user in
                                         if user != nil {
-                                            viewModel.showLogin.toggle()
+                                            viewModel.showLogin = true
                                             viewModel.clearPassword()
                                         }
                                     }
@@ -137,11 +137,11 @@ struct Signin: View {
         .rotation3DEffect(Angle(degrees: rotationEffect), axis: (x: 0.0, y: 5.0, z: 0.0))
         
         }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                self.emailIsFoucused = true
-            }
-        }
+//        .onAppear {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+//                self.emailIsFoucused = true
+//            }
+//        }
         .fullScreenCover(isPresented: $viewModel.showLogin, content: {
             withAnimation(.easeIn) {
                 TabBar()
