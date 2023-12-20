@@ -23,7 +23,6 @@
 		DB6FF39B2AD04186003E8541 /* Signin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6FF39A2AD04186003E8541 /* Signin.swift */; };
 		DB6FF39F2AD087E4003E8541 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6FF39E2AD087E4003E8541 /* HomeView.swift */; };
 		DB6FF3A22AD133E3003E8541 /* StoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6FF3A12AD133E2003E8541 /* StoreDataModel.swift */; };
-		DB6FF3A52AD13868003E8541 /* StoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6FF3A42AD13868003E8541 /* StoreViewModel.swift */; };
 		DB76FFBD2ACBD6F200AEDD9F /* FashionStoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB76FFBC2ACBD6F200AEDD9F /* FashionStoreApp.swift */; };
 		DB76FFC12ACBD6F400AEDD9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB76FFC02ACBD6F400AEDD9F /* Assets.xcassets */; };
 		DB76FFC52ACBD6F400AEDD9F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB76FFC42ACBD6F400AEDD9F /* Preview Assets.xcassets */; };
@@ -65,7 +64,6 @@
 		DB6FF39A2AD04186003E8541 /* Signin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signin.swift; sourceTree = "<group>"; };
 		DB6FF39E2AD087E4003E8541 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DB6FF3A12AD133E2003E8541 /* StoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDataModel.swift; sourceTree = "<group>"; };
-		DB6FF3A42AD13868003E8541 /* StoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewModel.swift; sourceTree = "<group>"; };
 		DB76FFB92ACBD6F200AEDD9F /* FashionStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FashionStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB76FFBC2ACBD6F200AEDD9F /* FashionStoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FashionStoreApp.swift; sourceTree = "<group>"; };
 		DB76FFC02ACBD6F400AEDD9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 		DB6FF3A32AD1384A003E8541 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				DB6FF3A42AD13868003E8541 /* StoreViewModel.swift */,
 				DB6CA1F22AE3109D0012339F /* AuthViewModel.swift */,
 				DBEFDECB2B18954D009E2988 /* StorageManager.swift */,
 				DBD8D8992AF23D9F006CBD5F /* ProductManagerViewModel.swift */,
@@ -343,7 +340,6 @@
 				DB6FF39F2AD087E4003E8541 /* HomeView.swift in Sources */,
 				DB92EE5D2AD6BC6D00EA2B1A /* ProductView.swift in Sources */,
 				DB76FFDC2ACEFD0D00AEDD9F /* OnBoarding.swift in Sources */,
-				DB6FF3A52AD13868003E8541 /* StoreViewModel.swift in Sources */,
 				DB46CBF62AEFC34B0040377B /* WishlistView.swift in Sources */,
 				DBB23DD62AFF5E0A00CE2A84 /* LoginRegisterViewModel.swift in Sources */,
 				DB46CBF42AEE499F0040377B /* Payment.swift in Sources */,

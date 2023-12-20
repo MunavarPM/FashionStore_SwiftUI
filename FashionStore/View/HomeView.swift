@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct HomeView: View {
-    private let categories = ["Dresses", "Jackets", "Jeans", "Shoese"]
+    private let categories = ["Dresses", "Jackets", "Tshirt", "Shoese"]
     @State private var selectedIndex: Int = 0
     @State var isFav: Bool
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
@@ -65,7 +65,7 @@ struct HomeView: View {
                             let gridColumn: [GridItem] = [GridItem(), GridItem()]
                             if selectedIndex == 0 {
                                 LazyVGrid(columns: gridColumn) {
-                                    ForEach(productManagerVM.tshirtList.prefix(2), id: \.id){ item in
+                                    ForEach(productManagerVM.shirtList.prefix(2), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item) {
                                                 if product.isFavorite {
@@ -75,9 +75,6 @@ struct HomeView: View {
                                                 }
                                             }
                                         }
-                                    }
-                                    .onAppear {
-                                        productManagerVM.fetchTshirtData()
                                     }
                                     ForEach(productManagerVM.shirtList.prefix(5), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
@@ -121,7 +118,7 @@ struct HomeView: View {
                                 }
                             } else if selectedIndex == 2 {
                                 LazyVGrid(columns: gridColumn) {
-                                    ForEach(productManagerVM.shirtList.prefix(4), id: \.id){ item in
+                                    ForEach(productManagerVM.tshirtList.prefix(4), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeOut) {
@@ -130,7 +127,7 @@ struct HomeView: View {
                                             })
                                         }
                                     }
-                                    ForEach(productManagerVM.shirtList.prefix(1), id: \.id){ item in
+                                    ForEach(productManagerVM.tshirtList.prefix(1), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item, action: {
                                                 withAnimation(.easeOut) {
@@ -141,7 +138,7 @@ struct HomeView: View {
                                     }
                                 }
                                 .onAppear {
-                                    productManagerVM.fetchShirtData()
+                                    productManagerVM.fetchTshirtData()
                                 }
                             } else if selectedIndex == 3 {
                                 LazyVGrid(columns: gridColumn) {
@@ -163,6 +160,9 @@ struct HomeView: View {
                                             })
                                         }
                                     }
+                                }
+                                .task { //MARK: Extra call for SwifFull thinking for fetching data from server
+                                    try? await productManagerVM.loadCurrentUser()
                                 }
                                 .onAppear {
                                     productManagerVM.fetchShoesData()

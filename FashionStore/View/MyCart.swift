@@ -78,17 +78,17 @@ struct MyCart: View {
                                 .padding(.leading, 260)
                             }
                         }
-                            HStack(spacing: 5) {
-                                Text("Total")
-                                    .font(.system(size: 20).bold())
-                                Text("(\(productManagerVM.getProductCount(product: product)) item): ").fontWeight(.semibold).font(.system(size: 19))
-                                    .font(.title2).opacity(0.5)
-                                    .fontWeight(.bold)
-                                Text("$\(productManagerVM.cartTotal)")
-                                    .font(.system(size: 20))
-                                    .fontWeight(.bold)
-                            }
-                            
+                        HStack(spacing: 5) {
+                            Text("Total")
+                                .font(.system(size: 20).bold())
+                            Text("(\(productManagerVM.getProductCount(product: product)) item): ").fontWeight(.semibold).font(.system(size: 19))
+                                .font(.title2).opacity(0.5)
+                                .fontWeight(.bold)
+                            Text("$\(productManagerVM.cartTotal)")
+                                .font(.system(size: 20))
+                                .fontWeight(.bold)
+                        }
+                        
                         .padding()
                         .frame(width: 360)
                         .background(RoundedRectangle(cornerRadius: 15).stroke(Color.gray, lineWidth: 1.5).opacity(0.6).background(Color(red: 0.95, green: 0.95, blue: 0.95))).cornerRadius(15)
@@ -140,18 +140,24 @@ struct CartItemView: View {
             .overlay {
                 ForEach(product.imageName, id: \.self){ img in
                     HStack {
-                        Image(img)
-                            .resizable()
-                            .frame(width: 80, height: 80)
-                            .cornerRadius(10)
-                            .padding()
-                        VStack(alignment: .leading) {
+                        if let url = URL(string: img) {
+                            AsyncImage(url: url) { image in
+                                image
+                                    .resizable()
+                                    .frame(width: 80, height: 80)
+                                    .cornerRadius(10)
+                                    .padding()
+                            } placeholder: {
+                                ProgressView()
+                                    .frame(width: UIScreen.main.bounds.width, height: 400)
+                            }
+                        }
+                        VStack(alignment: .leading, spacing: 0) {
                             Text(product.name)
                                 .font(.custom("PlayfairDisplay-Bold", size: 23))
                             
                             Text(product.suppliers)
                                 .font(.custom("PlayfairDisplay-Regular", size: 16))
-                            Spacer()
                             HStack {
                                 Text("\(product.price)")
                                     .fontWeight(.heavy)

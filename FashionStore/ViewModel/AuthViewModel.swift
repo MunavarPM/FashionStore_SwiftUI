@@ -13,6 +13,7 @@ import FirebaseFirestore
 
 @MainActor
 class AuthViewModel: ObservableObject {
+    
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     @Published var alertTittle: String = ""

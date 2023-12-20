@@ -62,18 +62,25 @@ struct WhishlistCardView: View {
         .overlay {
             ForEach(product.imageName, id: \.self){ img in
                 HStack {
-                    Image(img)
-                        .resizable()
-                        .frame(width: 80, height: 80)
-                        .cornerRadius(10)
-                        .padding()
+                    if let url = URL(string: img) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .frame(width: 80, height: 80)
+                                .cornerRadius(10)
+                                .padding()
+                        } placeholder: {
+                            ProgressView()
+                                .frame(width: UIScreen.main.bounds.width, height: 400)
+                        }
+                    }
                     VStack(alignment: .leading) {
                         HStack {
                             Text(product.suppliers)
                                 .font(.custom("PlayfairDisplay-Bold", size: 23))
                             BTHeart(isFav: isFav, product: product, action: {})
                                 .environmentObject(productManagerVM)
-                            .offset(x: -10,y: 10)
+                                .offset(x: -10,y: 10)
                         }
                         
                         Text(product.suppliers)

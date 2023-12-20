@@ -30,10 +30,11 @@ struct ProductView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .edgesIgnoringSafeArea(.top)
-                                        .frame(width: UIScreen.main.bounds.width, height: 300)
+                                        .frame(width: UIScreen.main.bounds.width)
                                         .clipped()
                                 } placeholder: {
                                     ProgressView()
+                                        .frame(width: UIScreen.main.bounds.width, height: 400)
                                 }
                                 .overlay(alignment: .bottomTrailing) {
                                     BTHeart(isFav: isFav, product: product) {
@@ -41,7 +42,6 @@ struct ProductView: View {
                                     }
                                     .padding(30)
                                 }
-                                
                             }
                             
                             DescriptionView(product: product)

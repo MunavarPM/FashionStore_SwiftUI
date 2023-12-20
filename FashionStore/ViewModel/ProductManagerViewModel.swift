@@ -27,6 +27,10 @@ class ProductManagerViewModel: ObservableObject {
     @Published var shoesList: [Product] = []
     
     
+    func updateisFavorite(user: User) {
+        
+    }
+    
     func toggleFavorite(_ product: Product) {
         if let index = products.firstIndex(where: { $0.id == product.id }) {
             products[index].isFavorite.toggle()  // Toggle the favorite status
@@ -35,6 +39,17 @@ class ProductManagerViewModel: ObservableObject {
             } else {
                 removeFromWishlist(product: product)
             }
+        }
+    }
+    
+        
+    //MARK: Extra call for SwifFullthinking
+    func loadCurrentUser() async throws {
+        do {
+            let user = try AuthViewModel().getAuthUser()
+            print("\(user)😎")
+        } catch {
+            print("error")
         }
     }
  
@@ -64,7 +79,7 @@ class ProductManagerViewModel: ObservableObject {
             if cartProducts[existingProductIndex].productCount == 1 {
                 removeFromCart(product: product)
                 
-            }else{
+            } else {
                 cartProducts[existingProductIndex].productCount -= 1
                 cartTotal -= product.price
             }

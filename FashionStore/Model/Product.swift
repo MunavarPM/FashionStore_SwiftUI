@@ -22,9 +22,24 @@ struct Product: Identifiable {
     var productCount: Int
     let colors: [String]
     let rating: Float
-    var isFavorite: Bool = false
-    let profileImagePath: String?
+    var isFavorite: Bool
+    let profileImagePath: String
      
+    
+    init(id: String?, name: String, imageName: [String], suppliers: String, description: String, price: Int, productCount: Int, colors: [String], rating: Float, isFavorite: Bool, profileImagePath: String?) {
+        self.id = id
+        self.name = name
+        self.imageName = imageName
+        self.suppliers = suppliers
+        self.description = description
+        self.price = price
+        self.productCount = productCount
+        self.colors = colors
+        self.rating = rating
+        self.isFavorite = false
+        self.profileImagePath = profileImagePath ?? ""
+    }
+    
     
     mutating func toggleFavorite() {
         let currentValue = isFavorite
@@ -40,12 +55,6 @@ struct Product: Identifiable {
     //        let currentValue = isFavorite ?? false
     //        return Product(isFavorite: !currentValue)
     //    }
-}
-
-extension Product: Equatable {
-    static func ==(lhs: Product, rhs: Product) -> Bool {
-        return lhs.id == rhs.id
-    }
 }
 
 struct ColorOption: Identifiable {
@@ -79,6 +88,11 @@ enum CustomColor: String {
     }
 }
 
+extension Product: Equatable {
+    static func ==(lhs: Product, rhs: Product) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
 
 var productList = [
     Product(id: UUID().uuidString, name: "White Stripe Polo Neck T-Shirt"

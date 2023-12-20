@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DeliveryAddress: View {
+    @EnvironmentObject var productManagerVM: ProductManagerViewModel
     var body: some View {
         NavigationStack {
             ZStack {
@@ -88,12 +89,15 @@ struct DeliveryAddress: View {
                             .font(.custom("PlayfairDisplay-Regular", size: 26).bold())
                             .padding(.leading)
                         ScrollView(showsIndicators: false){
-                            ForEach(1..<4, content: { item in
-                                ProductListView(image: "OnBoarding"+"\(item)", name: "String", brand: "String", cost: "122")
-                            })
+                            
+                                ForEach(productManagerVM.cartProducts, id: \.id) { item in
+                                    ProductListView(product: item.product)
+                                }
+                            
                         }
                         
                         Spacer()
+                        
                         HStack {
                             NavigationLink {
                                 Payment()
@@ -144,10 +148,10 @@ struct DeliveryAddress: View {
 }
 
 struct ProductListView: View {
-    let image: String
-    let name: String
-    let brand: String
-    let cost: String
+    
+    @EnvironmentObject var productManagerVM: ProductManagerViewModel
+    
+    var product: Product
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -161,25 +165,36 @@ struct ProductListView: View {
             .overlay {
                 VStack {
                     HStack(spacing: 20) {
-                        Image(image)
-                            .resizable()
-                            .frame(width: 80, height: 80)
-                            .cornerRadius(10)
+                        ForEach(product.imageName, id: \.self){ image in
+                            if let url = URL(string: image) {
+                                AsyncImage(url: url) { img in
+                                    img
+                                        .resizable()
+                                        .frame(width: 80, height: 80)
+                                        .cornerRadius(10)
+                                } placeholder: {
+                                    ProgressView()
+                                }
+                            }
+                        }
                         VStack(alignment: .leading) {
-                            Text("Name-t-shirt")
+                            Text(product.name)
                                 .font(.custom("PlayfairDisplay-Regular", size: 15).bold())
-                            Text("Brand")
+                            Text(product.suppliers)
                                 .foregroundStyle(.gray)
                                 .font(.custom("PlayfairDisplay-Regular", size: 15).bold())
-                            Text("$1299")
+                            Text("$\(product.price)")
                                 .font(.title3)
                                 .fontWeight(.bold)
                             
                         }
                     }
                 }
-                .offset(x: -60)
+                .offset(x: -70)
             }
+        }
+        .onAppear {
+            productManagerVM.cartProducts
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: 2).opacity(0.1))

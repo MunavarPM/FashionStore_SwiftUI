@@ -20,6 +20,22 @@ final class StorageManager {
     
     private let storage = Storage.storage().reference()
     
+    private func productReference(parent: String) -> StorageReference {
+        storage.child(parent)
+    }
+    
+    private let userCollection = Firestore.firestore().collection("user")
+    
+    private func userDocument(userID: String) -> DocumentReference { /// Fetching user for product detail's
+        userCollection.document(userID)
+    }
+    
+    func updateFavouriteProduct(userID: User) async throws {
+        if let id = userID.id {
+            try userDocument(userID: id).setData(from: userID, merge: true)
+        }
+    }
+    
     func productCollection(imageRef: String) {
         let product = Product(id: UUID().uuidString, name: "White Stripe Polo Neck T-Shirt"
                            , imageName: [imageRef],
@@ -60,7 +76,7 @@ final class StorageManager {
             let profileImagePath = data["profileImagePath"] as? String ?? ""
             let colors = data["colors"] as? [String] ?? []
             
-            let product = Product(id: id, name: name, imageName: imageName, suppliers: suppliers, description: description, price: price, productCount: productCount, colors: colors, rating: rating, profileImagePath: profileImagePath)
+            let product = Product(id: id, name: name, imageName: imageName, suppliers: suppliers, description: description, price: price, productCount: productCount, colors: colors, rating: rating, isFavorite: isFavorite, profileImagePath: profileImagePath)
             productList.append(product)
         }
         print("\(productList)⚽️")
@@ -87,7 +103,7 @@ final class StorageManager {
             let profileImagePath = data["profileImagePath"] as? String ?? ""
             let colors = data["colors"] as? [String] ?? []
 
-            let product = Product(id: id, name: name, imageName: imageName, suppliers: suppliers, description: description, price: price, productCount: productCount, colors: colors, rating: rating, profileImagePath: profileImagePath)
+            let product = Product(id: id, name: name, imageName: imageName, suppliers: suppliers, description: description, price: price, productCount: productCount, colors: colors, rating: rating, isFavorite: isFavorite, profileImagePath: profileImagePath)
             
             productList.append(product)
         } else {
@@ -96,6 +112,8 @@ final class StorageManager {
 
         return productList
     }
+    
+    
 
     
 //    private var productImageReference: StorageReference {
@@ -108,9 +126,7 @@ final class StorageManager {
 //        }
 //    }
     
-    private func productReference(parent: String) -> StorageReference {
-        storage.child(parent)
-    }
+    
     
 //    func saveImage(data: Data, parent: String) async throws -> (path: String?, name: String?) {
 //        let meta = StorageMetadata()
