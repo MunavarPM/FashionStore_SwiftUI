@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DeliveryAddress: View {
+    
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
     var body: some View {
         NavigationStack {
@@ -29,52 +30,60 @@ struct DeliveryAddress: View {
                         .overlay {
                             VStack(alignment: .leading, spacing: 8) {
                                 HStack {
-                                    Text("Street: ")
+                                    Text("Name: ")
                                         .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                    Text("India")
+                                    Text("Munavar")
                                         .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                         .foregroundStyle(.gray)
                                 }
                                 HStack {
-                                    Text("City: ")
+                                    Text("BuildingName: ")
                                         .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                    Text("India")
+                                    Text("Corwn Palaza")
                                         .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                         .foregroundStyle(.gray)
                                     
                                 }
                                 HStack {
-                                    Text("State/Province/area: ")
+                                    Text("Land Mark: ")
                                         .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                    Text("India")
+                                    Text("Kochi,Kundanur")
                                         .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                         .foregroundStyle(.gray)
                                 }
                                 HStack {
-                                    Text("Phone Number: ")
+                                    Text("Street: ")
                                         .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                    Text("India")
+                                    Text("Maradu")
                                         .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                         .foregroundStyle(.gray)
                                 }
                                 HStack {
-                                    Text("Zip Code: ")
+                                    Text("City, State: ")
                                         .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                    Text("India")
+                                    Text("Enakulam, Kerala")
                                         .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                         .foregroundStyle(.gray)
                                 }
-                                HStack {
-                                    Text("Country calling code: ")
-                                        .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                    Text("India")
-                                        .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
-                                        .foregroundStyle(.gray)
-                                }
+                                
                                 HStack {
                                     Text("Country: ")
                                         .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
                                     Text("India")
+                                        .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
+                                        .foregroundStyle(.gray)
+                                }
+                                HStack {
+                                    Text("Phone Number 1: ")
+                                        .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
+                                    Text("1223433241")
+                                        .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
+                                        .foregroundStyle(.gray)
+                                }
+                                HStack {
+                                    Text("Phone Number 2: ")
+                                        .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
+                                    Text("1232432")
                                         .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                         .foregroundStyle(.gray)
                                 }
@@ -89,11 +98,9 @@ struct DeliveryAddress: View {
                             .font(.custom("PlayfairDisplay-Regular", size: 26).bold())
                             .padding(.leading)
                         ScrollView(showsIndicators: false){
-                            
-                                ForEach(productManagerVM.cartProducts, id: \.id) { item in
-                                    ProductListView(product: item.product)
-                                }
-                            
+                            ForEach(productManagerVM.cartProducts) { item in
+                                ProductListView(product: item.product)
+                            }
                         }
                         
                         Spacer()
@@ -107,7 +114,7 @@ struct DeliveryAddress: View {
                                         .foregroundStyle(Color("Dark"))
                                         .font(.custom("PlayfairDisplay-Regular", size: 12))
                                         .opacity(0.4)
-                                    Text("$\(1222)")
+                                    Text("$\(productManagerVM.cartTotal)")
                                         .font(.title)
                                         .fontWeight(.heavy)
                                     
@@ -190,7 +197,7 @@ struct ProductListView: View {
                         }
                     }
                 }
-                .offset(x: -70)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
         .onAppear {

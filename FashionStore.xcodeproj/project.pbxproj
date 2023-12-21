@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DB28CC752AEB800A00DBA453 /* DeliveryAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB28CC742AEB800A00DBA453 /* DeliveryAddress.swift */; };
+		DB3C8B9F2B342F860057818B /* AddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3C8B9E2B342F860057818B /* AddressModel.swift */; };
 		DB46CBF42AEE499F0040377B /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB46CBF32AEE499F0040377B /* Payment.swift */; };
 		DB46CBF62AEFC34B0040377B /* WishlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB46CBF52AEFC34B0040377B /* WishlistView.swift */; };
 		DB46E1FE2AF61E6E00CFA2E8 /* ViewAll.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB46E1FD2AF61E6E00CFA2E8 /* ViewAll.swift */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		DB28CC742AEB800A00DBA453 /* DeliveryAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddress.swift; sourceTree = "<group>"; };
+		DB3C8B9E2B342F860057818B /* AddressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
 		DB46CBF32AEE499F0040377B /* Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
 		DB46CBF52AEFC34B0040377B /* WishlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistView.swift; sourceTree = "<group>"; };
 		DB46E1FD2AF61E6E00CFA2E8 /* ViewAll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAll.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			children = (
 				DB6FF3A12AD133E2003E8541 /* StoreDataModel.swift */,
 				DB7AC19A2ADED59C00C7D15D /* Product.swift */,
+				DB3C8B9E2B342F860057818B /* AddressModel.swift */,
 				DB6CA1F02AE30E770012339F /* User.swift */,
 			);
 			path = Model;
@@ -330,6 +333,7 @@
 				DB686B172ADDB342003B1A79 /* CartButton.swift in Sources */,
 				DB6E66632AE974E600C424C2 /* MyCart.swift in Sources */,
 				DBD8D89A2AF23D9F006CBD5F /* ProductManagerViewModel.swift in Sources */,
+				DB3C8B9F2B342F860057818B /* AddressModel.swift in Sources */,
 				DB6CA1F12AE30E770012339F /* User.swift in Sources */,
 				DB6CA1F32AE3109D0012339F /* AuthViewModel.swift in Sources */,
 				DB92EE602AD6DEC200EA2B1A /* DataModel.swift in Sources */,
