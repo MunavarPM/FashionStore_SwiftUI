@@ -28,7 +28,7 @@ struct ProfileView: View {
         ZStack {
             Color(Color("Light"))
             
-            NavigationStack {
+//            NavigationStack {
                 VStack {
                     ZStack {
                         RoundedRectangle(cornerRadius: 15)
@@ -209,7 +209,7 @@ struct ProfileView: View {
                         
                     }
                 }
-            }
+//            }
         }
     }
 //    func fetchImage() {

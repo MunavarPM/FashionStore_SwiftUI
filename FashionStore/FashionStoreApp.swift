@@ -13,14 +13,18 @@ import FirebaseFirestore
 struct FashionStoreApp: App {
     
     @StateObject var productManager = ProductManagerViewModel()
+    @StateObject var addressVM = AddressViewModel()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
             NavigationStack {
                 TabBar()
-                    .environmentObject(productManager)
+                //                    .environmentObject(productManager)
+                //                    .environmentObject(addressVM)
             }
+            .environmentObject(productManager)
+            .environmentObject(addressVM)
         }
     }
 }

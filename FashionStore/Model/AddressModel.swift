@@ -8,20 +8,20 @@
 import Foundation
 
 struct AddressModel {
-    let id:String
-    let name:String
-    let buildingName:String?
-    let landmark:String
+    let id: String
+    let name: String
+    let buildingName: String?
+    let landmark: String
     var street: String
     var city: String
     var state: String
     var zipCode: String
     var country: String
-    var phoneNumber1:String
-    var phoneNumber2:String
+    var phoneNumber1: String
+    var phoneNumber2: String
     
-    var adressModelDictionary:[String:Any]{
-        return ["id":id,"name":name,"buildingName":buildingName ?? "nil" ,"landmark":landmark,"street":street,"city":city,"state":state,"zipCode":zipCode,"country":country,"phoneNumber1":phoneNumber1,"phoneNumber2":phoneNumber2]
+    var adressModelDictionary: [String:Any] {
+        return ["id": id,"name": name,"buildingName": buildingName ?? "nil" ,"landmark": landmark,"street": street,"city": city,"state": state,"zipCode": zipCode,"country": country,"phoneNumber1": phoneNumber1,"phoneNumber2": phoneNumber2]
     }
     
     init(){
@@ -38,7 +38,7 @@ struct AddressModel {
         self.phoneNumber1 = ""
     }
     
-    init(id:String,name:String,buildingName:String,landmark:String,street:String,city:String,state:String,zipCode:String,country:String,phoneNumber1:String,phoneNumber2:String){
+    init(id: String,name: String,buildingName: String,landmark: String,street:  String,city: String,state: String,zipCode:  String,country: String,phoneNumber1: String,phoneNumber2: String){
         self.id = id
         self.name = name
         self.buildingName = buildingName
@@ -52,3 +52,4 @@ struct AddressModel {
         self.phoneNumber1 = phoneNumber1
     }
 }
+var addressD = AddressModel(id: UUID().uuidString, name: "Messi", buildingName: "Crown", landmark: "Kundanor", street: "Maradu", city: "Kochi", state: "Kerala", zipCode: "123412", country: "India", phoneNumber1: "123123123", phoneNumber2: "123123123")

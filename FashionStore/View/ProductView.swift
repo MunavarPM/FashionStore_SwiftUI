@@ -17,7 +17,7 @@ struct ProductView: View {
     var product: Product
     
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             ZStack {
                 Color("Light")
                     .ignoresSafeArea(.all)
@@ -73,9 +73,9 @@ struct ProductView: View {
                     })
                 }
             }
-        }
+//        }
         .sheet(isPresented: $isShowCartView, content: {
-            NavigationStack {
+//            NavigationStack {
                 MyCart(product: productList[1], isFav: .constant(false))
                     .environmentObject(productManagerVM)
                     .toolbar {
@@ -89,7 +89,7 @@ struct ProductView: View {
                             }
                         }
                     }
-            }
+//            }
         })
         .navigationBarBackButtonHidden()
     }

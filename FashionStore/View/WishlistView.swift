@@ -11,7 +11,7 @@ struct WishlistView: View {
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
     var product: Product
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             VStack {
                 Text("My Wishlist")
                     .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
@@ -38,7 +38,7 @@ struct WishlistView: View {
                     Spacer()
                 }
             }
-        }
+//        }
         .navigationBarBackButtonHidden(true)
     }
 }

@@ -9,6 +9,9 @@ import SwiftUI
 
 struct MyCart: View {
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
+//    @StateObject var addressVM = AddressViewModel()
+    @EnvironmentObject var addressVM: AddressViewModel
+    
     var product: Product
     
     @State private var totalPrice: Double = 0
@@ -95,6 +98,7 @@ struct MyCart: View {
                         .padding(3)
                         NavigationLink {
                             DeliveryAddress()
+                                .environmentObject(addressVM)
                         } label: {
                             ZStack {
                                 Rectangle()
@@ -125,6 +129,7 @@ struct MyCart: View {
 #Preview {
     MyCart(product: productList[1], isFav: .constant(false))
         .environmentObject(ProductManagerViewModel())
+        .environmentObject(AddressViewModel())
 }
 
 struct CartItemView: View {

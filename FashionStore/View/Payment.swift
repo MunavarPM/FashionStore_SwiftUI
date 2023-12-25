@@ -10,7 +10,7 @@ import SwiftUI
 struct Payment: View {
     
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             VStack {
                 Text("Payment")
                     .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
@@ -31,7 +31,7 @@ struct Payment: View {
                     DismissView()
                 }
             })
-        }
+//        }
         .navigationBarBackButtonHidden(true)
     }
 }

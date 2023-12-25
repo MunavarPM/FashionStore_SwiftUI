@@ -13,7 +13,7 @@ struct ViewAll: View {
     var column = [GridItem(.adaptive(minimum:160), spacing: 20)]
 
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             SearchBar()
                 .padding()
             ScrollView(showsIndicators: false) {
@@ -27,7 +27,7 @@ struct ViewAll: View {
                     }
                 }
             }
-        }
+//        }
         .onAppear {
             productManagerVM.fetData()
         }

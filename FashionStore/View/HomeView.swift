@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 
 struct HomeView: View {
@@ -13,11 +14,15 @@ struct HomeView: View {
     @State private var selectedIndex: Int = 0
     @State var isFav: Bool
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
+    @EnvironmentObject var addressVM: AddressViewModel
+    
+    @AppStorage("USER_NAME") var USER_NAME = ""
+    
     
     var product: Product
     
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             ZStack {
                 Color("Light")
                     .ignoresSafeArea()
@@ -86,6 +91,10 @@ struct HomeView: View {
                                             })
                                         }
                                     }
+                                }
+                                .task { //MARK: Extra call for SwifFull thinking for fetching data from server
+                                    try? await productManagerVM.loadCurrentUser()
+                                    addressVM.userName = USER_NAME  /// Alen code for getting user from the db.
                                 }
                                 .onAppear {
                                     productManagerVM.fetchShirtData()
@@ -161,9 +170,6 @@ struct HomeView: View {
                                         }
                                     }
                                 }
-                                .task { //MARK: Extra call for SwifFull thinking for fetching data from server
-                                    try? await productManagerVM.loadCurrentUser()
-                                }
                                 .onAppear {
                                     productManagerVM.fetchShoesData()
                                 }
@@ -172,7 +178,11 @@ struct HomeView: View {
                     }
                 }
             }
-            
+            .onAppear(perform: {
+//                addressVM.userName = Auth.auth().currentUser?.displayName ?? "User"
+                print("🏡\(addressVM.userName)")
+                
+            })
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {} label: {
@@ -196,7 +206,7 @@ struct HomeView: View {
                 }
             }
             .navigationBarHidden(false)
-        }
+//        }
     }
 }
 

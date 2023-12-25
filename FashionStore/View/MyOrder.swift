@@ -10,7 +10,7 @@ import SwiftUI
 struct MyOrder: View {
     @State var onTap: Bool = false
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             VStack {
                 Text("My Order")
                     .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
@@ -110,7 +110,7 @@ struct MyOrder: View {
                         }
                     }
                 })
-        }
+//        }
         .navigationBarBackButtonHidden(true)
     }
 }

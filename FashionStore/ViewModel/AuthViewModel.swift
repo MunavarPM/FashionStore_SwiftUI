@@ -20,6 +20,8 @@ class AuthViewModel: ObservableObject {
     @Published var alertMessage: String = ""
     @Published var showAlert: Bool = false
     @Published private(set) var user: User? = nil
+    
+    @AppStorage("USER_NAME") var USER_NAME = ""
 
     init() {
         self.userSession = Auth.auth().currentUser
@@ -97,6 +99,7 @@ class AuthViewModel: ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let snapshot = try? await Firestore.firestore().collection("user").document(uid).getDocument() else { return }
         self.currentUser = try? snapshot.data(as: User.self)
+        USER_NAME = (self.currentUser?.userName) ?? "MunavarD"
         print("😎Current User\(String(describing: self.currentUser))")
     }
     
