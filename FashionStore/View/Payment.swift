@@ -9,8 +9,9 @@ import SwiftUI
 
 struct Payment: View {
     
+    @State var showRazorPayView: Bool = false
+    
     var body: some View {
-//        NavigationStack {
             VStack {
                 Text("Payment")
                     .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
@@ -18,20 +19,25 @@ struct Payment: View {
                 Spacer()
                 VStack(alignment: .leading, spacing: 25) {
                     
-                    PaymentOptionView(systemImage: nil, image: "ModelFT", text: "Paypal")
-                    PaymentOptionView(systemImage: "plus.circle", image: nil, text: "Add Card")
+                    
+                    PaymentOptionView(isShow: $showRazorPayView, systemImage: nil, image: "razorpay", text: "Razorpay")
+//                        .onTapGesture {
+//                            showRazorPayView = true
+//                        }
+                    PaymentOptionView(isShow: $showRazorPayView, systemImage: "plus.circle", image: nil, text: "Add Card")
                     
                     Spacer()
                 }
                 .padding(.top)
             }
-            
+            .sheet(isPresented: $showRazorPayView, content: {
+                RazorPayView(totalPrie: 1000)
+            })
             .toolbar(content: {
                 ToolbarItem(placement: .topBarLeading) {
                     DismissView()
                 }
             })
-//        }
         .navigationBarBackButtonHidden(true)
     }
 }
@@ -43,6 +49,7 @@ struct Payment: View {
 
 struct PaymentOptionView: View {
     @State var isTap = false
+    @Binding var isShow: Bool
     let systemImage: String?
     let image: String?
     let text: String?
@@ -85,6 +92,7 @@ struct PaymentOptionView: View {
         }
         .onTapGesture {
             isTap.toggle()
+            isShow.toggle()
         }
         .background(RoundedRectangle(cornerRadius: 20).stroke(Color.gray, lineWidth: 2).opacity(0.1))
     }

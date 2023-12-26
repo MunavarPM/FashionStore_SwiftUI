@@ -15,14 +15,24 @@ struct FashionStoreApp: App {
     @StateObject var productManager = ProductManagerViewModel()
     @StateObject var addressVM = AddressViewModel()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State var isPresented: Bool = false
     
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                TabBar()
+                
+                    
+                        NavigationLink {
+                            RazorPayView(totalPrie: 10)
+                        } label: {
+                            TabBar()
+                        }
+
+                    
                 //                    .environmentObject(productManager)
                 //                    .environmentObject(addressVM)
             }
+            
             .environmentObject(productManager)
             .environmentObject(addressVM)
         }

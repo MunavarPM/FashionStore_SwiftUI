@@ -45,10 +45,27 @@
 		DB951EC12AE3B04600D779A1 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DB951EC02AE3B04600D779A1 /* FirebaseFirestoreSwift */; };
 		DB951ED72AE3B04600D779A1 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DB951ED62AE3B04600D779A1 /* FirebaseStorage */; };
 		DBB23DD62AFF5E0A00CE2A84 /* LoginRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB23DD52AFF5E0A00CE2A84 /* LoginRegisterViewModel.swift */; };
+		DBBF95862B39BBB6002593B8 /* RazorpayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBF95852B39BBB6002593B8 /* RazorpayView.swift */; };
+		DBBF95892B39C03A002593B8 /* Razorpay.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBBF95872B39BFED002593B8 /* Razorpay.xcframework */; };
+		DBBF958A2B39C03A002593B8 /* Razorpay.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DBBF95872B39BFED002593B8 /* Razorpay.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DBBFE9FC2AE3896500F6F9A0 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBFE9FB2AE3896500F6F9A0 /* TabBar.swift */; };
 		DBD8D89A2AF23D9F006CBD5F /* ProductManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD8D8992AF23D9F006CBD5F /* ProductManagerViewModel.swift */; };
 		DBEFDECC2B18954D009E2988 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEFDECB2B18954D009E2988 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DBBF958B2B39C03A002593B8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DBBF958A2B39C03A002593B8 /* Razorpay.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DB28CC742AEB800A00DBA453 /* DeliveryAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryAddress.swift; sourceTree = "<group>"; };
@@ -88,6 +105,8 @@
 		DB92EE5F2AD6DEC200EA2B1A /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		DB951EA12AE3AC0400D779A1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DBB23DD52AFF5E0A00CE2A84 /* LoginRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterViewModel.swift; sourceTree = "<group>"; };
+		DBBF95852B39BBB6002593B8 /* RazorpayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RazorpayView.swift; sourceTree = "<group>"; };
+		DBBF95872B39BFED002593B8 /* Razorpay.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Razorpay.xcframework; sourceTree = "<group>"; };
 		DBBFE9FB2AE3896500F6F9A0 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		DBD8D8992AF23D9F006CBD5F /* ProductManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductManagerViewModel.swift; sourceTree = "<group>"; };
 		DBEFDECB2B18954D009E2988 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
@@ -101,6 +120,7 @@
 				DB951EBD2AE3B04600D779A1 /* FirebaseFirestore in Frameworks */,
 				DB951EC12AE3B04600D779A1 /* FirebaseFirestoreSwift in Frameworks */,
 				DB951EB12AE3B04600D779A1 /* FirebaseAuth in Frameworks */,
+				DBBF95892B39C03A002593B8 /* Razorpay.xcframework in Frameworks */,
 				DB951ED72AE3B04600D779A1 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,6 +235,8 @@
 				DB28CC742AEB800A00DBA453 /* DeliveryAddress.swift */,
 				DB58866A2B34AABC00F90757 /* AddressEditing.swift */,
 				DB46CBF32AEE499F0040377B /* Payment.swift */,
+				DBBF95852B39BBB6002593B8 /* RazorpayView.swift */,
+				DBBF95872B39BFED002593B8 /* Razorpay.xcframework */,
 				DB686B162ADDB342003B1A79 /* CartButton.swift */,
 				DB686B142ADBB8EA003B1A79 /* BTHeart.swift */,
 				DB92EE5B2AD6B7F300EA2B1A /* Login */,
@@ -244,6 +266,7 @@
 				DB76FFB52ACBD6F200AEDD9F /* Sources */,
 				DB76FFB62ACBD6F200AEDD9F /* Frameworks */,
 				DB76FFB72ACBD6F200AEDD9F /* Resources */,
+				DBBF958B2B39C03A002593B8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -317,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBBF95862B39BBB6002593B8 /* RazorpayView.swift in Sources */,
 				DB28CC752AEB800A00DBA453 /* DeliveryAddress.swift in Sources */,
 				DB6FF3A22AD133E3003E8541 /* StoreDataModel.swift in Sources */,
 				DB76FFE12ACF3E1100AEDD9F /* OnBoardingTapView.swift in Sources */,

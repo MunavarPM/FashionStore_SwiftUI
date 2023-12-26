@@ -58,21 +58,21 @@ struct DeliveryAddress: View {
                                     HStack {
                                         Text("Land Mark: ")
                                             .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                        Text("Kochi,Kundanur")
+                                        Text("\(element.landmark)")
                                             .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                             .foregroundStyle(.gray)
                                     }
                                     HStack {
                                         Text("Street: ")
                                             .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                        Text("Maradu")
+                                        Text("\(element.street)")
                                             .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                             .foregroundStyle(.gray)
                                     }
                                     HStack {
                                         Text("City, State: ")
                                             .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                        Text("Enakulam, Kerala")
+                                        Text("\(element.city),\(element.state)")
                                             .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                             .foregroundStyle(.gray)
                                     }
@@ -80,21 +80,21 @@ struct DeliveryAddress: View {
                                     HStack {
                                         Text("Country: ")
                                             .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                        Text("India")
+                                        Text("\(element.country)")
                                             .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                             .foregroundStyle(.gray)
                                     }
                                     HStack {
                                         Text("Phone Number 1: ")
                                             .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                        Text("1223433241")
+                                        Text("\(element.phoneNumber1)")
                                             .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                             .foregroundStyle(.gray)
                                     }
                                     HStack {
                                         Text("Phone Number 2: ")
                                             .font(.custom("PlayfairDisplay-Bold", size: 20).bold())
-                                        Text("1232432")
+                                        Text("\(element.phoneNumber2)")
                                             .font(.custom("PlayfairDisplay-Regular", size: 18).bold())
                                             .foregroundStyle(.gray)
                                     }
@@ -108,7 +108,7 @@ struct DeliveryAddress: View {
                         
                         Text("Product List")
                             .font(.custom("PlayfairDisplay-Regular", size: 26).bold())
-                            .padding(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         ScrollView(showsIndicators: false){
                             ForEach(productManagerVM.cartProducts) { item in
                                 ProductListView(product: item.product)
