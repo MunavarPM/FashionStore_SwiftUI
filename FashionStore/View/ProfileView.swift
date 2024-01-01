@@ -14,7 +14,7 @@ import FirebaseFirestore
 struct ProfileView: View {
     
     @StateObject var authViewModel = AuthViewModel()
-    @StateObject var viewModel = ProductManagerViewModel()
+    @EnvironmentObject var viewModel: ProductManagerViewModel
     @State private var isDarkMode = false
     @Environment(\.presentationMode) var presentationMode
     @State var showLogin: Bool = false
@@ -28,7 +28,6 @@ struct ProfileView: View {
         ZStack {
             Color(Color("Light"))
             
-//            NavigationStack {
                 VStack {
                     ZStack {
                         RoundedRectangle(cornerRadius: 15)
@@ -88,12 +87,14 @@ struct ProfileView: View {
                             .overlay {
                                 VStack {
                                     NavigationLink {
-                                        MyOrder()
+//                                        MyOrder(orderListVM: <#ProductManagerViewModel#>)
                                     } label:{
                                         SettingBTView(imageSF: "person.fill", title: "Personal Details", action: {})
                                     }
                                     NavigationLink {
-                                        MyOrder()
+                                        ForEach(viewModel.orderList, id: \.id) { prodcut in
+                                            MyOrder(product: prodcut.product)
+                                        }
                                     } label: {
                                         SettingBTView(imageSF: "bag.fill", title: "My Order", action: {})
                                     }

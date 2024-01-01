@@ -70,7 +70,9 @@ struct MyCart: View {
                             .background(Color(red: 0.95, green: 0.95, blue: 0.95))
                             .cornerRadius(10)
                             .overlay {
-                                Button(action: {}, label: {
+                                Button(action: {
+//                                    productManagerVM.removeAllFromCart()
+                                }, label: {
                                     Text("Apply")
                                         .bold()
                                         .foregroundStyle(Color("Light"))

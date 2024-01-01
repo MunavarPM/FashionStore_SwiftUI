@@ -19,12 +19,14 @@ class ProductManagerViewModel: ObservableObject {
     @Published private(set) var wishlistTotal: Int = 0
     @Published private(set) var cartProducts: [CartProduct] = []
     @Published private(set) var cartTotal: Int = 0
+    @Published var orderList: [CartProduct] = []
     @Published var selectedFilter: FilterOption? = nil
     @Published var productList: [Product] = []
     @Published var jacketList: [Product] = []
     @Published var shirtList: [Product] = []
     @Published var tshirtList: [Product] = []
     @Published var shoesList: [Product] = []
+   
     
     
     func updateisFavorite(user: User) {
@@ -73,6 +75,8 @@ class ProductManagerViewModel: ObservableObject {
     }
     
     func removeAllFromCart() {
+        orderList.append(contentsOf: cartProducts)
+        print("\(orderList.count)📋📋📋")
         cartProducts.removeAll()
         cartTotal = 0
     }
@@ -133,16 +137,6 @@ class ProductManagerViewModel: ObservableObject {
         wishlistTotal -= product.price
     }
     
-    
-//    func saveProductImage(item: PhotosPickerItem, parent: String) {
-//        Task {
-//            guard let data = try await item.loadTransferable(type: Data.self) else { return }
-//            let (path, name) = try await StorageManager.shared.saveImage(data: data, parent: parent)
-//            print("ProductImageSaved")
-//            print("\(path ?? "")🛣️")
-//            print("\(name ?? "")🙋🏽‍♂️")
-//        }
-//    }
     
     func saveProductImage(item: PhotosPickerItem, parent: String) {
         Task {

@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct MyOrder: View {
+    @EnvironmentObject var orderListVM: ProductManagerViewModel
     @State var onTap: Bool = false
+    @State var onGoing: Bool = false
+    var product: Product
     var body: some View {
-//        NavigationStack {
-            VStack {
-                Text("My Order")
-                    .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
-                    .offset(x: -105)
-                Spacer()
-                ScrollView(showsIndicators: false) {
+        VStack {
+            Text("My Order")
+                .font(.custom("PlayfairDisplay-Bold", size: 32).bold())
+                .offset(x: -105)
+            Spacer()
+            ScrollView(showsIndicators: false) {
+                ForEach(product.imageName, id: \.self) { img in
                     HStack {
                         Spacer()
                         ZStack {
@@ -28,6 +31,7 @@ struct MyOrder: View {
                             Button(action: {
                                 withAnimation(.easeInOut) {
                                     onTap.toggle()
+                                    onGoing.toggle()
                                 }
                             }, label: {
                                 Text("Ongoing")
@@ -44,6 +48,7 @@ struct MyOrder: View {
                             Button(action: {
                                 withAnimation(.easeInOut) {
                                     onTap.toggle()
+                                    onGoing.toggle()
                                 }
                             }, label: {
                                 Text("Completed")
@@ -64,59 +69,75 @@ struct MyOrder: View {
                             .frame(width: UIScreen.main.bounds.width - 25, height: 120)
                     }
                     .overlay {
-                        HStack {
-                            Image(.shoesBoys)
-                                .resizable()
-                                .frame(width: 80, height: 80)
-                                .cornerRadius(10)
-                                .padding()
-                            VStack(alignment: .leading) {
-                                Text("Shoes")
-                                    .font(.custom("PlayfairDisplay-Bold", size: 25))
-                                
-                                Text("Brand name").opacity(0.5).bold()
-                                    .font(.custom("PlayfairDisplay-Bold", size: 18))
-                                HStack {
-                                    Text("Quantity:").opacity(0.5)
-                                        .font(.custom("PlayfairDisplay-Bold", size: 17))
-                                    Text("2").opacity(0.7)
+                        
+                        if onGoing {
+                            HStack {
+                                if let url = URL(string: img) {
+                                    AsyncImage(url: url) { image in
+                                        image
+                                            .resizable()
+                                            .frame(width: 80, height: 80)
+                                            .cornerRadius(10)
+                                            .padding()
+                                        
+                                    } placeholder: {
+                                        ProgressView()
+                                            .frame(width: UIScreen.main.bounds.width, height: 50)
+                                    }
                                 }
-                                HStack {
-                                    Text("Size:").opacity(0.5)
-                                        .font(.custom("PlayfairDisplay-Bold", size: 17))
-                                    Text("42").opacity(0.7)
+                                VStack(alignment: .leading) {
+                                    Text(product.name)
+                                        .font(.custom("PlayfairDisplay-Bold", size: 25))
+                                    
+                                    Text(product.suppliers).opacity(0.5).bold()
+                                        .font(.custom("PlayfairDisplay-Bold", size: 18))
+                                    HStack {
+                                        Text("Quantity:").opacity(0.5)
+                                            .font(.custom("PlayfairDisplay-Bold", size: 17))
+                                        Text("1").opacity(0.7)
+                                    }
+                                    HStack {
+                                        Text("Size:").opacity(0.5)
+                                            .font(.custom("PlayfairDisplay-Bold", size: 17))
+                                        Text("S").opacity(0.7)
+                                    }
                                 }
+                                Spacer()
+                                Text("$ \(product.price)").bold()
+                                    .padding(.horizontal)
                             }
-                            Spacer()
-                            Text("$ 120.00").bold()
-                                .padding(.horizontal)
+                        } else {
+                            Image("Cart")
+                                .resizable()
+                                .offset(y: -70)
+                                .frame(width: 550, height: 550)
                         }
                     }
+                    
                 }
             }
-            
-                .toolbar(content: {
-                    ToolbarItem(placement: .topBarLeading) {
-                        DismissView()
-                    }
-                    ToolbarItem(placement: .topBarTrailing) {
-                        
-                        NavigationLink {
-                            MyCart(product: productList[1], isFav: .constant(false))
-                        } label: {
-                            CartButton(numberOfProduct: 1, action: {
-                                print("CartButton")
-                            })
-                        }
-                    }
-                })
-//        }
+        }
+        .toolbar(content: {
+            ToolbarItem(placement: .topBarLeading) {
+                DismissView()
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                
+                NavigationLink {
+                    MyCart(product: productList[1], isFav: .constant(false))
+                } label: {
+                    CartButton(numberOfProduct: 1, action: {
+                        print("CartButton")
+                    })
+                }
+            }
+        })
         .navigationBarBackButtonHidden(true)
     }
 }
 
 #Preview {
-    MyOrder(onTap: true)
+    MyOrder(onTap: true, product: productList[2])
 }
 struct DismissView: View {
     @Environment(\.dismiss) var dismiss
@@ -129,7 +150,7 @@ struct DismissView: View {
             Image(systemName: "xmark.circle.fill")
                 .foregroundStyle(Color("Dark"))
                 .font(.title2)
-                
+            
         })
     }
 }
