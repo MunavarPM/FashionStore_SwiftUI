@@ -112,42 +112,6 @@ final class StorageManager {
 
         return productList
     }
-    
-    
-
-    
-//    private var productImageReference: StorageReference {
-//        storage.child("product_image")
-//    }
-    
-//    func geProduct() {
-//        db.collection("product").getDocuments { (QuerySnapshot?, Error?) in
-//            
-//        }
-//    }
-    
-    
-    
-//    func saveImage(data: Data, parent: String) async throws -> (path: String?, name: String?) {
-//        let meta = StorageMetadata()
-//        meta.contentType = "image/jpeg"
-//        let path = "\(UUID().uuidString).jpeg"
-//        
-//        do {
-//            let returnMetaData = try await productReference(parent: parent).child(path).putDataAsync(data, metadata: meta)
-//            
-//            guard let returnPath = returnMetaData.path, let returnName = returnMetaData.name else {
-//                throw URLError(.badServerResponse)
-//            }
-//            
-//            return (returnPath, returnName)
-//        } catch {
-//            // Handle the specific error, print or propagate as needed
-//            print("Error putting data to Firebase Storage: \(error)")
-//            return (nil, nil)
-//        }
-//    }
-
 
     func saveImage(data: Data, parent: String) async throws -> (path: String?, name: String?, url: URL?) {
         let meta = StorageMetadata()
@@ -170,17 +134,6 @@ final class StorageManager {
         try await storage.child(path).data(maxSize: 3 * 1024 * 1024)
     }
     
-    
-
-    
-//    func getData(path: String) async throws -> UIImage {
-//        let data = try await getData(path: path)
-//        
-//        guard let image = UIImage(data: data) else {
-//            throw URLError(.badServerResponse)
-//        }
-//        return image
-//    }
     
     func getProductData(parent: String, child: String) async throws -> Data {
         try await productReference(parent: parent).data(maxSize: 3 * 1024 * 1024)

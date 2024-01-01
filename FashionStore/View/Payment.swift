@@ -19,7 +19,7 @@ struct Payment: View {
                     
                     
                     NavigationLink {
-                        RazorPayView(totalPrice: 1090)
+                        RazorPayView(productManagerViewModel: cartVm, totalPrice: 1090)
                     } label: {
                         PaymentOptionView(systemImage: nil, image: "razorpay", text: "Razorpay")
                     }

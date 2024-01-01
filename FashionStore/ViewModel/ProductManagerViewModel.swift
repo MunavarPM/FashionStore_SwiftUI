@@ -72,6 +72,11 @@ class ProductManagerViewModel: ObservableObject {
         cartTotal -= product.price
     }
     
+    func removeAllFromCart() {
+        cartProducts.removeAll()
+        cartTotal = 0
+    }
+    
     func minusProductCart(product: Product){
         if let existingProductIndex = cartProducts.firstIndex(where: { $0.product == product }) {
             

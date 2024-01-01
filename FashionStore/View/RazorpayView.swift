@@ -287,13 +287,16 @@ import UIKit
 import Foundation
 import SwiftUI
 
-struct RazorPayView:UIViewControllerRepresentable{
+struct RazorPayView:UIViewControllerRepresentable {
+    
+    @StateObject var productManagerViewModel: ProductManagerViewModel
     @State var totalPrice:Int
     typealias UIViewControllerType = ViewController
     
     func makeUIViewController(context: Context) -> ViewController {
         let vc = ViewController()
         vc.totalPrice = totalPrice
+        vc.productManagerViewModel = productManagerViewModel
         return vc
     }
     
@@ -305,6 +308,7 @@ struct RazorPayView:UIViewControllerRepresentable{
 class ViewController: UIViewController, RazorpayPaymentCompletionProtocol {
     var razorpay: RazorpayCheckout!
     var totalPrice: Int = 0
+    var productManagerViewModel: ProductManagerViewModel!
     override func viewDidLoad(){
         super.viewDidLoad()
         razorpay = RazorpayCheckout.initWithKey("rzp_test_as8Qsyvi6jv8By", andDelegate: self)
@@ -328,7 +332,7 @@ class ViewController: UIViewController, RazorpayPaymentCompletionProtocol {
                 "email": "foo@bar.com"
             ],
             "theme": [
-                "color": "#F37254"
+                "color": "#000000"
             ],
             "key": "rzp_test_as8Qsyvi6jv8By"
         ]
@@ -345,6 +349,7 @@ class ViewController: UIViewController, RazorpayPaymentCompletionProtocol {
     func onPaymentSuccess(_ payment_id: String) {
         print("success: ", payment_id)
         self.presentAlert(withTitle: "Success", message: "Payment Succeeded")
+        productManagerViewModel.removeAllFromCart()
     }
 
     func presentAlert(withTitle title: String, message: String) {
