@@ -10,7 +10,7 @@ import SwiftUI
 struct MyOrder: View {
     @EnvironmentObject var orderListVM: ProductManagerViewModel
     @State var onTap: Bool = false
-    @State var onGoing: Bool = false
+    @State var onGoing: Bool = true
     var product: Product
     var body: some View {
         VStack {
@@ -19,7 +19,6 @@ struct MyOrder: View {
                 .offset(x: -105)
             Spacer()
             ScrollView(showsIndicators: false) {
-                ForEach(product.imageName, id: \.self) { img in
                     HStack {
                         Spacer()
                         ZStack {
@@ -56,7 +55,6 @@ struct MyOrder: View {
                             })
                         }
                         .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 2).opacity(0.5))
-                        
                     }
                     .padding(10)
                     .padding(.horizontal)
@@ -69,51 +67,52 @@ struct MyOrder: View {
                             .frame(width: UIScreen.main.bounds.width - 25, height: 120)
                     }
                     .overlay {
-                        
-                        if onGoing {
-                            HStack {
-                                if let url = URL(string: img) {
-                                    AsyncImage(url: url) { image in
-                                        image
-                                            .resizable()
-                                            .frame(width: 80, height: 80)
-                                            .cornerRadius(10)
-                                            .padding()
+                        VStack {
+                            ForEach(product.imageName, id: \.self) { img in
+                            if onGoing {
+                                HStack {
+                                    if let url = URL(string: img) {
+                                        AsyncImage(url: url) { image in
+                                            image
+                                                .resizable()
+                                                .frame(width: 80, height: 80)
+                                                .cornerRadius(10)
+                                                .padding()
+                                            
+                                        } placeholder: {
+                                            ProgressView()
+                                                .frame(width: UIScreen.main.bounds.width, height: 50)
+                                        }
+                                    }
+                                    VStack(alignment: .leading) {
+                                        Text(product.name)
+                                            .font(.custom("PlayfairDisplay-Bold", size: 25))
                                         
-                                    } placeholder: {
-                                        ProgressView()
-                                            .frame(width: UIScreen.main.bounds.width, height: 50)
+                                        Text(product.suppliers).opacity(0.5).bold()
+                                            .font(.custom("PlayfairDisplay-Bold", size: 18))
+                                        HStack {
+                                            Text("Quantity:").opacity(0.5)
+                                                .font(.custom("PlayfairDisplay-Bold", size: 17))
+                                            Text("1").opacity(0.7)
+                                        }
+                                        HStack {
+                                            Text("Size:").opacity(0.5)
+                                                .font(.custom("PlayfairDisplay-Bold", size: 17))
+                                            Text("S").opacity(0.7)
+                                        }
                                     }
+                                    Spacer()
+                                    Text("$ \(product.price)").bold()
+                                        .padding(.horizontal)
                                 }
-                                VStack(alignment: .leading) {
-                                    Text(product.name)
-                                        .font(.custom("PlayfairDisplay-Bold", size: 25))
-                                    
-                                    Text(product.suppliers).opacity(0.5).bold()
-                                        .font(.custom("PlayfairDisplay-Bold", size: 18))
-                                    HStack {
-                                        Text("Quantity:").opacity(0.5)
-                                            .font(.custom("PlayfairDisplay-Bold", size: 17))
-                                        Text("1").opacity(0.7)
-                                    }
-                                    HStack {
-                                        Text("Size:").opacity(0.5)
-                                            .font(.custom("PlayfairDisplay-Bold", size: 17))
-                                        Text("S").opacity(0.7)
-                                    }
-                                }
-                                Spacer()
-                                Text("$ \(product.price)").bold()
-                                    .padding(.horizontal)
+                            } else {
+                                Image("Cart")
+                                    .resizable()
+                                    .frame(width: 550, height: 550)
+                                    .padding(.top, 400)
                             }
-                        } else {
-                            Image("Cart")
-                                .resizable()
-                                .offset(y: -70)
-                                .frame(width: 550, height: 550)
                         }
                     }
-                    
                 }
             }
         }

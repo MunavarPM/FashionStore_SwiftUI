@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyCart: View {
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
-//    @StateObject var addressVM = AddressViewModel()
+    //    @StateObject var addressVM = AddressViewModel()
     @EnvironmentObject var addressVM: AddressViewModel
     
     var product: Product
@@ -71,7 +71,7 @@ struct MyCart: View {
                             .cornerRadius(10)
                             .overlay {
                                 Button(action: {
-//                                    productManagerVM.removeAllFromCart()
+                                    productManagerVM.removeAllFromCart()
                                 }, label: {
                                     Text("Apply")
                                         .bold()
@@ -183,9 +183,3 @@ struct CartItemView: View {
         }
     }
 }
-
-
-
-
-
-
