@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct TabBar: View {
-//    @StateObject var addressVM = AddressViewModel()
+    
+    @State var selectedTab = 0
+    @AppStorage ("TabSelection1") var TabSelection = -1
+
     var body: some View {
-//        VStack {
-//            ForEach(0..<addressVM.addressArray.count, id: \.self) { index in
-//                Text(addressVM.addressArray[index].name)
-//            }
-//        }
         VStack {
-            TabView {
+            TabView(selection: $selectedTab) {
                 HomeView(isFav: true, product: productList[3])
                     .tabItem {
                         Label("Home", systemImage: "house")
@@ -40,6 +38,14 @@ struct TabBar: View {
                     .tag(3)
             }
             .accentColor(Color("Dark"))
+        }
+        .onChange(of: TabSelection) { _ in
+            selectedTab = TabSelection
+            print("TabSelection", selectedTab, TabSelection)
+        }
+        .onAppear {
+            TabSelection = -1
+            print("☀️TabSelectionOnAppeaer", selectedTab, TabSelection)
         }
     }
 }

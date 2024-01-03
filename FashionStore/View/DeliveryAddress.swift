@@ -134,7 +134,7 @@ struct DeliveryAddress: View {
                             }
                             Spacer()
                             NavigationLink {
-                                RazorPayView(productManagerViewModel: productManagerVM, totalPrice: 1999)
+                                RazorPayView(productManagerViewModel: productManagerVM, totalPrice: productManagerVM.cartTotal)
                             } label: {
                                 HStack {
                                     Image(systemName: "bag")

@@ -289,25 +289,29 @@ import SwiftUI
 
 struct RazorPayView:UIViewControllerRepresentable {
     
+    
+    
     @StateObject var productManagerViewModel: ProductManagerViewModel
     @State var totalPrice:Int
     typealias UIViewControllerType = ViewController
     
+    
     func makeUIViewController(context: Context) -> ViewController {
         let vc = ViewController()
         vc.totalPrice = totalPrice
+        vc.view.backgroundColor = .white
         vc.productManagerViewModel = productManagerViewModel
         return vc
     }
     
-    func updateUIViewController(_ uiViewController: ViewController, context: Context) {
-        
-    }
+    func updateUIViewController(_ uiViewController: ViewController, context: Context) {}
 }
 
 class ViewController: UIViewController, RazorpayPaymentCompletionProtocol {
+    @AppStorage ("TabSelection1") var TabSelection = -1
     var razorpay: RazorpayCheckout!
     var totalPrice: Int = 0
+    var gotoHome = false
     var productManagerViewModel: ProductManagerViewModel!
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -354,9 +358,12 @@ class ViewController: UIViewController, RazorpayPaymentCompletionProtocol {
 
     func presentAlert(withTitle title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: {_ in 
+            print("Ok action tapped")
+            self.TabSelection = 0
+            self.navigationController?.popToRootViewController(animated: true)
+        })
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
-
 }

@@ -120,21 +120,21 @@ struct MyOrder: View {
             ToolbarItem(placement: .topBarLeading) {
                 DismissView()
             }
-            ToolbarItem(placement: .topBarTrailing) {
-                
-                NavigationLink {
-                    MyCart(product: productList[1], isFav: .constant(false))
-                } label: {
-                    CartButton(numberOfProduct: 1, action: {
-                        print("CartButton")
-                    })
-                }
-            }
+//            ToolbarItem(placement: .topBarTrailing) {
+//                
+//                NavigationLink {
+//                    MyCart(product: productList[1], isFav: .constant(false))
+//                } label: {
+//                    CartButton(numberOfProduct: 1, action: {
+//                        print("CartButton")
+//                    })
+//                }
+//            }
         })
         .navigationBarBackButtonHidden(true)
     }
 }
-
+ 
 #Preview {
     MyOrder(onTap: true, product: productList[2])
 }

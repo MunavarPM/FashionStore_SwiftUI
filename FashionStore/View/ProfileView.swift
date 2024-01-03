@@ -37,12 +37,13 @@ struct ProfileView: View {
                 }
                 .overlay(
                     HStack {
-                        ForEach(retriveImage, id: \.self) { image in
-                            Image(uiImage: image)
+//                        ForEach(retriveImage, id: \.self) { image in
+//                            Image(uiImage: image)
+                            Image(systemName: "person.fill")
                                 .resizable()
-                                .frame(width: 90, height: 90)
+                                .frame(width: 80, height: 80)
                                 .cornerRadius(20)
-                        }
+//                        }
                         
                         Button(action: {
                             
@@ -179,17 +180,17 @@ struct ProfileView: View {
             .onAppear {
                 guard let auth = try? authViewModel.getAuthUser() else { return }
                 let path = "product_image/\(CodingKeys.jacket).jpg"
-                userName = auth.id ?? ""
+                userName = auth.userName ?? auth.id ?? ""
                 email = auth.email ?? ""
                 print("\(auth)userrrrrrr!")
                 let data = StorageManager.shared.productCollection(imageRef: path)
                 print(data)
                 print(imageData ?? "no data")
-                //                    fetchImage()
                 print("✅\(retriveImage)")
             }
             .task {
-                if (authViewModel.currentUser != nil), let path = authViewModel.currentUser?.imagePath {
+                if (authViewModel.currentUser != nil),
+                   let path = authViewModel.currentUser?.imagePath {
                     let data = try? await StorageManager.shared.getData(path: path)
                     self.imageData = data
                     
