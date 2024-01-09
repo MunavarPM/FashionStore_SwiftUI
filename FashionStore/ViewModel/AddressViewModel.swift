@@ -11,10 +11,9 @@ import Firebase
 class AddressViewModel: ObservableObject {
     
     @Published var userName = "alen"
+    @Published var addressArray = [AddressModel]()
     
     let cartRef = Firestore.firestore().collection("address")
-    
-    @Published var addressArray = [AddressModel]()
     
     private var listenerRegistration: ListenerRegistration?
     
@@ -36,8 +35,6 @@ class AddressViewModel: ObservableObject {
                 print("Product data was empty.")
                 return
             }
-            
-            print(addressData)
             
             self.addressArray = addressData.map { data in
                 if let id = data["id"] as? String,
@@ -69,14 +66,13 @@ class AddressViewModel: ObservableObject {
     }
     
     func updateAddress(addressModel:AddressModel) {
-//        let addressId = addressModel.id
         let addressId = "6E4BEB90-198C-4924-9098-E7D6BBFC29DA"
         cartRef.document(self.userName).getDocument { (document, error) in
             print(document?.exists as Any)
             if let document = document, document.exists {
                 var products = document.data()?["address"] as? [[String: Any]] ?? []
                 if let index = products.firstIndex(where: { $0["id"] as? String == addressId }) {
-                    // If the adrress with the given id exists in the array, update its details
+                    /// If the adrress with the given id exists in the array, update its details
                     products[index]["name"] = addressModel.name
                     products[index]["buildingName"] = addressModel.buildingName
                     products[index]["landmark"] = addressModel.landmark
@@ -90,14 +86,14 @@ class AddressViewModel: ObservableObject {
                  
                     self.cartRef.document(self.userName).updateData(["address": products])
                 } else {
-                    // If the product with the given name doesn't exist in the array, do nothing
+                    /// If the product with the given name doesn't exist in the array, do nothing
                     print("Product not found")
                     print("no product so calling addProductToCart...")
                     self.addNewAddress(addressModel: addressModel)
                     
                 }
             } else {
-                // If the document doesn't exist, do nothing
+                /// If the document doesn't exist, do nothing
                 print("Document not found")
                 self.addNewAddress(addressModel: addressModel)
             }
@@ -107,15 +103,15 @@ class AddressViewModel: ObservableObject {
     func addNewAddress(addressModel:AddressModel) {
         cartRef.document(self.userName).getDocument { (document, error) in
             if let document = document, document.exists {
-                // If the document exists, update the array
+                /// If the document exists, update the array
                 var addresses = document.data()?["address"] as? [[String: Any]] ?? []
-                // Create the new address dictionary
+                /// Create the new address dictionary
                 let newAddress = addressModel.adressModelDictionary
                 addresses.append(newAddress) // Add the new address to the array
                 self.cartRef.document(self.userName).updateData(["address": addresses]) // Update the "address" field in the document with the new array
             } else {
-                // If the document doesn't exist, create it with the new array
-                // Create the new address dictionary
+                /// If the document doesn't exist, create it with the new array
+                /// Create the new address dictionary
                 let newAddress = addressModel.adressModelDictionary
                 let addresses = [newAddress] // Create an array with the new product
                 self.cartRef.document(self.userName).setData(["address": addresses]) // Set the "address" field in the document with the new array
@@ -126,7 +122,7 @@ class AddressViewModel: ObservableObject {
     func deleteProductFromCart(addressId: String) {
         cartRef.document(self.userName).getDocument { (document, error) in
             if let document = document, document.exists {
-                // If the document exists, update the array
+                /// If the document exists, update the array
                 var addresses = document.data()?["address"] as? [[String: Any]] ?? []
                 addresses.removeAll { $0["id"] as? String == addressId } // Remove the address with matching name
                 self.cartRef.document(self.userName).updateData(["address": addresses]) // Update the "address" field in the document with the modified array

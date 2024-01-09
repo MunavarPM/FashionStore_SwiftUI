@@ -15,12 +15,13 @@ struct ProfileView: View {
     
     @StateObject var authViewModel = AuthViewModel()
     @EnvironmentObject var viewModel: ProductManagerViewModel
+    
     @State private var isDarkMode = false
     @Environment(\.presentationMode) var presentationMode
     @State var showLogin: Bool = false
     @State private var isImageSelected: PhotosPickerItem? = nil
     @State var imageData: Data? = nil
-    @State private var userName: String = ""
+    @State var userName: String = ""
     @State private var email: String = ""
     @State var retriveImage: [UIImage] = []
     
@@ -37,14 +38,19 @@ struct ProfileView: View {
                 }
                 .overlay(
                     HStack {
-//                        ForEach(retriveImage, id: \.self) { image in
-//                            Image(uiImage: image)
-                            Image(systemName: "person.fill")
-                                .resizable()
-                                .frame(width: 80, height: 80)
-                                .cornerRadius(20)
-//                        }
-                        
+                        ForEach(viewModel.profileImage, id: \.self) { image in
+                            if image != nil {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .frame(width: 80, height: 80)
+                                    .cornerRadius(20)
+                            } else {
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .frame(width: 80, height: 80)
+                                    .cornerRadius(20)
+                            }
+                        }
                         Button(action: {
                             
                         }, label: {
@@ -62,9 +68,10 @@ struct ProfileView: View {
                         .offset(x: -20, y: 40)
                         
                         VStack(alignment: .leading) {
-                            Text(userName)
+                            TextField("userName", text: $userName)
                                 .font(.custom("PlayfairDisplay-Regular", size: 25)).bold()
                             Text(email).opacity(0.4)
+                                .font(.custom("PlayfairDisplay-Regular", size: 18)).bold()
                         }
                     }
                         .padding(.horizontal, 30)
@@ -171,22 +178,22 @@ struct ProfileView: View {
                 .fullScreenCover(isPresented: $showLogin, content: {
                     withAnimation(.easeOut) {
                         Signin()
-                        
                     }
                 })
                 
             }
-            
             .onAppear {
                 guard let auth = try? authViewModel.getAuthUser() else { return }
                 let path = "product_image/\(CodingKeys.jacket).jpg"
-                userName = auth.userName ?? auth.id ?? ""
+                userName = auth.userName ?? "Loading..."
                 email = auth.email ?? ""
                 print("\(auth)userrrrrrr!")
-                let data = StorageManager.shared.productCollection(imageRef: path)
+                let data  = StorageManager.shared.productCollection(imageRef: path)
                 print(data)
                 print(imageData ?? "no data")
                 print("✅\(retriveImage)")
+//                viewModel.getImage()
+//                print("✅✅✅✅✅✅✅✅\(viewModel.getImage())")
             }
             .task {
                 if (authViewModel.currentUser != nil),
@@ -198,8 +205,7 @@ struct ProfileView: View {
             }
             .onChange(of: isImageSelected) { value in
                 if let value {
-                    viewModel.saveProductImage(item: value, parent: "shoes")
-                    
+                    viewModel.saveProfileImage(item: value)
                 }
             }
         }

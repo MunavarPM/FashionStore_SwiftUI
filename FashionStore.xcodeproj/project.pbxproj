@@ -142,6 +142,7 @@
 				DB6FF3A12AD133E2003E8541 /* StoreDataModel.swift */,
 				DB7AC19A2ADED59C00C7D15D /* Product.swift */,
 				DB3C8B9E2B342F860057818B /* AddressModel.swift */,
+				DBB23DD52AFF5E0A00CE2A84 /* LoginRegisterViewModel.swift */,
 				DB6CA1F02AE30E770012339F /* User.swift */,
 			);
 			path = Model;
@@ -152,9 +153,8 @@
 			children = (
 				DB6CA1F22AE3109D0012339F /* AuthViewModel.swift */,
 				DBEFDECB2B18954D009E2988 /* StorageManager.swift */,
-				DBD8D8992AF23D9F006CBD5F /* ProductManagerViewModel.swift */,
 				DB3C8BA02B346B820057818B /* AddressViewModel.swift */,
-				DBB23DD52AFF5E0A00CE2A84 /* LoginRegisterViewModel.swift */,
+				DBD8D8992AF23D9F006CBD5F /* ProductManagerViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

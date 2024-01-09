@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 import PhotosUI
 import FirebaseFirestore
+import FirebaseAuth
+import FirebaseStorage
 
 @MainActor
 class ProductManagerViewModel: ObservableObject {
@@ -26,8 +28,9 @@ class ProductManagerViewModel: ObservableObject {
     @Published var shirtList: [Product] = []
     @Published var tshirtList: [Product] = []
     @Published var shoesList: [Product] = []
-   
+    @Published var profileImage = [UIImage]()
     
+    //MARK: Product Crud Logic☑️.
     
     func updateisFavorite(user: User) {
         
@@ -45,7 +48,7 @@ class ProductManagerViewModel: ObservableObject {
     }
     
         
-    //MARK: Extra call for SwifFullthinking
+    //MARK: Extra call for SwifFullthinking for loading the user.
     func loadCurrentUser() async throws {
         do {
             let user = try AuthViewModel().getAuthUser()
@@ -126,7 +129,6 @@ class ProductManagerViewModel: ObservableObject {
             let wish = WishlistProduct(product: product)
             wishlistProducts.append(wish)
             wishlistTotal += product.price
-            print("\(wishlistProducts.count) ❤️Wishlist")
         }
     }
     
@@ -159,8 +161,48 @@ class ProductManagerViewModel: ObservableObject {
             }
         }
     }
-
     
+    func saveProfileImage(item: PhotosPickerItem) {
+        Task {
+            
+            guard let data = try? await item.loadTransferable(type: Data.self) else { return }
+            
+            do {
+                StorageManager.shared.UploadProfileImage(data: data)
+                print("👺👺👺\(data)")
+                DispatchQueue.main.async {
+                    self.profileImage.append(UIImage(data: data)!)
+                    print("🤡🤡🤡🤡🤡🤡\(self.profileImage)")
+                }
+            }
+        }
+    }
+    
+    func compressImage(_ image: UIImage, quality: CGFloat) -> Data? {
+        return image.jpegData(compressionQuality: quality)
+        // If using PNG format: return image.pngData()
+    }
+    
+    func getImage() {
+        guard let user = Auth.auth().currentUser else { return }
+        Firestore.firestore().collection("user").document(user.uid).getDocument { snapshot, error in
+            if error == nil && snapshot != nil {
+                let data = snapshot?.data()
+                let profileImage = data?["profileImage"] as? String
+                let storageRef = Storage.storage().reference()
+                let path = storageRef.child(profileImage ?? "")
+                path.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                    if error == nil && data != nil {
+                        DispatchQueue.main.async {
+                            self.profileImage.append(UIImage(data: data!)!)}
+                    } else {
+                        print("Error in getting profile image")
+                    }
+                }
+            }
+        }
+    }
+
     func fetData(){
         Task {
             do {
@@ -171,6 +213,7 @@ class ProductManagerViewModel: ObservableObject {
             }
         }
     }
+    
     
     
     func fetchJacketData(){
@@ -220,54 +263,6 @@ class ProductManagerViewModel: ObservableObject {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-//    func getProductList() async throws -> [Product] {
-//        let product = Firestore.firestore().collection("productList")
-//        
-//    }
-    
-//    func saveProductImage(item: PhotosPickerItem, parent: String) {
-//            Task {
-//                do {
-//                    guard let data = try await item.loadTransferable(type: Data.self) else { return }
-//                    let (path, name) = try await StorageManager.shared.saveImage(data: data, parent: parent)
-//                    print("ProductImageSaved")
-//                    print("\(path ?? "")🛣️")
-//                    print("\(name ?? "")🙋🏽‍♂️")
-//
-//                    // Assuming StorageManager.shared.saveImage returns the path to the saved image
-//                    if let imagePath = path {
-//                        // Load the saved image using the path
-//                        if let uiImage = UIImage(contentsOfFile: imagePath) {
-//                            // Update the @Published property
-//                            DispatchQueue.main.async {
-//                                self.retrievedImage.append(uiImage)
-//                                print("\(self.retrievedImage.count)➕")
-//                            }
-//                        }
-//                    }
-//                } catch {
-//                    print("Error saving or loading image: \(error)")
-//                }
-//            }
-//        }
-    //    func filterSelectedOption(option: FilterOption) async throws {
-    //        switch option {
-    //        case .noFilter:
-    //            self.products = try await productList
-    //        case .priceHigh:
-    //            self.products = try await productList.
-    //        }
-    //    }
-    //    func getAllroductSortedByPrice(desending: Bool) async throws -> [Product]{
-    //
-    //    }
 }
 
 class CartProduct: Identifiable {

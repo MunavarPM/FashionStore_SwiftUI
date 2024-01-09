@@ -9,6 +9,7 @@ import Foundation
 import FirebaseStorage
 import FirebaseFirestore
 import SwiftUI
+import FirebaseAuth
 
 
 final class StorageManager {
@@ -36,6 +37,21 @@ final class StorageManager {
         }
     }
     
+    func UploadProfileImage(data: Data) {
+        guard let user = Auth.auth().currentUser else { return }
+        let storagaRef = Storage.storage().reference()
+        let path = "profileImage/\(UUID().uuidString).jpg"
+        let imageData = storagaRef.child(path)
+        let uploadData = imageData.putData(data, metadata: nil) { metadata, error in
+            if error == nil && metadata != nil {
+                self.userCollection.document(user.uid).setData(["profileImage" : path])
+                print("Profile Image Uploaded")
+            } else {
+                print("Error in uploading profile image")
+            }
+        }
+    }
+    
     func productCollection(imageRef: String) {
         let product = Product(id: UUID().uuidString, name: "White Stripe Polo Neck T-Shirt"
                            , imageName: [imageRef],
@@ -52,7 +68,7 @@ final class StorageManager {
                 "productCount": product.productCount,
                 "rating": product.rating,
                 "isFavorite": product.isFavorite,
-                "profileImagePath": product.profileImagePath ?? ""
+                "profileImagePath": product.profileImagePath 
             ]
         
         db.collection("productList").document().setData(data)
@@ -79,11 +95,12 @@ final class StorageManager {
             let product = Product(id: id, name: name, imageName: imageName, suppliers: suppliers, description: description, price: price, productCount: productCount, colors: colors, rating: rating, isFavorite: isFavorite, profileImagePath: profileImagePath)
             productList.append(product)
         }
-        print("\(productList)⚽️")
         return productList
     }
     
+    
     func getProductList(forDocumentID documentID: String) async throws -> [Product] {
+        
         let product = Firestore.firestore().collection("productList").document(documentID)
         let snapshot = try await product.getDocument()
 
@@ -130,6 +147,7 @@ final class StorageManager {
             return (nil, nil, nil)
         }
     }
+    
     func getData(path: String) async throws -> Data {
         try await storage.child(path).data(maxSize: 3 * 1024 * 1024)
     }

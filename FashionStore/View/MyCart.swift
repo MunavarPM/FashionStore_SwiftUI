@@ -84,11 +84,11 @@ struct MyCart: View {
                             }
                         }
                         HStack(spacing: 5) {
-                            Text("Total")
+                            Text("Total: ")
                                 .font(.system(size: 20).bold())
-                            Text("(\(productManagerVM.getProductCount(product: product)) item): ").fontWeight(.semibold).font(.system(size: 19))
-                                .font(.title2).opacity(0.5)
-                                .fontWeight(.bold)
+//                            Text("(\(productManagerVM.getProductCount(product: product)) item): ").fontWeight(.semibold).font(.system(size: 19))
+//                                .font(.title2).opacity(0.5)
+//                                .fontWeight(.bold)
                             Text("$\(productManagerVM.cartTotal)")
                                 .font(.system(size: 20))
                                 .fontWeight(.bold)

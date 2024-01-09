@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BTHeart: View {
     @EnvironmentObject var productManagerVM: ProductManagerViewModel
-    @State var isFav: Bool
+    @State var isFav: Bool = false
     var product: Product
     let action: () -> ()
     var body: some View {
