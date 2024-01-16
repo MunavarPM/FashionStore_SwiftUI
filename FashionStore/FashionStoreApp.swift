@@ -14,13 +14,15 @@ struct FashionStoreApp: App {
     
     @StateObject var productManager = ProductManagerViewModel()
     @StateObject var addressVM = AddressViewModel()
+    @AppStorage("isDarkModeEnabled") var isDarkModeEnabled: Bool = false
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
             NavigationStack {
                 
-                    TabBar()
+                    OnBoardingTapView()
+                    .preferredColorScheme(isDarkModeEnabled ? .dark : .light)
                 
 
                 

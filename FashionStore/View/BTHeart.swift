@@ -24,12 +24,12 @@ struct BTHeart: View {
                 isFav.toggle()
             } label: {
                 Image(systemName: isFav ? "heart.fill" : "heart" )
-                    .font(.title3)
-                    .foregroundStyle(.black)
+                    .font(.system(size: 17))
+                    .foregroundStyle(Color("AccentColor2"))
                     .cornerRadius(50)
                     .padding(7)
                     .background(Circle())
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color("AccentColor"))
             }
         }
     }

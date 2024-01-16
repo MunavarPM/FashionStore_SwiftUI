@@ -17,17 +17,18 @@ struct CartButton: View {
             ZStack {
                 Image(systemName: "bag")
                     .font(.body)
+                    .scaleEffect(0.85)
                     .fontWeight(.bold)
-                    .foregroundStyle(Color("Dark"))
-                    .padding(10)
-                    .background(Color("Light"))
+                    .foregroundStyle(Color("AccentColor2"))
+                    .padding(7)
+                    .background(Color("AccentColor"))
                     .clipShape(Circle())
                 if numberOfProduct > 0 {
                     Text("\(numberOfProduct)")
                         .font(.caption2)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color("AccentColor"))
                         .frame(width: 15, height: 15)
-                        .background(.black)
+                        .background(Color("AccentColor2"))
                         .cornerRadius(50)
                         .offset(x: 9, y: -7)
                 }

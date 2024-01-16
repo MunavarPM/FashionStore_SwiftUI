@@ -13,21 +13,22 @@ struct Signin: View {
 //    @FocusState private var emailIsFoucused: Bool
     @StateObject var authViewModel = AuthViewModel()
     @State var rotationEffect: Double = 0.0
-    @ObservedObject var viewModel = LoginRegisterViewModel()
+    @ObservedObject var viewModel : LoginRegisterViewModel
     
     var body: some View {
         //        if authViewModel.isAuthenticated {
         //            HomeView()
         //        } else {
         ZStack {
-            Color("Light")
+            Color("AccentColor")
                 .ignoresSafeArea()
             VStack {
-                AppNameView(color: .black)
+                AppNameView(color: "AccentColor2")
                     .padding(.bottom, 50)
                     .offset(x: -15)
                 VStack(alignment: .leading) {
                     Text(viewModel.signinToggle ?  "Welcome !" : "Sign Up")
+                        .foregroundStyle(Color("AccentColor2"))
                         .font(.custom("PlayfairDisplay-Bold", size: 25))
                         .padding(.bottom, 5)
                     Text(viewModel.signinToggle ?  "please login or sign up to continue with our app" : "Create an new account")
@@ -61,6 +62,7 @@ struct Signin: View {
                                 }
                             } label: {
                                 Text("Forgot Password?")
+                                    .foregroundStyle(Color("AccentColor2"))
                                     .font(.custom("PlayfairDisplay-Bold", size: 17))
                                     .tint(.black).opacity(0.8)
                                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -87,10 +89,10 @@ struct Signin: View {
                                 } label: {
                                     Text(viewModel.signinToggle ? "Login" : "Submit")
                                         .font(.custom("PlayfairDisplay-Bold", size: 17))
-                                        .foregroundStyle(.light)
+                                        .foregroundStyle(Color("AccentColor"))
                                         .padding(.horizontal, 35)
                                         .padding(.vertical, 12)
-                                        .background(.dark)
+                                        .background(Color("AccentColor2"))
                                         .clipShape(Capsule())
                                         .disabledWithOpacity( viewModel.email.isEmpty || viewModel.password.isEmpty)
                                 }
@@ -118,6 +120,7 @@ struct Signin: View {
                                 }
                             } label: {
                                 Text(viewModel.signinToggle ? "Sign up" : "Sign in")
+                                    .foregroundStyle(Color("AccentColor2"))
                                     .font(.custom("PlayfairDisplay-Bold", size: 17))
                                     .fontWeight(.bold)
                                     .tint(.black)
@@ -142,14 +145,15 @@ struct Signin: View {
 //                self.emailIsFoucused = true
 //            }
 //        }
-        .fullScreenCover(isPresented: $viewModel.showLogin, content: {
-            withAnimation(.easeIn) {
-                TabBar()
-            }
-        })
+//        .fullScreenCover(isPresented: $viewModel.showLogin, content: {
+//            withAnimation(.easeIn) {
+//                TabBar()
+////                Text("TabBar()")
+//                .background(Color.red)}
+//        })
     }
 }
 
-#Preview {
-    Signin()
-}
+//#Preview {
+//    Signin()
+//}

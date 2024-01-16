@@ -28,7 +28,7 @@ class ProductManagerViewModel: ObservableObject {
     @Published var shirtList: [Product] = []
     @Published var tshirtList: [Product] = []
     @Published var shoesList: [Product] = []
-    @Published var profileImage = [UIImage]()
+    @Published var profileImage = [UIImage?]()
     
     //MARK: Product Crud Logic☑️.
     
@@ -282,7 +282,7 @@ class WishlistProduct: Identifiable {
     }
 }
 enum FilterOption: String, CaseIterable {
-    case noFilter
-    case priceHigh
-    case priceLow
+    case NoFilter
+    case HighToLow
+    case LowToHigh
 }

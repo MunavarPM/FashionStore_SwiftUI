@@ -13,7 +13,7 @@ struct WelcomeView: View {
             Image(.opening)
                 .aspectRatio(contentMode: .fill)
                 .ignoresSafeArea()
-            AppNameView(color: .white)
+            AppNameView(color: "Light")
         }
     }
 }
@@ -23,17 +23,17 @@ struct WelcomeView: View {
 }
 
 struct AppNameView: View {
-    var color: Color
+    var color: String
     var body: some View {
         VStack {
             Text("Fashion")
                 .font(.custom("GreatVibes-Regular", size: 100))
-                .foregroundStyle(color)
+                .foregroundStyle(Color(color))
                 .offset(y: 30)
             
             Text("MY LIFE MY STYLE.")
                 .font(.custom("PlayfairDisplay-Regular", size: 18))
-                .foregroundStyle(color)
+                .foregroundStyle(Color(color))
                 .offset(x: 60, y: -8)
         }
     }

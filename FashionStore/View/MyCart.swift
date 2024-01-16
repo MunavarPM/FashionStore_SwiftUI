@@ -21,7 +21,7 @@ struct MyCart: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color("Light")
+//                Color("AccentColor")
                 VStack {
                     ScrollView(showsIndicators: false){
                         VStack {
@@ -52,7 +52,6 @@ struct MyCart: View {
                                         .resizable()
                                         .offset(y: -70)
                                         .frame(width: 550, height: 550)
-                                    
                                 }
                             }
                             Spacer()
@@ -63,11 +62,13 @@ struct MyCart: View {
                         HStack {
                             TextField( text: $promoCode, label: {
                                 Text("Promo Code")
+                                    .foregroundStyle(.gray)
                             })
                             .padding(.leading)
-                            .foregroundColor(.clear)
+                            .foregroundColor(.gray)
                             .frame(width: 355, height: 60)
-                            .background(Color(red: 0.95, green: 0.95, blue: 0.95))
+                            .background(RoundedRectangle(cornerRadius: 15)
+                                .stroke(Color.gray, lineWidth: 1.5).opacity(0.6).background(Color(red: 0.95, green: 0.95, blue: 0.95))).cornerRadius(15)
                             .cornerRadius(10)
                             .overlay {
                                 Button(action: {
@@ -75,28 +76,32 @@ struct MyCart: View {
                                 }, label: {
                                     Text("Apply")
                                         .bold()
-                                        .foregroundStyle(Color("Light"))
+                                        .foregroundStyle(Color("AccentColor"))
                                 })
                                 .padding(8)
-                                .background(Color("Dark"))
+                                .background(Color("AccentColor2"))
                                 .cornerRadius(8)
                                 .padding(.leading, 260)
                             }
                         }
+                        
                         HStack(spacing: 5) {
                             Text("Total: ")
                                 .font(.system(size: 20).bold())
+                                .foregroundStyle(Color("Dark"))
 //                            Text("(\(productManagerVM.getProductCount(product: product)) item): ").fontWeight(.semibold).font(.system(size: 19))
 //                                .font(.title2).opacity(0.5)
 //                                .fontWeight(.bold)
                             Text("$\(productManagerVM.cartTotal)")
+                                .foregroundStyle(Color("Dark"))
                                 .font(.system(size: 20))
                                 .fontWeight(.bold)
                         }
                         
                         .padding()
                         .frame(width: 360)
-                        .background(RoundedRectangle(cornerRadius: 15).stroke(Color.gray, lineWidth: 1.5).opacity(0.6).background(Color(red: 0.95, green: 0.95, blue: 0.95))).cornerRadius(15)
+                        .background(RoundedRectangle(cornerRadius: 15)
+                            .stroke(Color.gray, lineWidth: 1.5).opacity(0.6).background(Color(red: 0.95, green: 0.95, blue: 0.95))).cornerRadius(15)
                         .padding(3)
                         NavigationLink {
                             DeliveryAddress()
@@ -104,11 +109,12 @@ struct MyCart: View {
                         } label: {
                             ZStack {
                                 Rectangle()
-                                    .fill(Color("Dark"))
+                                    .fill(Color("AccentColor2"))
                                     .cornerRadius(20)
                             } .overlay {
                                 HStack {
                                     Text("Proceed to Pay")
+                                        .foregroundStyle(Color("AccentColor"))
                                         .font(.system(size: 20).bold())
                                         .padding()
                                         .foregroundColor(.white)
@@ -133,7 +139,12 @@ struct MyCart: View {
         .environmentObject(ProductManagerViewModel())
         .environmentObject(AddressViewModel())
 }
-
+#Preview {
+    MyCart(product: productList[1], isFav: .constant(false))
+        .environmentObject(ProductManagerViewModel())
+        .environmentObject(AddressViewModel())
+        .preferredColorScheme(.dark)
+}
 struct CartItemView: View {
     var product: Product
     var body: some View {

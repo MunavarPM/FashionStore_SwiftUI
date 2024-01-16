@@ -11,6 +11,7 @@ struct TabBar: View {
     
     @State var selectedTab = 0
     @AppStorage ("TabSelection1") var TabSelection = -1
+    @ObservedObject var viewModel = LoginRegisterViewModel()
 
     var body: some View {
         VStack {
@@ -31,13 +32,13 @@ struct TabBar: View {
                         Label("Whislist", systemImage: "heart.fill")
                     }
                     .tag(2)
-                ProfileView()
+                ProfileView(LogicVM: viewModel)
                     .tabItem {
                         Label("Profile", systemImage: "person.fill")
                     }
                     .tag(3)
             }
-            .accentColor(Color("Dark"))
+            .accentColor(Color("AccentColor2"))
         }
         .onChange(of: TabSelection) { _ in
             selectedTab = TabSelection
@@ -50,7 +51,7 @@ struct TabBar: View {
     }
 }
 
-#Preview {
-    TabBar()
-}
+//#Preview {
+//    TabBar()
+//}
 

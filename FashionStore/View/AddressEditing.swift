@@ -28,7 +28,6 @@ struct AddressEditing: View {
     @Binding var tappedAddress: AddressModel
     
     var body: some View {
-//        NavigationStack {
             VStack{
                 HStack{
                     VStack(alignment: .leading, spacing: 10){
@@ -67,14 +66,15 @@ struct AddressEditing: View {
                 HStack {
                     Text("Save address")
                         .font(.custom("PlayfairDisplay-Bold", size: 20))
+                        .foregroundColor(Color("AccentColor"))
+                        .background(Color("AccentColor2"))
                         .padding()
                 }
                 .frame(maxWidth: .infinity)
-                .background(Color("Dark"))
+                .foregroundColor(Color("AccentColor"))
+                .background(Color("AccentColor2"))
                 .cornerRadius(20)
-                .foregroundColor(Color("Light"))
-                
-                .shadow(color:.black,radius: 3)
+                .shadow(color: Color("AccentColor"),radius: 3)
                 .onTapGesture {
                     
                     //MARK: means adding new address
@@ -100,9 +100,9 @@ struct AddressEditing: View {
                             .padding()
                     }
                     .frame(maxWidth: .infinity)
-                    .background(Color("Dark"))
+                    .background(Color("AccentColor2"))
                     .cornerRadius(20)
-                    .foregroundColor(Color("Light"))
+                    .foregroundColor(Color("AccentColor"))
                     
                     .shadow(color:.black,radius: 3)
                     .onTapGesture {
@@ -113,7 +113,7 @@ struct AddressEditing: View {
             }
             .frame(maxWidth: .infinity,maxHeight: .infinity)
             .padding()
-            .background(Color("Light"))
+            .background(Color("AccentColor"))
             .onAppear {
                 if enableEditAddress {
                     nameTxt = tappedAddress.name
@@ -136,7 +136,6 @@ struct AddressEditing: View {
                     DismissView()
                 }
             }
-//        }
     }
 }
 

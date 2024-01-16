@@ -154,9 +154,9 @@ struct DismissView: View {
             }
         }, label: {
             Image(systemName: "xmark.circle.fill")
-                .foregroundStyle(Color("Dark"))
-                .font(.title2)
-            
+                .foregroundStyle(Color("AccentColor"))
+                .font(.title2).bold()
+                .background(Circle().fill(Color("AccentColor2")))
         })
     }
 }

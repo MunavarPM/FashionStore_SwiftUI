@@ -30,7 +30,8 @@ class AuthViewModel: ObservableObject {
         }
         Task {
             await fetchUser()
-            print(currentUser?.userName ?? "id!😕", currentUser?.email ?? "email!🙄")
+            print("🤴🏽🤴🏽🤴🏽UsserFromFetccUser :- \(String(describing: fetchUser))")
+//            print(currentUser?.userName ?? "id!😕", currentUser?.email ?? "email!🙄")
         }
     }
     

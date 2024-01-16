@@ -11,7 +11,7 @@ struct ContentView: View {
     @StateObject var viewModel = AuthViewModel()
     var body: some View {
         if viewModel.userSession != nil {
-            TabBar()
+            
         } else {
            OnBoardingTapView()
         }

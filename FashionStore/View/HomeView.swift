@@ -22,9 +22,8 @@ struct HomeView: View {
     var product: Product
     
     var body: some View {
-//        NavigationStack {
             ZStack {
-                Color("Light")
+                Color("AccentColor")
                     .ignoresSafeArea()
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading) {
@@ -70,7 +69,7 @@ struct HomeView: View {
                             let gridColumn: [GridItem] = [GridItem(), GridItem()]
                             if selectedIndex == 0 {
                                 LazyVGrid(columns: gridColumn) {
-                                    ForEach(productManagerVM.shirtList.prefix(2), id: \.id){ item in
+                                    ForEach(productManagerVM.shirtList.prefix(1), id: \.id){ item in
                                         NavigationLink(destination: ProductView(isFav: $isFav, product: item).environmentObject(productManagerVM)) {
                                             TopItems(product: item) {
                                                 if product.isFavorite {
@@ -206,7 +205,6 @@ struct HomeView: View {
                 }
             }
             .navigationBarHidden(false)
-//        }
     }
 }
 
@@ -261,12 +259,12 @@ struct CapsuleButton: View {
             HStack {
                 Text(text)
                     .fontWeight(.bold)
-                    .foregroundStyle(Color(isActive ? "Light": "Dark"))
+                    .foregroundStyle(Color(isActive ? "AccentColor": "AccentColor2"))
                     .frame(width: 85, height: 18)
                     .padding(.vertical, 10)
                 
             }
-            .background(Color(isActive ? "Dark" : "Light"))
+            .background(Color(isActive ? "AccentColor2" : "AccentColor"))
             .clipShape(Capsule())
         }
     }
@@ -288,11 +286,13 @@ struct MostDemandItem: View {
                     .offset(x: -18)
                 VStack {
                     Text(slides[currentIndex].name)
+                        .foregroundStyle(Color("Dark"))
                         .font(.custom("PlayfairDisplay-Regular", size: 20))
                     Text(itemBrand)
                         .font(.custom("PlayfairDisplay-Regular", size: 15))
                         .foregroundStyle(.gray)
                     Text("$ \(slides[currentIndex].price)")
+                        .foregroundStyle(Color("Dark"))
                         .fontWeight(.bold)
                         .padding(.top, 0.1)
                 }
@@ -332,9 +332,9 @@ struct BackButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: forward ? "chevron.forward" : "chevron.backward")
-                .foregroundColor(.white)
+                .foregroundColor(Color("Light"))
                 .padding(.all, 6)
-                .background(Color.black)
+                .background(Color("Dark"))
                 .cornerRadius(8.0)
         }
     }
@@ -380,17 +380,19 @@ struct TopItems: View {
 
                 VStack {
                     Text(product.name) // Display the product name
+                        .foregroundStyle(Color("AccentColor2"))
                         .font(.custom("PlayfairDisplay-Bold", size: 18))
                     Text(product.suppliers)
                         .font(.custom("PlayfairDisplay-Regular", size: 15))
                         .foregroundStyle(.gray)
                     Text("$ \(product.price)")
+                        .foregroundStyle(Color("AccentColor2"))
                         .fontWeight(.bold)
                 }
                 .padding(10)
             }
         }
-        .shadow(color: Color("Dark").opacity(0.2), radius: 10, x: 5, y: 10)
+        .shadow(color: Color("AccentColor2").opacity(0.2), radius: 10, x: 5, y: 10)
         .padding(.horizontal)
     }
 }
@@ -410,7 +412,7 @@ struct SearchBar: View {
                     .frame(height: 52)
             }
             .frame(height: 52)
-            .background(Color("Dark").cornerRadius(32)
+            .background(Color("AccentColor2").cornerRadius(32)
                 .opacity(0.1))
             
             .overlay {
@@ -427,7 +429,7 @@ struct SearchBar: View {
             } label: {
                 ZStack {
                     Circle()
-                        .fill(Color("Dark"))
+                        .fill(Color("AccentColor2"))
                         .cornerRadius(10)
                         .frame(width: 45, height: 45)
                         .overlay {
@@ -451,7 +453,7 @@ struct SearchBar: View {
                                         .offset(x: 5)
                                 }
                             }
-                            .foregroundStyle(Color("Light"))
+                            .foregroundStyle(Color("AccentColor"))
                         }
                 }
             }

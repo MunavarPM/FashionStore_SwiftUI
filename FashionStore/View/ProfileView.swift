@@ -7,16 +7,15 @@
 
 import SwiftUI
 import PhotosUI
-import FirebaseStorage
-import FirebaseFirestore
-
 
 struct ProfileView: View {
     
     @StateObject var authViewModel = AuthViewModel()
     @EnvironmentObject var viewModel: ProductManagerViewModel
+    @AppStorage("isDarkModeEnabled") var isDarkModeEnabled: Bool = false
+    @ObservedObject var LogicVM : LoginRegisterViewModel
     
-    @State private var isDarkMode = false
+
     @Environment(\.presentationMode) var presentationMode
     @State var showLogin: Bool = false
     @State private var isImageSelected: PhotosPickerItem? = nil
@@ -27,42 +26,48 @@ struct ProfileView: View {
     
     var body: some View {
         ZStack {
-            Color(Color("Light"))
+            Color(Color("AccentColor"))
             
             VStack {
                 ZStack {
                     RoundedRectangle(cornerRadius: 15)
-                        .fill(Color("Light").opacity(0.8))
+                        .fill(Color("AccentColor").opacity(0.8))
                         .shadow(radius: 15, x: 5, y: 10)
                         .frame(width: 360, height: 120)
                 }
                 .overlay(
                     HStack {
-                        ForEach(viewModel.profileImage, id: \.self) { image in
-                            if image != nil {
+                        ForEach(viewModel.profileImage.prefix(1), id: \.self) { image in
+                            if let image = image {
                                 Image(uiImage: image)
                                     .resizable()
                                     .frame(width: 80, height: 80)
                                     .cornerRadius(20)
                             } else {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
+                                ProgressView()
                                     .frame(width: 80, height: 80)
                                     .cornerRadius(20)
                             }
+                            
                         }
                         Button(action: {
-                            
-                        }, label: {
-                            ZStack {
-                                PhotosPicker(selection: $isImageSelected, matching: .images, photoLibrary: .shared()){
-                                    Image(systemName: "pencil.line")
-                                        .foregroundStyle(.black).font(.footnote).bold()
-                                }
+                            if isImageSelected != nil {
+                                viewModel.profileImage.removeAll()
+                                viewModel.profileImage.append(retriveImage[0])
                             }
+                        }, label: {
+                            
+                                ZStack {
+                                    PhotosPicker(selection: $isImageSelected, matching: .images, photoLibrary: .shared()){
+                                        Image(systemName: "pencil.line")
+                                            .foregroundStyle(Color(isDarkModeEnabled ? "Light" : "Dark"))
+                                            .font(.footnote).bold()
+                                    }
+                                }
+                            
                             .padding()
                             .frame(width: 25, height: 25)
-                            .background(Color("Light").opacity(0.8))
+                            .background(Color("AccentColor").opacity(0.8))
                             .cornerRadius(7)
                         })
                         .offset(x: -20, y: 40)
@@ -82,7 +87,7 @@ struct ProfileView: View {
                     VStack {
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
-                                .fill(Color("Light").opacity(0.8))
+                                .fill(Color("AccentColor").opacity(0.8))
                                 .frame(width: 360, height: 350)
                         }
                         .overlay {
@@ -116,7 +121,7 @@ struct ProfileView: View {
                                         .padding(.horizontal)
                                         .overlay(
                                             HStack {
-                                                Image(systemName: isDarkMode ? "moon.fill" : "sun.max.fill")
+                                                Image(systemName: isDarkModeEnabled ? "moon.fill" : "sun.max.fill")
                                                     .resizable()
                                                     .frame(width: 27, height: 25)
                                             }
@@ -124,7 +129,7 @@ struct ProfileView: View {
                                     Text("Dark Mode")
                                         .font(.custom("PlayfairDisplay-Bold", size: 20))
                                     Spacer()
-                                    Toggle("", isOn: $isDarkMode)
+                                    Toggle("", isOn: $isDarkModeEnabled)
                                         .padding(.horizontal)
                                 }
                             }
@@ -134,7 +139,7 @@ struct ProfileView: View {
                         
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
-                                .fill(Color("Light").opacity(0.8))
+                                .fill(Color("AccentColor").opacity(0.8))
                                 .frame(width: 360, height: 215)
                         }
                         .overlay {
@@ -153,9 +158,9 @@ struct ProfileView: View {
                     }, label: {
                         HStack {
                             Image(systemName: "rectangle.portrait.and.arrow.forward.fill")
-                                .foregroundStyle(Color("Light"))
+                                .foregroundStyle(Color("AccentColor"))
                                 .font(.caption)
-                            Text("LogOut").foregroundStyle(Color("Light"))
+                            Text("LogOut").foregroundStyle(Color("AccentColor"))
                         }
                         .alert(isPresented: $authViewModel.showAlert) {
                             Alert(
@@ -165,35 +170,35 @@ struct ProfileView: View {
                                     Text("OK"),
                                     action: {
                                         showLogin = true
+                                        LogicVM.showLogin = true
                                     }
                                 )
                             )
                         }
                         .frame(width: UIScreen.main.bounds.width - 23, height: 50)
-                        .background(Color("Dark"))
+                        .background(Color("AccentColor2"))
                         .cornerRadius(17)
                         .padding()
                     })
                 }
-                .fullScreenCover(isPresented: $showLogin, content: {
-                    withAnimation(.easeOut) {
-                        Signin()
-                    }
-                })
+//                .fullScreenCover(isPresented: $showLogin, content: {
+//                    withAnimation(.easeOut) {
+//                        Signin(viewModel: viewmodel.)
+//                    }
+//                })
                 
             }
             .onAppear {
                 guard let auth = try? authViewModel.getAuthUser() else { return }
                 let path = "product_image/\(CodingKeys.jacket).jpg"
-                userName = auth.userName ?? "Loading..."
+                userName = auth.userName ?? "Loading.."
                 email = auth.email ?? ""
                 print("\(auth)userrrrrrr!")
                 let data  = StorageManager.shared.productCollection(imageRef: path)
                 print(data)
                 print(imageData ?? "no data")
-                print("✅\(retriveImage)")
 //                viewModel.getImage()
-//                print("✅✅✅✅✅✅✅✅\(viewModel.getImage())")
+                print("✅\(retriveImage)")
             }
             .task {
                 if (authViewModel.currentUser != nil),
@@ -212,9 +217,6 @@ struct ProfileView: View {
     }
 }
 
-#Preview {
-    ProfileView()
-}
 
 
 struct SettingBTView: View {
@@ -234,10 +236,12 @@ struct SettingBTView: View {
                         Image(systemName: imageSF)
                             .resizable()
                             .frame(width: 27, height: 25)
+                            .foregroundStyle(Color("AccentColor2"))
                     }
                 )
             Text(title)
                 .font(.custom("PlayfairDisplay-Bold", size: 20))
+                .foregroundStyle(Color("AccentColor2"))
             Spacer()
             Button(action: action, label: {
                 Image(systemName: "chevron.forward")
